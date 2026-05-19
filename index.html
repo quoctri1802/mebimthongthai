@@ -2636,10 +2636,13 @@
           setLoading(true);
 
           try {
-            const url = isLogin ? '/api/users/login' : '/api/users/register';
-            const body = isLogin 
-              ? { emailOrPhone, password }
-              : { emailOrPhone, password, name };
+            // Tự động nhận diện đăng nhập quản trị viên nếu nhập email admin
+            const isAdminLogin = isLogin && emailOrPhone.trim().toLowerCase() === 'admin@mebim.vn';
+            const url = isAdminLogin ? '/api/admin/login' : (isLogin ? '/api/users/login' : '/api/users/register');
+            
+            const body = isAdminLogin 
+              ? { email: emailOrPhone, password }
+              : (isLogin ? { emailOrPhone, password } : { emailOrPhone, password, name });
 
             const response = await fetch(url, {
               method: 'POST',
@@ -2658,23 +2661,37 @@
               localStorage.setItem('user_token', data.token);
             }
             
-            // Cập nhật currentUser trong db engine
-            window.parentingDb.setCurrentUser(data.user);
-            
-            // Đồng bộ bé
-            const babies = isLogin ? (data.babies || []) : [data.baby];
-            const database = window.parentingDb.getDb ? window.parentingDb.getDb() : null;
-            if (database) {
-              database.babyProfiles = babies;
-              window.parentingDb.saveDb(database);
+            if (isAdminLogin) {
+              const adminUser = {
+                id: data.admin.id,
+                name: data.admin.name,
+                nickname: data.admin.name,
+                avatar: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&auto=format&fit=crop&q=80', // Avatar bác sĩ/admin chuyên gia
+                badge: 'Quản trị viên 🛡️',
+                points: 9999,
+                role: 'admin'
+              };
+              window.parentingDb.setCurrentUser(adminUser);
+              setActiveBaby({ id: 'baby_admin', name: 'Hệ thống Quản lý', birthdate: '2026-02-15', gender: 'female' });
+              alert(`Chào mừng Admin, ${adminUser.name}! Đăng nhập thành công hệ thống quản trị.`);
+            } else {
+              // Cập nhật currentUser trong db engine
+              window.parentingDb.setCurrentUser(data.user);
+              
+              // Đồng bộ bé
+              const babies = isLogin ? (data.babies || []) : [data.baby];
+              const database = window.parentingDb.getDb ? window.parentingDb.getDb() : null;
+              if (database) {
+                database.babyProfiles = babies;
+                window.parentingDb.saveDb(database);
+              }
+              
+              const activeB = babies[0] || null;
+              setActiveBaby(activeB);
+              alert(isLogin ? `Chào mừng quay trở lại, ${data.user.nickname || data.user.name}! Đăng nhập thành công.` : 'Đăng ký tài khoản thành công! Em bé mặc định đã được thiết lập.');
             }
             
-            const activeB = babies[0] || null;
-            setActiveBaby(activeB);
             setDbState({ ...window.parentingDb });
-            
-            alert(isLogin ? `Chào mừng quay trở lại, ${data.user.nickname || data.user.name}! Đăng nhập thành công.` : 'Đăng ký tài khoản thành công! Em bé mặc định đã được thiết lập.');
-            
             // Quay về trang chủ
             setCurrentTab('home');
           } catch (err) {
