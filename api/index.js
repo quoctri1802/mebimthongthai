@@ -727,16 +727,18 @@ async function initializeDatabaseSchema() {
     
     console.log('⚡ Đã đồng bộ cấu trúc bảng DDL trên đám mây Neon Postgres!');
 
-    // 2. Nạp dữ liệu mẫu nếu bảng articles rỗng
+    // 2. Tự động nạp tài khoản quản trị viên nếu chưa có
+    const adminCheck = await pool.query('SELECT COUNT(*) FROM admins');
+    if (parseInt(adminCheck.rows[0].count) === 0) {
+      console.log('🛡️ Đang tự động nạp tài khoản admin mặc định...');
+      const defaultPasswordHash = await bcrypt.hash('admin123', 10);
+      await pool.query('INSERT INTO admins (email, password_hash, name) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING;', ['admin@mebim.vn', defaultPasswordHash, 'Quản trị viên']);
+    }
+
+    // 3. Nạp dữ liệu mẫu nếu bảng articles rỗng
     const countCheck = await pool.query('SELECT COUNT(*) FROM articles');
     if (parseInt(countCheck.rows[0].count) === 0) {
       console.log('⚠️  Phát hiện cơ sở dữ liệu trống! Đang tự động nạp dữ liệu cẩm nang mẫu...');
-      
-      // Hash password cho admin mặc định: admin123
-      const defaultPasswordHash = await bcrypt.hash('admin123', 10);
-
-      // Chèn tài khoản admin mặc định
-      await pool.query('INSERT INTO admins (email, password_hash, name) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING;', ['admin@mebim.vn', defaultPasswordHash, 'Quản trị viên']);
 
       // Chèn các bài viết mẫu sơ khởi để trang web hiển thị lung linh ngay lập tức
       await pool.query(`
