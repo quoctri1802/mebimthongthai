@@ -1070,6 +1070,9 @@ export const db = {
     database.currentUser.babyId = newBaby.id; 
     saveDb(database);
 
+    // Tự động khởi tạo lịch tiêm chủng dựa trên ngày sinh cho em bé mới
+    db.recalculateVaccinations(newBaby.id, newBaby.birthdate);
+
     if (IS_SERVER_MODE) {
       fetch('/api/babies', {
         method: 'POST',
@@ -1079,6 +1082,107 @@ export const db = {
     }
 
     return newBaby;
+  },
+
+  updateBabyProfile: (id, data) => {
+    const database = getDb();
+    const baby = database.babyProfiles.find(b => b.id === id);
+    if (baby) {
+      baby.name = data.name;
+      baby.birthdate = data.birthdate;
+      baby.gender = data.gender;
+      saveDb(database);
+
+      if (IS_SERVER_MODE) {
+        fetch('/api/babies/' + id, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        }).catch(e => console.error("Lỗi sync Neon update baby profile:", e));
+      }
+    }
+    return baby;
+  },
+
+  recalculateVaccinations: (babyId, birthdate) => {
+    const database = getDb();
+    let currentVacs = database.vaccinations.filter(v => v.babyId === babyId);
+    
+    const VACCINE_MASTER_SCHEDULE = [
+      { age: 'Sơ sinh (24h đầu)', name: 'Vắc xin Lao (BCG)', disease: 'Phòng bệnh Lao phổi, Lao màng não' },
+      { age: 'Sơ sinh (24h đầu)', name: 'Vắc xin Viêm gan B (Sơ sinh)', disease: 'Phòng bệnh Viêm gan B lây từ mẹ' },
+      { age: '2 tháng tuổi', name: 'Vắc xin 6 trong 1 (Hexaxim / Infanrix Hexa)', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib' },
+      { age: '2 tháng tuổi', name: 'Vắc xin phòng Phế cầu (Synflorix / Prevenar 13)', disease: 'Phòng Viêm phổi, Viêm màng não, Viêm tai giữa do phế cầu khuẩn' },
+      { age: '2 tháng tuổi', name: 'Vắc xin uống Rotavirus (Rotarix / Rotateq)', disease: 'Phòng bệnh Tiêu chảy cấp do Rotavirus' },
+      { age: '3 tháng tuổi', name: 'Vắc xin 6 trong 1 (Hexaxim / Infanrix Hexa)', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib' },
+      { age: '3 tháng tuổi', name: 'Vắc xin phòng Phế cầu (Synflorix / Prevenar 13)', disease: 'Phòng Viêm phổi, Viêm màng não, Viêm tai giữa do phế cầu khuẩn' },
+      { age: '3 tháng tuổi', name: 'Vắc xin uống Rotavirus (Rotarix / Rotateq)', disease: 'Phòng bệnh Tiêu chảy cấp do Rotavirus' },
+      { age: '4 tháng tuổi', name: 'Vắc xin 6 trong 1 (Hexaxim / Infanrix Hexa)', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib' },
+      { age: '4 tháng tuổi', name: 'Vắc xin phòng Phế cầu (Synflorix / Prevenar 13)', disease: 'Phòng Viêm phổi, Viêm màng não, Viêm tai giữa do phế cầu khuẩn' },
+      { age: '4 tháng tuổi', name: 'Vắc xin uống Rotavirus (Rotateq)', disease: 'Phòng bệnh Tiêu chảy cấp do Rotavirus' },
+      { age: '6 tháng tuổi', name: 'Vắc xin phòng Cúm mùa', disease: 'Phòng ngừa các chủng cúm A và B theo mùa' },
+      { age: '6 tháng tuổi', name: 'Vắc xin Não mô cầu BC (Mengoc-BC)', disease: 'Phòng Viêm màng não mô cầu tuýp B và C' },
+      { age: '9 tháng tuổi', name: 'Vắc xin Sởi đơn (MVVac)', disease: 'Phòng bệnh Sởi nguy cơ gây biến chứng phổi' },
+      { age: '9 tháng tuổi', name: 'Vắc xin phòng Quai bị - Sởi - Rubella (MMR II / Priorix)', disease: 'Phòng 3 bệnh truyền nhiễm Sởi, Quai bị, Rubella' },
+      { age: '9 tháng tuổi', name: 'Vắc xin phòng Viêm não Nhật Bản (Imojev)', disease: 'Phòng Viêm não Nhật Bản thế hệ mới' },
+      { age: '9 tháng tuổi', name: 'Vắc xin phòng Não mô cầu ACYW (Menactra)', disease: 'Phòng Viêm màng não, nhiễm khuẩn huyết do não mô cầu A, C, Y, W-135' },
+      { age: '12 tháng tuổi', name: 'Vắc xin phòng Thủy đậu (Varilrix / Varivax)', disease: 'Phòng bệnh Thủy đậu (Trái rạ) lây lan mạnh' },
+      { age: '12 tháng tuổi', name: 'Vắc xin phòng Viêm gan A (Avaxim)', disease: 'Phòng bệnh Viêm gan A cấp tính' },
+      { age: '12 tháng tuổi', name: 'Vắc xin phòng Viêm não Nhật Bản (Jevax)', disease: 'Phòng Viêm não Nhật Bản truyền thống' },
+      { age: '18 tháng tuổi', name: 'Vắc xin phối hợp nhắc lại (6 trong 1 hoặc 5 trong 1)', disease: 'Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib' },
+      { age: '24 tháng tuổi', name: 'Vắc xin phòng Thương hàn (Typhim Vi)', disease: 'Phòng bệnh sốt Thương hàn biến chứng ruột' },
+      { age: '24 tháng tuổi', name: 'Vắc xin uống ngừa bệnh Tả (mORCVAX)', disease: 'Phòng dịch bệnh Tả lây lan qua nguồn nước' }
+    ];
+
+    const helperAddMonths = (dStr, mToAdd) => {
+      const d = new Date(dStr);
+      if (isNaN(d.getTime())) return dStr;
+      d.setMonth(d.getMonth() + mToAdd);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    };
+
+    const parseMonths = (ageStr) => {
+      if (ageStr.includes('Sơ sinh')) return 0;
+      const match = ageStr.match(/(\d+)\s*tháng/);
+      return match ? parseInt(match[1]) : 0;
+    };
+
+    if (currentVacs.length === 0) {
+      const newVacs = VACCINE_MASTER_SCHEDULE.map((item, index) => {
+        const m = parseMonths(item.age);
+        const dueDate = helperAddMonths(birthdate, m);
+        return {
+          id: `v_${babyId}_${Date.now()}_${index}`,
+          babyId: babyId,
+          vaccineName: item.name,
+          disease: item.disease,
+          scheduleAge: item.age,
+          dueDate: dueDate,
+          status: 'pending',
+          completedDate: null,
+          note: ''
+        };
+      });
+      database.vaccinations = [...database.vaccinations, ...newVacs];
+    } else {
+      // Cập nhật lại ngày dự kiến của các mũi tiêm hiện có dựa trên ngày sinh mới
+      database.vaccinations.forEach(vac => {
+        if (vac.babyId === babyId) {
+          const m = parseMonths(vac.scheduleAge);
+          vac.dueDate = helperAddMonths(birthdate, m);
+        }
+      });
+    }
+
+    saveDb(database);
+
+    if (IS_SERVER_MODE) {
+      fetch('/api/logs/vaccines/recalculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ babyId, birthdate })
+      }).catch(e => console.error("Lỗi sync Neon recalculate vaccines:", e));
+    }
   },
 
   // Hoạt động của Bé (Bú sữa, Giấc ngủ, Tã)

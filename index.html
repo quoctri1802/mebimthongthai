@@ -231,6 +231,8 @@
       const [activeBaby, setActiveBaby] = useState(null);
       const [showAddBabyModal, setShowAddBabyModal] = useState(false);
       const [newBabyForm, setNewBabyForm] = useState({ name: '', birthdate: '', gender: 'female' });
+      const [showEditBabyModal, setShowEditBabyModal] = useState(false);
+      const [editBabyForm, setEditBabyForm] = useState({ name: '', birthdate: '', gender: 'female' });
       
       // State cho tính năng Lịch Tiêm Chủng (Vaccination Schedule)
       const [vaccineActiveTab, setVaccineActiveTab] = useState('tracker'); // tracker | master
@@ -504,6 +506,17 @@
         setActiveBaby(newB);
         setShowAddBabyModal(false);
         setNewBabyForm({ name: '', birthdate: '', gender: 'female' });
+        setDbState({ ...dbState });
+      };
+
+      const handleEditBaby = (e) => {
+        e.preventDefault();
+        if (!editBabyForm.name.trim() || !editBabyForm.birthdate) return;
+
+        const updatedBaby = dbState.updateBabyProfile(activeBaby.id, editBabyForm);
+        dbState.recalculateVaccinations(activeBaby.id, editBabyForm.birthdate);
+        setActiveBaby(updatedBaby);
+        setShowEditBabyModal(false);
         setDbState({ ...dbState });
       };
 
@@ -1352,7 +1365,20 @@
               </div>
               
               <div className="flex gap-2">
-                <button onClick={() => setShowAddBabyModal(true)} className="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 text-neutral-600 text-xs font-semibold px-4 py-2 rounded-xl">
+                <button 
+                  onClick={() => {
+                    setEditBabyForm({
+                      name: activeBaby.name,
+                      birthdate: activeBaby.birthdate,
+                      gender: activeBaby.gender
+                    });
+                    setShowEditBabyModal(true);
+                  }}
+                  className="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 text-neutral-600 text-xs font-semibold px-4 py-2 rounded-xl transition-all"
+                >
+                  ✏️ Chỉnh sửa thông tin
+                </button>
+                <button onClick={() => setShowAddBabyModal(true)} className="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 text-neutral-600 text-xs font-semibold px-4 py-2 rounded-xl transition-all">
                   ➕ Thêm bé
                 </button>
               </div>
@@ -2026,6 +2052,72 @@
                   </div>
 
                   <button type="submit" className="w-full btn-primary py-3 font-semibold text-sm shadow-md">Đăng ký hồ sơ bé</button>
+                </form>
+              </div>
+            )}
+
+            {/* EDIT BABY MODAL */}
+            {showEditBabyModal && (
+              <div className="fixed inset-0 z-50 bg-neutral-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+                <form onSubmit={handleEditBaby} className="bg-white w-full max-w-sm rounded-3xl p-6 md:p-8 space-y-4 relative shadow-2xl">
+                  <button 
+                    type="button"
+                    onClick={() => setShowEditBabyModal(false)}
+                    className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-700 bg-neutral-100 hover:bg-neutral-200 p-2 rounded-full"
+                  >
+                    ✕
+                  </button>
+                  
+                  <h2 className="font-extrabold text-xl text-neutral-800">Chỉnh sửa hồ sơ Bé</h2>
+                  
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Tên của bé</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={editBabyForm.name}
+                      onChange={(e) => setEditBabyForm({ ...editBabyForm, name: e.target.value })}
+                      placeholder="Ví dụ: Nguyễn Tuệ Lâm"
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm font-sans"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Ngày sinh của bé</label>
+                    <input 
+                      type="date" 
+                      required
+                      value={editBabyForm.birthdate}
+                      onChange={(e) => setEditBabyForm({ ...editBabyForm, birthdate: e.target.value })}
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm font-sans"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Giới tính</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button 
+                        type="button"
+                        onClick={() => setEditBabyForm({ ...editBabyForm, gender: 'female' })}
+                        className={`py-2 rounded-xl text-xs font-semibold border transition-all ${
+                          editBabyForm.gender === 'female' ? 'border-brand-pink-dark text-brand-pink-dark bg-brand-pink-light/40' : 'border-neutral-200 text-neutral-500'
+                        }`}
+                      >
+                        🌸 Bé Gái
+                      </button>
+                      <button 
+                        type="button"
+                        onClick={() => setEditBabyForm({ ...editBabyForm, gender: 'male' })}
+                        className={`py-2 rounded-xl text-xs font-semibold border transition-all ${
+                          editBabyForm.gender === 'male' ? 'border-blue-400 text-blue-500 bg-blue-50/40' : 'border-neutral-200 text-neutral-500'
+                        }`}
+                      >
+                        💎 Bé Trai
+                      </button>
+                    </div>
+                  </div>
+
+                  <button type="submit" className="w-full btn-primary py-3 font-semibold text-sm shadow-md">Lưu thay đổi</button>
                 </form>
               </div>
             )}

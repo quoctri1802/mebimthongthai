@@ -65,6 +65,80 @@ if (process.env.DATABASE_URL) {
   };
 }
 
+// --- HÀM KHỞI TẠO & CẬP NHẬT LỊCH TIÊM CHỦNG BÉ ---
+async function initializeVaccinationsForBaby(babyId, birthdate) {
+  const VACCINE_MASTER_SCHEDULE = [
+    { age: 'Sơ sinh (24h đầu)', name: 'Vắc xin Lao (BCG)', disease: 'Phòng bệnh Lao phổi, Lao màng não' },
+    { age: 'Sơ sinh (24h đầu)', name: 'Vắc xin Viêm gan B (Sơ sinh)', disease: 'Phòng bệnh Viêm gan B lây từ mẹ' },
+    { age: '2 tháng tuổi', name: 'Vắc xin 6 trong 1 (Hexaxim / Infanrix Hexa)', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib' },
+    { age: '2 tháng tuổi', name: 'Vắc xin phòng Phế cầu (Synflorix / Prevenar 13)', disease: 'Phòng Viêm phổi, Viêm màng não, Viêm tai giữa do phế cầu khuẩn' },
+    { age: '2 tháng tuổi', name: 'Vắc xin uống Rotavirus (Rotarix / Rotateq)', disease: 'Phòng bệnh Tiêu chảy cấp do Rotavirus' },
+    { age: '3 tháng tuổi', name: 'Vắc xin 6 trong 1 (Hexaxim / Infanrix Hexa)', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib' },
+    { age: '3 tháng tuổi', name: 'Vắc xin phòng Phế cầu (Synflorix / Prevenar 13)', disease: 'Phòng Viêm phổi, Viêm màng não, Viêm tai giữa do phế cầu khuẩn' },
+    { age: '3 tháng tuổi', name: 'Vắc xin uống Rotavirus (Rotarix / Rotateq)', disease: 'Phòng bệnh Tiêu chảy cấp do Rotavirus' },
+    { age: '4 tháng tuổi', name: 'Vắc xin 6 trong 1 (Hexaxim / Infanrix Hexa)', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib' },
+    { age: '4 tháng tuổi', name: 'Vắc xin phòng Phế cầu (Synflorix / Prevenar 13)', disease: 'Phòng Viêm phổi, Viêm màng não, Viêm tai giữa do phế cầu khuẩn' },
+    { age: '4 tháng tuổi', name: 'Vắc xin uống Rotavirus (Rotateq)', disease: 'Phòng bệnh Tiêu chảy cấp do Rotavirus' },
+    { age: '6 tháng tuổi', name: 'Vắc xin phòng Cúm mùa', disease: 'Phòng ngừa các chủng cúm A và B theo mùa' },
+    { age: '6 tháng tuổi', name: 'Vắc xin Não mô cầu BC (Mengoc-BC)', disease: 'Phòng Viêm màng não mô cầu tuýp B và C' },
+    { age: '9 tháng tuổi', name: 'Vắc xin Sởi đơn (MVVac)', disease: 'Phòng bệnh Sởi nguy cơ gây biến chứng phổi' },
+    { age: '9 tháng tuổi', name: 'Vắc xin phòng Quai bị - Sởi - Rubella (MMR II / Priorix)', disease: 'Phòng 3 bệnh truyền nhiễm Sởi, Quai bị, Rubella' },
+    { age: '9 tháng tuổi', name: 'Vắc xin phòng Viêm não Nhật Bản (Imojev)', disease: 'Phòng Viêm não Nhật Bản thế hệ mới' },
+    { age: '9 tháng tuổi', name: 'Vắc xin phòng Não mô cầu ACYW (Menactra)', disease: 'Phòng Viêm màng não, nhiễm khuẩn huyết do não mô cầu A, C, Y, W-135' },
+    { age: '12 tháng tuổi', name: 'Vắc xin phòng Thủy đậu (Varilrix / Varivax)', disease: 'Phòng bệnh Thủy đậu (Trái rạ) lây lan mạnh' },
+    { age: '12 tháng tuổi', name: 'Vắc xin phòng Viêm gan A (Avaxim)', disease: 'Phòng bệnh Viêm gan A cấp tính' },
+    { age: '12 tháng tuổi', name: 'Vắc xin phòng Viêm não Nhật Bản (Jevax)', disease: 'Phòng Viêm não Nhật Bản truyền thống' },
+    { age: '18 tháng tuổi', name: 'Vắc xin phối hợp nhắc lại (6 trong 1 hoặc 5 trong 1)', disease: 'Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib' },
+    { age: '24 tháng tuổi', name: 'Vắc xin phòng Thương hàn (Typhim Vi)', disease: 'Phòng bệnh sốt Thương hàn biến chứng ruột' },
+    { age: '24 tháng tuổi', name: 'Vắc xin uống ngừa bệnh Tả (mORCVAX)', disease: 'Phòng dịch bệnh Tả lây lan qua nguồn nước' }
+  ];
+
+  const helperAddMonths = (dStr, mToAdd) => {
+    const d = new Date(dStr);
+    if (isNaN(d.getTime())) return dStr;
+    d.setMonth(d.getMonth() + mToAdd);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  };
+
+  const parseMonths = (ageStr) => {
+    if (ageStr.includes('Sơ sinh')) return 0;
+    const match = ageStr.match(/(\d+)\s*tháng/);
+    return match ? parseInt(match[1]) : 0;
+  };
+
+  try {
+    const existingVacs = await pool.query('SELECT * FROM vaccinations WHERE baby_id = $1', [babyId]);
+
+    if (existingVacs.rows.length === 0) {
+      for (let i = 0; i < VACCINE_MASTER_SCHEDULE.length; i++) {
+        const item = VACCINE_MASTER_SCHEDULE[i];
+        const m = parseMonths(item.age);
+        const dueDate = helperAddMonths(birthdate, m);
+        const vacId = `v_${babyId}_${Date.now()}_${i}`;
+
+        await pool.query(
+          `INSERT INTO vaccinations (id, baby_id, vaccine_name, disease, schedule_age, due_date, status, completed_date, note)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`,
+          [vacId, babyId, item.name, item.disease, item.age, dueDate, 'pending', null, '']
+        );
+      }
+    } else {
+      for (const vac of existingVacs.rows) {
+        const m = parseMonths(vac.schedule_age);
+        const newDueDate = helperAddMonths(birthdate, m);
+        await pool.query(
+          `UPDATE vaccinations 
+           SET due_date = $1 
+           WHERE id = $2;`,
+          [newDueDate, vac.id]
+        );
+      }
+    }
+  } catch (e) {
+    console.error("Lỗi khởi tạo lịch tiêm chủng backend:", e.message);
+  }
+}
+
 // --- API HỆ THỐNG ---
 
 const JWT_SECRET = process.env.JWT_SECRET || 'mebimthongthai_secret_key_2026';
@@ -132,6 +206,9 @@ app.post('/api/users/register', async (req, res) => {
        VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
       [babyId, userId, babyName, birthdate, gender]
     );
+
+    // Khởi tạo lịch tiêm chủng dựa trên ngày sinh cho em bé mặc định
+    await initializeVaccinationsForBaby(babyId, birthdate);
 
     // Tạo token JWT
     const token = jwt.sign(
@@ -362,9 +439,9 @@ app.get('/api/babies', async (req, res) => {
 });
 
 app.post('/api/babies', async (req, res) => {
-  const { name, birthdate, gender } = req.body;
-  const id = 'baby_' + Date.now();
-  const parentId = 'user_01';
+  const { id, parentId, name, birthdate, gender } = req.body;
+  const babyId = id || 'baby_' + Date.now();
+  const parent = parentId || 'user_01';
 
   try {
     const query = `
@@ -372,9 +449,47 @@ app.post('/api/babies', async (req, res) => {
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
     `;
-    const values = [id, parentId, name, birthdate, gender];
+    const values = [babyId, parent, name, birthdate, gender];
     const result = await pool.query(query, values);
+    
+    // Tự động khởi tạo lịch tiêm chủng mới vào DB cho bé này
+    await initializeVaccinationsForBaby(babyId, birthdate);
+
     res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/api/babies/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, birthdate, gender } = req.body;
+
+  try {
+    const query = `
+      UPDATE baby_profiles 
+      SET name = $1, birthdate = $2, gender = $3 
+      WHERE id = $4 
+      RETURNING *;
+    `;
+    const values = [name, birthdate, gender, id];
+    const result = await pool.query(query, values);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Không tìm thấy thông tin bé' });
+    }
+    
+    res.json({ success: true, baby: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/logs/vaccines/recalculate', async (req, res) => {
+  const { babyId, birthdate } = req.body;
+
+  try {
+    await initializeVaccinationsForBaby(babyId, birthdate);
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
