@@ -98,6 +98,114 @@ app.post('/api/admin/login', async (req, res) => {
   }
 });
 
+app.post('/api/users/register', async (req, res) => {
+  const { emailOrPhone, password, name } = req.body;
+
+  try {
+    const existing = await pool.query('SELECT * FROM users WHERE email_or_phone = $1', [emailOrPhone]);
+    if (existing.rows.length > 0) {
+      return res.status(400).json({ error: 'Tài khoản này đã tồn tại trong hệ thống!' });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    const userId = 'user_' + Date.now();
+    const nickname = name; // Sử dụng tên làm nickname mặc định
+    const avatar = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80'; // Avatar mặc định
+    const badge = 'Mẹ Mới';
+    const points = 0;
+
+    // Chèn người dùng mới
+    await pool.query(
+      `INSERT INTO users (id, email_or_phone, password_hash, name, nickname, avatar, badge, points)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`,
+      [userId, emailOrPhone, passwordHash, name, nickname, avatar, badge, points]
+    );
+
+    // Tự động tạo em bé mặc định cho tài khoản mới
+    const babyId = 'baby_' + Date.now();
+    const babyName = 'Bé của ' + nickname;
+    const birthdate = '2026-02-15';
+    const gender = 'female';
+
+    const babyResult = await pool.query(
+      `INSERT INTO baby_profiles (id, parent_id, name, birthdate, gender)
+       VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
+      [babyId, userId, babyName, birthdate, gender]
+    );
+
+    // Tạo token JWT
+    const token = jwt.sign(
+      { id: userId, emailOrPhone: emailOrPhone, role: 'user' },
+      JWT_SECRET,
+      { expiresIn: '30d' }
+    );
+
+    res.json({
+      success: true,
+      token,
+      user: {
+        id: userId,
+        name,
+        nickname,
+        avatar,
+        badge,
+        points,
+        babyId
+      },
+      baby: babyResult.rows[0]
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Lỗi server đăng ký: ' + err.message });
+  }
+});
+
+app.post('/api/users/login', async (req, res) => {
+  const { emailOrPhone, password } = req.body;
+
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE email_or_phone = $1', [emailOrPhone]);
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: 'Tài khoản hoặc mật khẩu không chính xác' });
+    }
+
+    const user = result.rows[0];
+    const isMatch = await bcrypt.compare(password, user.password_hash);
+    
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Tài khoản hoặc mật khẩu không chính xác' });
+    }
+
+    // Lấy thông tin các bé của tài khoản này
+    const babiesRes = await pool.query('SELECT * FROM baby_profiles WHERE parent_id = $1', [user.id]);
+    const baby = babiesRes.rows[0] || null;
+    const babyId = baby ? baby.id : null;
+
+    // Tạo token JWT
+    const token = jwt.sign(
+      { id: user.id, emailOrPhone: user.email_or_phone, role: 'user' },
+      JWT_SECRET,
+      { expiresIn: '30d' }
+    );
+
+    res.json({
+      success: true,
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        nickname: user.nickname,
+        avatar: user.avatar,
+        badge: user.badge,
+        points: user.points,
+        babyId
+      },
+      babies: babiesRes.rows
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Lỗi server đăng nhập: ' + err.message });
+  }
+});
+
 app.get('/api/status', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
@@ -382,6 +490,18 @@ async function initializeDatabaseSchema() {
   try {
     // 1. Tạo các bảng cơ sở dữ liệu
     await pool.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id TEXT PRIMARY KEY,
+        email_or_phone TEXT UNIQUE NOT NULL,
+        password_hash TEXT NOT NULL,
+        name TEXT NOT NULL,
+        nickname TEXT,
+        avatar TEXT,
+        badge TEXT DEFAULT 'Mẹ Mới',
+        points INT DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
       CREATE TABLE IF NOT EXISTS admins (
         id SERIAL PRIMARY KEY,
         email TEXT UNIQUE NOT NULL,

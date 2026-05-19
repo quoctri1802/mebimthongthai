@@ -1031,7 +1031,14 @@
                 <p className="text-neutral-500 text-sm mt-0.5">Nơi chia sẻ tâm sự, kinh nghiệm thực tế & giải đáp cùng các chuyên gia y tế</p>
               </div>
               <button 
-                onClick={() => setShowNewPostModal(true)} 
+                onClick={() => {
+                  if (!currentUser) {
+                    alert("Mẹ ơi, vui lòng đăng nhập trước khi chia sẻ câu hỏi hoặc tâm sự nhé!");
+                    setCurrentTab('login');
+                    return;
+                  }
+                  setShowNewPostModal(true);
+                }} 
                 className="btn-primary px-6 py-3 font-semibold flex items-center gap-1 shadow-md hover:scale-105 transform transition-all text-sm"
               >
                 ➕ Đặt Câu Hỏi / Tâm Sự
@@ -1216,17 +1223,24 @@
                       )}
                     </div>
 
-                    {/* Add comment form */}
-                    <form onSubmit={handleAddComment} className="flex gap-2">
-                      <input 
-                        type="text" 
-                        value={commentContent}
-                        onChange={(e) => setCommentContent(e.target.value)}
-                        placeholder="Lời khuyên hay động viên gửi tới mẹ..."
-                        className="flex-grow bg-neutral-50 border border-neutral-200 focus:border-brand-pink-pastel outline-none px-4 py-2.5 rounded-xl text-sm"
-                      />
-                      <button type="submit" className="btn-primary px-6 py-2.5 font-semibold text-sm">Gửi</button>
-                    </form>
+                     {/* Add comment form */}
+                    {currentUser ? (
+                      <form onSubmit={handleAddComment} className="flex gap-2">
+                        <input 
+                          type="text" 
+                          value={commentContent}
+                          onChange={(e) => setCommentContent(e.target.value)}
+                          placeholder="Lời khuyên hay động viên gửi tới mẹ..."
+                          className="flex-grow bg-neutral-50 border border-neutral-200 focus:border-brand-pink-pastel outline-none px-4 py-2.5 rounded-xl text-sm"
+                          required
+                        />
+                        <button type="submit" className="btn-primary px-6 py-2.5 font-semibold text-sm">Gửi</button>
+                      </form>
+                    ) : (
+                      <div className="p-4 bg-neutral-50 rounded-2xl text-center text-xs text-neutral-500 border border-dashed border-neutral-200">
+                        Mẹ ơi, hãy <button onClick={() => { setActivePost(null); setCurrentTab('login'); }} className="text-brand-pink-dark font-bold hover:underline">Đăng nhập</button> để gửi lời khuyên/bình luận nhé!
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1292,6 +1306,19 @@
       };
 
       const renderTools = () => {
+        if (!currentUser) {
+          return (
+            <div className="fade-in max-w-xl mx-auto p-8 soft-card text-center bg-white space-y-4">
+              <p className="text-lg font-bold">Mẹ ơi, vui lòng đăng nhập trước nhé!</p>
+              <p className="text-sm text-neutral-400">Đăng nhập tài khoản giúp lưu nhật ký chăm sóc bé và đồng bộ dữ liệu an toàn lên đám mây Neon.</p>
+              <div className="flex justify-center gap-4 pt-2">
+                <button onClick={() => setCurrentTab('login')} className="btn-primary px-6 py-2.5 font-semibold text-sm">🔑 Đăng nhập</button>
+                <button onClick={() => setCurrentTab('register')} className="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 text-neutral-600 text-sm font-semibold px-6 py-2.5 rounded-xl">📝 Đăng ký tài khoản</button>
+              </div>
+            </div>
+          );
+        }
+
         if (!activeBaby) {
           return (
             <div className="fade-in max-w-xl mx-auto p-8 soft-card text-center bg-white space-y-4">
@@ -2502,17 +2529,67 @@
         );
       };
 
-      // --- RENDER AUTHENTICATION (LOGIN / REGISTER) ---
-      const renderAuth = (type) => {
+      // --- AUTHENTICATION COMPONENT ---
+      const AuthForm = ({ type, setCurrentTab, setDbState, setActiveBaby }) => {
         const isLogin = type === 'login';
-        
-        const handleAuthSubmit = (e) => {
+        const [emailOrPhone, setEmailOrPhone] = useState('');
+        const [password, setPassword] = useState('');
+        const [name, setName] = useState('');
+        const [errorMsg, setErrorMsg] = useState('');
+        const [loading, setLoading] = useState(false);
+
+        const handleAuthSubmit = async (e) => {
           e.preventDefault();
-          // Demo: Giả lập đăng nhập thành công bằng user mẫu đầu tiên
-          const sampleUser = window.parentingDb.getUsers()[0];
-          window.parentingDb.setCurrentUser(sampleUser);
-          alert(isLogin ? 'Đăng nhập thành công! Chào mừng Mẹ Bông.' : 'Đăng ký thành công! Đã tự động đăng nhập.');
-          window.location.reload();
+          setErrorMsg('');
+          setLoading(true);
+
+          try {
+            const url = isLogin ? '/api/users/login' : '/api/users/register';
+            const body = isLogin 
+              ? { emailOrPhone, password }
+              : { emailOrPhone, password, name };
+
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(body)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+              throw new Error(data.error || 'Có lỗi xảy ra, vui lòng thử lại!');
+            }
+
+            // Đăng nhập/Đăng ký thành công
+            if (data.token) {
+              localStorage.setItem('user_token', data.token);
+            }
+            
+            // Cập nhật currentUser trong db engine
+            window.parentingDb.setCurrentUser(data.user);
+            
+            // Đồng bộ bé
+            const babies = isLogin ? (data.babies || []) : [data.baby];
+            const database = window.parentingDb.getDb ? window.parentingDb.getDb() : null;
+            if (database) {
+              database.babyProfiles = babies;
+              window.parentingDb.saveDb(database);
+            }
+            
+            const activeB = babies[0] || null;
+            setActiveBaby(activeB);
+            setDbState({ ...window.parentingDb });
+            
+            alert(isLogin ? `Chào mừng quay trở lại, ${data.user.nickname || data.user.name}! Đăng nhập thành công.` : 'Đăng ký tài khoản thành công! Em bé mặc định đã được thiết lập.');
+            
+            // Quay về trang chủ
+            setCurrentTab('home');
+          } catch (err) {
+            setErrorMsg(err.message);
+          } finally {
+            setLoading(false);
+          }
         };
 
         return (
@@ -2535,26 +2612,60 @@
                   </p>
                 </div>
 
+                {errorMsg && (
+                  <div className="p-3 bg-red-50 text-red-600 text-xs rounded-xl font-bold text-center border border-red-200 fade-in">
+                    ⚠️ {errorMsg}
+                  </div>
+                )}
+
                 <form onSubmit={handleAuthSubmit} className="space-y-4 text-left">
                   {!isLogin && (
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-neutral-700 ml-1">Tên của mẹ</label>
-                      <input type="text" placeholder="VD: Mẹ Bông" className="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200 rounded-xl text-sm focus:bg-white focus:border-brand-pink-pastel focus:ring-4 focus:ring-brand-pink-pastel/10 outline-none transition-all" required />
+                      <input 
+                        type="text" 
+                        placeholder="VD: Mẹ Bông" 
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200 rounded-xl text-sm focus:bg-white focus:border-brand-pink-pastel focus:ring-4 focus:ring-brand-pink-pastel/10 outline-none transition-all" 
+                        required 
+                      />
                     </div>
                   )}
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-neutral-700 ml-1">Email / Số điện thoại</label>
-                    <input type="text" placeholder="Nhập email hoặc số điện thoại..." className="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200 rounded-xl text-sm focus:bg-white focus:border-brand-pink-pastel focus:ring-4 focus:ring-brand-pink-pastel/10 outline-none transition-all" required />
+                    <input 
+                      type="text" 
+                      placeholder="Nhập email hoặc số điện thoại..." 
+                      value={emailOrPhone}
+                      onChange={(e) => setEmailOrPhone(e.target.value)}
+                      className="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200 rounded-xl text-sm focus:bg-white focus:border-brand-pink-pastel focus:ring-4 focus:ring-brand-pink-pastel/10 outline-none transition-all" 
+                      required 
+                    />
                   </div>
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between ml-1">
                       <label className="text-xs font-bold text-neutral-700">Mật khẩu</label>
                       {isLogin && <a href="#" className="text-xs text-brand-pink-dark font-semibold hover:underline">Quên mật khẩu?</a>}
                     </div>
-                    <input type="password" placeholder="••••••••" className="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200 rounded-xl text-sm focus:bg-white focus:border-brand-pink-pastel focus:ring-4 focus:ring-brand-pink-pastel/10 outline-none transition-all" required />
+                    <input 
+                      type="password" 
+                      placeholder="••••••••" 
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200 rounded-xl text-sm focus:bg-white focus:border-brand-pink-pastel focus:ring-4 focus:ring-brand-pink-pastel/10 outline-none transition-all" 
+                      required 
+                    />
                   </div>
 
-                  <button type="submit" className="w-full py-3.5 bg-brand-pink-dark hover:bg-brand-pink-dark/90 text-white font-bold rounded-xl shadow-lg shadow-brand-pink-dark/20 transform hover:-translate-y-0.5 transition-all mt-2">
+                  <button 
+                    type="submit" 
+                    disabled={loading}
+                    className={`w-full py-3.5 bg-brand-pink-dark hover:bg-brand-pink-dark/90 text-white font-bold rounded-xl shadow-lg shadow-brand-pink-dark/20 transform hover:-translate-y-0.5 transition-all mt-2 flex items-center justify-center gap-2 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  >
+                    {loading ? (
+                      <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    ) : null}
                     {isLogin ? 'Đăng nhập' : 'Đăng ký tài khoản'}
                   </button>
                 </form>
@@ -2778,8 +2889,8 @@
 
           {/* MAIN BODY LAYOUT */}
           <main className="flex-grow max-w-7xl mx-auto px-4 md:px-6 py-8 w-full">
-            {currentTab === 'login' && renderAuth('login')}
-            {currentTab === 'register' && renderAuth('register')}
+            {currentTab === 'login' && <AuthForm type="login" setCurrentTab={setCurrentTab} setDbState={setDbState} setActiveBaby={setActiveBaby} />}
+            {currentTab === 'register' && <AuthForm type="register" setCurrentTab={setCurrentTab} setDbState={setDbState} setActiveBaby={setActiveBaby} />}
             {currentTab === 'home' && renderHome()}
             {currentTab === 'articles' && renderArticles()}
             {currentTab === 'article-detail' && renderArticleDetail()}

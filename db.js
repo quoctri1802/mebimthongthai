@@ -8,16 +8,7 @@ const STORAGE_KEY = 'ME_BIM_THONG_THAI_DB';
 // Dữ liệu mẫu ban đầu để khởi tạo cơ sở dữ liệu nếu chưa có
 const INITIAL_DATABASE = {
   // 1. Hệ thống người dùng & Hồ sơ thành viên
-  currentUser: {
-    id: 'user_01',
-    name: 'Nguyễn Thị Mai',
-    nickname: 'Mẹ Bông',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
-    badge: 'Mẹ Siêu Chăm',
-    points: 340,
-    role: 'user', // user | admin
-    babyId: 'baby_01'
-  },
+  currentUser: null,
   
   users: [
     { id: 'user_01', name: 'Nguyễn Thị Mai', nickname: 'Mẹ Bông', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80', badge: 'Mẹ Siêu Chăm', points: 340, role: 'user' },
@@ -886,7 +877,7 @@ function saveDb(db) {
 }
 
 // APIs xuất khẩu cho việc thao tác CSDL
-const IS_SERVER_MODE = typeof window !== 'undefined' && (window.location.port === '3000' || window.location.origin.includes('localhost:3000'));
+const IS_SERVER_MODE = typeof window !== 'undefined';
 
 export const db = {
   // Đồng bộ đám mây Neon Postgres hoặc LocalStorage
