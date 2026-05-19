@@ -21,29 +21,49 @@ app.use(express.json());
 // Phục vụ file tĩnh từ thư mục hiện tại (index.html, db.js, ai.js, styles.css)
 app.use(express.static(path.join(__dirname)));
 
-// Khởi tạo Connection Pool tới Neon Postgres
-const dbUrl = process.env.DATABASE_URL.includes('?') 
-  ? process.env.DATABASE_URL + '&sslmode=require' 
-  : process.env.DATABASE_URL + '?sslmode=require';
+// Khởi tạo Connection Pool tới Neon Postgres hoặc sử dụng Mock Pool nếu thiếu cấu hình
+let pool;
+if (process.env.DATABASE_URL) {
+  const dbUrl = process.env.DATABASE_URL.includes('?') 
+    ? process.env.DATABASE_URL + '&sslmode=require' 
+    : process.env.DATABASE_URL + '?sslmode=require';
 
-const pool = new Pool({
-  connectionString: dbUrl,
-  ssl: {
-    rejectUnauthorized: false // Yêu cầu bảo mật SSL của Neon
-  }
-});
+  pool = new Pool({
+    connectionString: dbUrl,
+    ssl: {
+      rejectUnauthorized: false // Yêu cầu bảo mật SSL của Neon
+    }
+  });
 
-// Kiểm tra kết nối đám mây Neon
-pool.connect((err, client, release) => {
-  if (err) {
-    console.error('❌ Lỗi kết nối đám mây Neon Postgres:', err.message);
-    console.log('⚠️  Hệ thống sẽ chạy ở chế độ LOCAL-ONLY.');
-  } else {
-    console.log('🟢 Đã kết nối thành công tới đám mây Neon Serverless Postgres!');
-    release();
-    initializeDatabaseSchema(); // Tự động khởi tạo schema khi khởi chạy thành công
-  }
-});
+  // Kiểm tra kết nối đám mây Neon
+  pool.connect((err, client, release) => {
+    if (err) {
+      console.error('❌ Lỗi kết nối đám mây Neon Postgres:', err.message);
+      console.log('⚠️  Hệ thống sẽ chạy ở chế độ LOCAL-ONLY.');
+    } else {
+      console.log('🟢 Đã kết nối thành công tới đám mây Neon Serverless Postgres!');
+      release();
+      initializeDatabaseSchema(); // Tự động khởi tạo schema khi khởi chạy thành công
+    }
+  });
+} else {
+  console.warn('⚠️  DATABASE_URL không được định nghĩa trong Environment Variables!');
+  console.log('⚠️  Hệ thống chạy ở chế độ LOCAL-ONLY (Mock Database).');
+  
+  // Mock Pool để tránh crash lỗi runtime khi deploy hoặc chạy thiếu biến môi trường
+  pool = {
+    query: async (text, params) => {
+      console.warn('⚠️  Truy vấn bị bỏ qua vì DATABASE_URL chưa được cấu hình:', text);
+      if (text.trim().toUpperCase().includes('SELECT COUNT')) {
+        return { rows: [{ count: '0' }] };
+      }
+      return { rows: [] };
+    },
+    connect: (cb) => {
+      cb(new Error('DATABASE_URL is not configured'), null, () => {});
+    }
+  };
+}
 
 // --- API HỆ THỐNG ---
 
@@ -345,10 +365,12 @@ app.post('/api/logs/:type', async (req, res) => {
   }
 });
 
-// Khởi chạy server lắng nghe kết nối
-app.listen(PORT, () => {
-  console.log(`🚀 Máy chủ Mẹ Bỉm Thông Thái đang chạy tại: http://localhost:${PORT}`);
-});
+// Khởi chạy server lắng nghe kết nối nếu không phải môi trường serverless Vercel
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Máy chủ Mẹ Bỉm Thông Thái đang chạy tại: http://localhost:${PORT}`);
+  });
+}
 
 // --- HÀM TỰ ĐỘNG KHỞI TẠO BẢNG DDL ---
 async function initializeDatabaseSchema() {
@@ -546,3 +568,5 @@ async function initializeDatabaseSchema() {
     console.error('❌ Lỗi khởi tạo cấu trúc bảng trên Neon Postgres:', err.message);
   }
 }
+
+module.exports = app;
