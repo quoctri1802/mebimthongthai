@@ -1,5 +1,5 @@
 /**
- * Mẹ Bỉm Thông Thái - Node.js Backend Server (server.js)
+ * Mẹ Bỉm Thông Thái - Node.js Backend Server (api/index.js)
  * Cổng kết nối bảo mật tới Neon serverless Postgres đám mây với cơ chế tự khởi tạo DDL.
  */
 
@@ -18,8 +18,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Phục vụ file tĩnh từ thư mục hiện tại (index.html, db.js, ai.js, styles.css)
-app.use(express.static(path.join(__dirname)));
+// Phục vụ file tĩnh từ thư mục cha (Root Folder) khi chạy phát triển cục bộ
+app.use(express.static(path.join(__dirname, '..')));
 
 // Khởi tạo Connection Pool tới Neon Postgres hoặc sử dụng Mock Pool nếu thiếu cấu hình
 let pool;
