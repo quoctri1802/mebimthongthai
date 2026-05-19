@@ -2901,11 +2901,23 @@
 
               {/* User Avatar dropdown */}
               {currentUser ? (
-                <div className="hidden md:flex items-center gap-2.5 pl-3 border-l border-neutral-150 flex-shrink-0 relative group cursor-pointer">
-                  <img src={currentUser.avatar} alt="User avatar" className="w-9 h-9 rounded-full object-cover border border-brand-pink-pastel shadow-sm" />
-                  <div className="text-left text-xs">
-                    <p className="font-bold text-neutral-800">{currentUser.nickname}</p>
-                    <p className="text-[10px] text-neutral-400">{currentUser.badge} • 🏆 {currentUser.points} đ</p>
+                <div className="hidden md:flex items-center gap-3 pl-3 border-l border-neutral-150 flex-shrink-0 relative group cursor-pointer py-1">
+                  <div className="relative">
+                    <div className="absolute -inset-0.5 rounded-full bg-gradient-to-tr from-brand-pink-dark via-brand-pink-pastel to-amber-300 animate-pulse opacity-40 blur-[1px]"></div>
+                    <img 
+                      src={currentUser.avatar} 
+                      alt="User avatar" 
+                      className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-md relative z-10 hover:scale-105 transition-all duration-300" 
+                    />
+                    <span className="absolute -bottom-1 -right-1 z-20 w-5 h-5 bg-white border border-brand-pink-pastel/30 rounded-full flex items-center justify-center text-[10px] shadow-sm animate-bounce duration-1000">
+                      {currentUser.role === 'admin' ? '🛡️' : '🌸'}
+                    </span>
+                  </div>
+                  <div className="text-left text-xs z-10">
+                    <p className="font-extrabold text-neutral-800 flex items-center gap-1 group-hover:text-brand-pink-dark transition-all">
+                      {currentUser.nickname}
+                    </p>
+                    <p className="text-[10px] text-neutral-400 font-semibold mt-0.5">{currentUser.badge} • 🏆 {currentUser.points} đ</p>
                   </div>
 
                   {/* Logout Menu Popup */}
@@ -2972,12 +2984,22 @@
 
               {/* User summary in drawer */}
               {currentUser ? (
-                <div className="flex flex-col gap-2 p-3 bg-neutral-50 rounded-xl border border-neutral-100 mt-2">
+                <div className="flex flex-col gap-3 p-4 bg-gradient-to-br from-brand-pink-light/35 to-amber-50/20 rounded-3xl border border-brand-pink-light/30 mt-3 shadow-inner">
                   <div className="flex items-center gap-3">
-                    <img src={currentUser.avatar} alt="User avatar" className="w-10 h-10 rounded-full object-cover" />
+                    <div className="relative">
+                      <div className="absolute -inset-0.5 rounded-full bg-gradient-to-tr from-brand-pink-dark to-amber-300 opacity-30 blur-[0.5px]"></div>
+                      <img 
+                        src={currentUser.avatar} 
+                        alt="User avatar" 
+                        className="w-12 h-12 rounded-full object-cover border-2 border-white shadow relative z-10" 
+                      />
+                      <span className="absolute -bottom-1 -right-1 z-20 w-5 h-5 bg-white border border-brand-pink-pastel/30 rounded-full flex items-center justify-center text-[10px] shadow-sm animate-bounce">
+                        {currentUser.role === 'admin' ? '🛡️' : '🌸'}
+                      </span>
+                    </div>
                     <div className="text-left flex-grow">
-                      <p className="font-bold text-neutral-800 text-sm">{currentUser.nickname}</p>
-                      <p className="text-xs text-neutral-400">{currentUser.badge} • 🏆 {currentUser.points} điểm</p>
+                      <p className="font-extrabold text-neutral-800 text-sm">{currentUser.nickname}</p>
+                      <p className="text-xs text-neutral-400 font-semibold mt-0.5">{currentUser.badge} • 🏆 {currentUser.points} điểm</p>
                     </div>
                   </div>
                   <button 
