@@ -1,0 +1,548 @@
+/**
+ * Mẹ Bỉm Thông Thái - Node.js Backend Server (server.js)
+ * Cổng kết nối bảo mật tới Neon serverless Postgres đám mây với cơ chế tự khởi tạo DDL.
+ */
+
+const express = require('express');
+const cors = require('cors');
+const { Pool } = require('pg');
+const path = require('path');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Cấu hình Middleware
+app.use(cors());
+app.use(express.json());
+
+// Phục vụ file tĩnh từ thư mục hiện tại (index.html, db.js, ai.js, styles.css)
+app.use(express.static(path.join(__dirname)));
+
+// Khởi tạo Connection Pool tới Neon Postgres
+const dbUrl = process.env.DATABASE_URL.includes('?') 
+  ? process.env.DATABASE_URL + '&sslmode=require' 
+  : process.env.DATABASE_URL + '?sslmode=require';
+
+const pool = new Pool({
+  connectionString: dbUrl,
+  ssl: {
+    rejectUnauthorized: false // Yêu cầu bảo mật SSL của Neon
+  }
+});
+
+// Kiểm tra kết nối đám mây Neon
+pool.connect((err, client, release) => {
+  if (err) {
+    console.error('❌ Lỗi kết nối đám mây Neon Postgres:', err.message);
+    console.log('⚠️  Hệ thống sẽ chạy ở chế độ LOCAL-ONLY.');
+  } else {
+    console.log('🟢 Đã kết nối thành công tới đám mây Neon Serverless Postgres!');
+    release();
+    initializeDatabaseSchema(); // Tự động khởi tạo schema khi khởi chạy thành công
+  }
+});
+
+// --- API HỆ THỐNG ---
+
+const JWT_SECRET = process.env.JWT_SECRET || 'mebimthongthai_secret_key_2026';
+
+app.post('/api/admin/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const result = await pool.query('SELECT * FROM admins WHERE email = $1', [email]);
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: 'Email hoặc mật khẩu không chính xác' });
+    }
+
+    const admin = result.rows[0];
+    const isMatch = await bcrypt.compare(password, admin.password_hash);
+    
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Email hoặc mật khẩu không chính xác' });
+    }
+
+    // Tạo token JWT
+    const token = jwt.sign(
+      { id: admin.id, email: admin.email, role: 'admin' },
+      JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    res.json({ success: true, token, admin: { id: admin.id, email: admin.email, name: admin.name } });
+  } catch (err) {
+    res.status(500).json({ error: 'Lỗi server: ' + err.message });
+  }
+});
+
+app.get('/api/status', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({ status: 'connected', provider: 'neon', dbTime: result.rows[0].now });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: err.message });
+  }
+});
+
+// --- API ARTICLE (CRUD) ---
+app.get('/api/articles', async (req, res) => {
+  try {
+
+    const result = await pool.query('SELECT * FROM articles ORDER BY created_at DESC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/articles', async (req, res) => {
+  const { title, category, subCategory, tags, summary, content, image, faqs } = req.body;
+  const id = 'art_' + Date.now();
+  const author = 'Dr. Hải Anh';
+  const createdAt = new Date().toISOString().split('T')[0];
+
+  try {
+    const query = `
+      INSERT INTO articles (id, title, category, sub_category, tags, summary, content, image, views, likes, created_at, author, faqs)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+      RETURNING *;
+    `;
+    const values = [id, title, category, subCategory, tags.join(','), summary, content, image, 0, 0, createdAt, author, JSON.stringify(faqs)];
+    const result = await pool.query(query, values);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/api/articles/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, category, subCategory, tags, summary, content, image, faqs } = req.body;
+
+  try {
+    const query = `
+      UPDATE articles 
+      SET title = $1, category = $2, sub_category = $3, tags = $4, summary = $5, content = $6, image = $7, faqs = $8
+      WHERE id = $9
+      RETURNING *;
+    `;
+    const values = [title, category, subCategory, tags.join(','), summary, content, image, JSON.stringify(faqs), id];
+    const result = await pool.query(query, values);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Không tìm thấy bài viết' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/articles/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query('DELETE FROM articles WHERE id = $1 RETURNING *', [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Không tìm thấy bài viết' });
+    }
+    res.json({ success: true, deleted: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- API FORUM POSTS ---
+app.get('/api/posts', async (req, res) => {
+  try {
+
+    const result = await pool.query('SELECT * FROM posts ORDER BY created_at DESC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/posts', async (req, res) => {
+  const { title, content, isAnonymous, tags, author_nickname, author_avatar, author_badge } = req.body;
+  const id = 'post_' + Date.now();
+  const createdAt = new Date().toISOString();
+
+  try {
+    const query = `
+      INSERT INTO posts (id, title, content, author_nickname, author_avatar, author_badge, tags, upvotes, helpful_count, heart_count, created_at, is_anonymous)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      RETURNING *;
+    `;
+    const values = [id, title, content, author_nickname, author_avatar, author_badge, tags.join(','), 1, 0, 0, createdAt, isAnonymous];
+    const result = await pool.query(query, values);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/posts/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM comments WHERE post_id = $1', [id]);
+    const result = await pool.query('DELETE FROM posts WHERE id = $1 RETURNING *', [id]);
+    res.json({ success: true, deleted: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- API COMMENTS ---
+app.get('/api/comments', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM comments ORDER BY created_at ASC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/comments', async (req, res) => {
+  const { postId, content, author_nickname, author_avatar, author_badge } = req.body;
+  const id = 'c_' + Date.now();
+  const createdAt = new Date().toISOString();
+
+  try {
+    const query = `
+      INSERT INTO comments (id, post_id, content, author_nickname, author_avatar, author_badge, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *;
+    `;
+    const values = [id, postId, content, author_nickname, author_avatar, author_badge, createdAt];
+    const result = await pool.query(query, values);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- API BABY PROFILE ---
+app.get('/api/babies', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM baby_profiles');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/babies', async (req, res) => {
+  const { name, birthdate, gender } = req.body;
+  const id = 'baby_' + Date.now();
+  const parentId = 'user_01';
+
+  try {
+    const query = `
+      INSERT INTO baby_profiles (id, parent_id, name, birthdate, gender)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *;
+    `;
+    const values = [id, parentId, name, birthdate, gender];
+    const result = await pool.query(query, values);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- API TRACKING LOGS (FEEDING, SLEEP, DIAPER, GROWTH, VACCINE) ---
+app.get('/api/logs/:type', async (req, res) => {
+  const { type } = req.params;
+  try {
+    let tableName = '';
+    if (type === 'feeding') tableName = 'feeding_logs';
+    else if (type === 'sleep') tableName = 'sleep_logs';
+    else if (type === 'diaper') tableName = 'diaper_logs';
+    else if (type === 'growth') tableName = 'growth_tracking';
+    else if (type === 'vaccine') tableName = 'vaccinations';
+    else return res.status(400).json({ error: 'Loại nhật ký không hợp lệ' });
+
+    const result = await pool.query(`SELECT * FROM ${tableName}`);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/logs/:type', async (req, res) => {
+  const { type } = req.params;
+  const data = req.body;
+
+  try {
+    if (type === 'feeding') {
+      const id = 'f_' + Date.now();
+      const query = `
+        INSERT INTO feeding_logs (id, baby_id, type, time, amount, duration, note)
+        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
+      `;
+      const values = [id, data.babyId, data.type, data.time, data.amount, data.duration, data.note];
+      const result = await pool.query(query, values);
+      return res.json(result.rows[0]);
+    } 
+    
+    if (type === 'sleep') {
+      const id = 's_' + Date.now();
+      const query = `
+        INSERT INTO sleep_logs (id, baby_id, start_time, end_time, duration, quality, note)
+        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
+      `;
+      const values = [id, data.babyId, data.startTime, data.endTime, data.duration, data.quality, data.note];
+      const result = await pool.query(query, values);
+      return res.json(result.rows[0]);
+    }
+
+    if (type === 'diaper') {
+      const id = 'd_' + Date.now();
+      const query = `
+        INSERT INTO diaper_logs (id, baby_id, type, time, note)
+        VALUES ($1, $2, $3, $4, $5) RETURNING *;
+      `;
+      const values = [id, data.babyId, data.type, data.time, data.note];
+      const result = await pool.query(query, values);
+      return res.json(result.rows[0]);
+    }
+
+    if (type === 'growth') {
+      const id = 'g_' + Date.now();
+      const query = `
+        INSERT INTO growth_tracking (id, baby_id, date, age_months, weight, height, head_circumference)
+        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
+      `;
+      const values = [id, data.babyId, data.date, data.ageMonths, data.weight, data.height, data.headCircumference];
+      const result = await pool.query(query, values);
+      return res.json(result.rows[0]);
+    }
+
+    if (type === 'vaccine') {
+      // Toggle vaccination status
+      const { id, completedDate } = data;
+      const selectRes = await pool.query('SELECT status FROM vaccinations WHERE id = $1', [id]);
+      if (selectRes.rows.length === 0) return res.status(404).json({ error: 'Không tìm thấy lịch tiêm' });
+
+      const newStatus = selectRes.rows[0].status === 'done' ? 'pending' : 'done';
+      const newCompletedDate = newStatus === 'done' ? (completedDate || new Date().toISOString().split('T')[0]) : null;
+
+      const query = `
+        UPDATE vaccinations 
+        SET status = $1, completed_date = $2 
+        WHERE id = $3 
+        RETURNING *;
+      `;
+      const result = await pool.query(query, [newStatus, newCompletedDate, id]);
+      return res.json(result.rows[0]);
+    }
+
+    res.status(400).json({ error: 'Loại nhật ký không hợp lệ' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Khởi chạy server lắng nghe kết nối
+app.listen(PORT, () => {
+  console.log(`🚀 Máy chủ Mẹ Bỉm Thông Thái đang chạy tại: http://localhost:${PORT}`);
+});
+
+// --- HÀM TỰ ĐỘNG KHỞI TẠO BẢNG DDL ---
+async function initializeDatabaseSchema() {
+  try {
+    // 1. Tạo các bảng cơ sở dữ liệu
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS admins (
+        id SERIAL PRIMARY KEY,
+        email TEXT UNIQUE NOT NULL,
+        password_hash TEXT NOT NULL,
+        name TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS articles (
+        id TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        category TEXT NOT NULL,
+        sub_category TEXT,
+        tags TEXT,
+        summary TEXT,
+        content TEXT,
+        image TEXT,
+        views INT DEFAULT 0,
+        likes INT DEFAULT 0,
+        created_at TEXT,
+        author TEXT,
+        faqs JSONB
+      );
+      
+      CREATE TABLE IF NOT EXISTS posts (
+        id TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        content TEXT,
+        author_nickname TEXT,
+        author_avatar TEXT,
+        author_badge TEXT,
+        tags TEXT,
+        upvotes INT DEFAULT 0,
+        helpful_count INT DEFAULT 0,
+        heart_count INT DEFAULT 0,
+        created_at TEXT,
+        is_anonymous BOOLEAN DEFAULT FALSE
+      );
+
+      CREATE TABLE IF NOT EXISTS comments (
+        id TEXT PRIMARY KEY,
+        post_id TEXT REFERENCES posts(id) ON DELETE CASCADE,
+        content TEXT,
+        author_nickname TEXT,
+        author_avatar TEXT,
+        author_badge TEXT,
+        created_at TEXT
+      );
+
+      CREATE TABLE IF NOT EXISTS baby_profiles (
+        id TEXT PRIMARY KEY,
+        parent_id TEXT,
+        name TEXT,
+        birthdate TEXT,
+        gender TEXT
+      );
+
+      CREATE TABLE IF NOT EXISTS feeding_logs (
+        id TEXT PRIMARY KEY,
+        baby_id TEXT,
+        type TEXT,
+        time TEXT,
+        amount INT DEFAULT 0,
+        duration INT DEFAULT 0,
+        note TEXT
+      );
+
+      CREATE TABLE IF NOT EXISTS sleep_logs (
+        id TEXT PRIMARY KEY,
+        baby_id TEXT,
+        start_time TEXT,
+        end_time TEXT,
+        duration INT DEFAULT 0,
+        quality TEXT,
+        note TEXT
+      );
+
+      CREATE TABLE IF NOT EXISTS diaper_logs (
+        id TEXT PRIMARY KEY,
+        baby_id TEXT,
+        type TEXT,
+        time TEXT,
+        note TEXT
+      );
+
+      CREATE TABLE IF NOT EXISTS growth_tracking (
+        id TEXT PRIMARY KEY,
+        baby_id TEXT,
+        date TEXT,
+        age_months INT DEFAULT 0,
+        weight REAL DEFAULT 0.0,
+        height REAL DEFAULT 0.0,
+        head_circumference REAL DEFAULT 0.0
+      );
+
+      CREATE TABLE IF NOT EXISTS vaccinations (
+        id TEXT PRIMARY KEY,
+        baby_id TEXT,
+        vaccine_name TEXT,
+        disease TEXT,
+        schedule_age TEXT,
+        due_date TEXT,
+        status TEXT,
+        completed_date TEXT,
+        note TEXT
+      );
+    `);
+    
+    console.log('⚡ Đã đồng bộ cấu trúc bảng DDL trên đám mây Neon Postgres!');
+
+    // 2. Nạp dữ liệu mẫu nếu bảng articles rỗng
+    const countCheck = await pool.query('SELECT COUNT(*) FROM articles');
+    if (parseInt(countCheck.rows[0].count) === 0) {
+      console.log('⚠️  Phát hiện cơ sở dữ liệu trống! Đang tự động nạp dữ liệu cẩm nang mẫu...');
+      
+      // Hash password cho admin mặc định: admin123
+      const defaultPasswordHash = await bcrypt.hash('admin123', 10);
+
+      // Chèn tài khoản admin mặc định
+      await pool.query('INSERT INTO admins (email, password_hash, name) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING;', ['admin@mebim.vn', defaultPasswordHash, 'Quản trị viên']);
+
+      // Chèn các bài viết mẫu sơ khởi để trang web hiển thị lung linh ngay lập tức
+      await pool.query(`
+        INSERT INTO baby_profiles (id, parent_id, name, birthdate, gender)
+        VALUES ('baby_01', 'user_01', 'Nguyễn Tuệ Lâm (Bông)', '2026-02-15', 'female')
+        ON CONFLICT DO NOTHING;
+
+        INSERT INTO articles (id, title, category, sub_category, tags, summary, content, image, views, likes, created_at, author, faqs)
+        VALUES (
+          'art_01', 
+          'Hướng dẫn tắm trẻ sơ sinh an toàn tại nhà cho mẹ mới sinh', 
+          'Trẻ sơ sinh', 
+          'Tắm bé', 
+          'trẻ sơ sinh,tắm bé,mẹ mới', 
+          'Tắm bé sơ sinh lần đầu tại nhà có thể khiến nhiều mẹ lúng túng. Dưới đây là hướng dẫn chi tiết chuẩn y khoa giúp tắm bé an toàn.', 
+          'Tắm bé sơ sinh là một thử thách lớn. Hãy thực hiện theo quy tắc: Lau mặt -> Gội đầu -> Tắm toàn thân -> Chăm sóc rốn sau tắm.', 
+          'https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=600&auto=format&fit=crop&q=80', 
+          1250, 
+          85, 
+          '2026-03-10', 
+          'Dr. Hải Anh', 
+          '[{"q": "Trẻ sơ sinh chưa rụng rốn tắm được không?", "a": "Hoàn toàn được. Mẹ chỉ cần giữ cuống rốn khô thoáng sau khi tắm."}]'
+        ),
+        (
+          'art_02', 
+          'Ăn dặm tự chỉ huy (BLW): Bắt đầu thế nào cho đúng và an toàn?', 
+          'Dinh dưỡng cho bé', 
+          'Ăn dặm', 
+          'ăn dặm,BLW,dinh dưỡng', 
+          'Phương pháp ăn dặm tự chỉ huy giúp con tự lập và phát triển kỹ năng nhai nuốt sớm. Bài viết chia sẻ hướng dẫn bắt đầu đúng cách.', 
+          'Ăn dặm tự chỉ huy (BLW) là phương pháp bỏ qua giai đoạn ăn bột nhuyễn, bé tự bốc ăn rau củ chín mềm từ 6 tháng tuổi.', 
+          'https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=600&auto=format&fit=crop&q=80', 
+          2450, 
+          198, 
+          '2026-04-05', 
+          'Mẹ Ốc', 
+          '[{"q": "Bé chưa mọc răng có ăn BLW được không?", "a": "Được. Lợi của bé rất cứng, có thể nghiền nát rau củ luộc mềm."}]'
+        )
+        ON CONFLICT DO NOTHING;
+
+        INSERT INTO posts (id, title, content, author_nickname, author_avatar, author_badge, tags, upvotes, helpful_count, heart_count, created_at, is_anonymous)
+        VALUES (
+          'post_01',
+          'Bé 3 tháng không chịu bú bình phải làm sao hả các mẹ?',
+          'Em chuẩn bị đi làm lại nên tập bú bình cho con nhưng con khóc thét lên đẩy ra. Có mẹ nào có kinh nghiệm không cứu em với!',
+          'Mẹ Bông',
+          'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+          'Mẹ Siêu Chăm',
+          'trẻ sơ sinh,sữa,giấc ngủ',
+          48,
+          22,
+          15,
+          '2026-05-12T09:30:00Z',
+          FALSE
+        )
+        ON CONFLICT DO NOTHING;
+
+        INSERT INTO vaccinations (id, baby_id, vaccine_name, disease, schedule_age, due_date, status, completed_date, note)
+        VALUES 
+          ('v_01', 'baby_01', 'Lao (BCG)', 'Phòng bệnh Lao', 'Sơ sinh', '2026-02-20', 'done', '2026-02-18', 'Tiêm tại viện sản.'),
+          ('v_02', 'baby_01', 'Viêm gan B mũi 1', 'Viêm gan B', 'Sơ sinh', '2026-02-16', 'done', '2026-02-15', 'Tiêm trong 24h đầu.'),
+          ('v_03', 'baby_01', '6 trong 1 Mũi 1', '6 bệnh nguy hiểm', '2 tháng', '2026-04-15', 'done', '2026-04-18', 'Hơi sốt nhẹ 38 độ.'),
+          ('v_04', 'baby_01', '6 trong 1 Mũi 2', '6 bệnh nguy hiểm', '3 tháng', '2026-05-15', 'pending', NULL, 'Cần đặt lịch tiêm trạm y tế.')
+        ON CONFLICT DO NOTHING;
+      `);
+      console.log('🎉 Đã tự động nạp dữ liệu mẫu ban đầu thành công lên đám mây Neon Postgres!');
+    }
+  } catch (err) {
+    console.error('❌ Lỗi khởi tạo cấu trúc bảng trên Neon Postgres:', err.message);
+  }
+}

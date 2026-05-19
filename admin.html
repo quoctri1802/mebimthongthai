@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Điều Khiển - Mẹ Bỉm Thông Thái</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff6b8b;
+            --secondary: #4facfe;
+            --bg-light: #f8fafc;
+            --text-main: #2d3748;
+            --text-light: #718096;
+            --card-bg: #ffffff;
+            --sidebar-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 10;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .sidebar-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            padding: 20px 0;
+            flex: 1;
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 107, 139, 0.05);
+            color: var(--primary);
+            border-right: 3px solid var(--primary);
+        }
+
+        .nav-item.active {
+            background-color: rgba(255, 107, 139, 0.1);
+            color: var(--primary);
+            border-right: 3px solid var(--primary);
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .sidebar-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e53e3e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px 40px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .page-title p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #cbd5e0;
+            background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80');
+            background-size: cover;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Dashboard Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-info h3 {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .stat-info .value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .icon-blue { background: rgba(79, 172, 254, 0.1); color: #4facfe; }
+        .icon-pink { background: rgba(255, 107, 139, 0.1); color: #ff6b8b; }
+        .icon-green { background: rgba(72, 187, 120, 0.1); color: #48bb78; }
+        .icon-purple { background: rgba(159, 122, 234, 0.1); color: #9f7aea; }
+
+        /* Welcome Section */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(255, 107, 139, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-banner h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-banner p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .welcome-img {
+            position: relative;
+            z-index: 1;
+            font-size: 80px;
+            opacity: 0.9;
+        }
+
+        .circle-decor {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .c1 { width: 300px; height: 300px; right: -50px; top: -100px; }
+        .c2 { width: 150px; height: 150px; right: 200px; bottom: -50px; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-icon"><i class="fa-solid fa-baby-carriage"></i></div>
+            <h2>Admin Panel</h2>
+        </div>
+        
+        <nav class="nav-links">
+            <a href="#" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Tổng quan</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-book-open"></i>
+                <span>Quản lý bài viết</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>Quản lý người dùng</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-comments"></i>
+                <span>Cộng đồng (Forum)</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Thống kê & Báo cáo</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                <span>Cài đặt hệ thống</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="#" class="logout-btn" id="logoutBtn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Đăng xuất</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <div class="page-title">
+                <h1>Tổng quan hệ thống</h1>
+                <p>Theo dõi các chỉ số hoạt động của ứng dụng Mẹ Bỉm Thông Thái</p>
+            </div>
+            <div class="user-profile">
+                <div style="text-align: right;">
+                    <div id="adminName" style="font-weight: 600; font-size: 14px;">Quản trị viên</div>
+                    <div id="adminEmail" style="color: var(--text-light); font-size: 12px;">admin@mebim.vn</div>
+                </div>
+                <div class="avatar"></div>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Tổng số bài viết</h3>
+                    <div class="value">1,248</div>
+                </div>
+                <div class="stat-icon icon-blue"><i class="fa-solid fa-file-lines"></i></div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Người dùng đăng ký</h3>
+                    <div class="value">8,592</div>
+                </div>
+                <div class="stat-icon icon-pink"><i class="fa-solid fa-users"></i></div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Bài đăng cộng đồng</h3>
+                    <div class="value">4,302</div>
+                </div>
+                <div class="stat-icon icon-green"><i class="fa-solid fa-comments"></i></div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Hồ sơ em bé</h3>
+                    <div class="value">9,120</div>
+                </div>
+                <div class="stat-icon icon-purple"><i class="fa-solid fa-baby"></i></div>
+            </div>
+        </section>
+
+        <section class="welcome-banner">
+            <div class="circle-decor c1"></div>
+            <div class="circle-decor c2"></div>
+            
+            <div class="welcome-content">
+                <h2>Xin chào, Quản trị viên! 👋</h2>
+                <p>Hệ thống hoạt động ổn định. Có 24 bài viết mới cần duyệt hôm nay.</p>
+            </div>
+            <div class="welcome-img">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+        </section>
+        
+        <div style="margin-top: 40px; padding: 20px; background: white; border-radius: 20px; border: 1px solid var(--border-color);">
+            <h3 style="font-family: 'Outfit'; margin-bottom: 20px;">Hoạt động gần đây</h3>
+            <p style="color: var(--text-light);">Tính năng chi tiết đang được cập nhật...</p>
+        </div>
+
+    </main>
+
+    <script>
+        // Check if admin is logged in
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            window.location.href = 'admin-login.html';
+        }
+
+        // Update UI with admin info
+        const adminInfoStr = localStorage.getItem('adminInfo');
+        if (adminInfoStr) {
+            try {
+                const adminInfo = JSON.parse(adminInfoStr);
+                document.getElementById('adminName').textContent = adminInfo.name || 'Quản trị viên';
+                document.getElementById('adminEmail').textContent = adminInfo.email || 'admin@mebim.vn';
+            } catch(e) {}
+        }
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminInfo');
+            window.location.href = 'admin-login.html';
+        });
+    </script>
+</body>
+</html>

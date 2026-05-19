@@ -1,0 +1,20 @@
+{
+  "name": "me-and-be",
+  "version": "1.0.0",
+  "description": "Mẹ Bỉm Thông Thái fullstack server for Neon Postgres connection",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.11.5",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
+  },
+  "author": "Mẹ Bỉm Thông Thái",
+  "license": "ISC"
+}

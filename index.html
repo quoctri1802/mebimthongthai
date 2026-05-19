@@ -1,0 +1,3034 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags - Khởi tạo mặc định (Sẽ được React cập nhật động) -->
+  <title>Mẹ Bỉm Thông Thái | Cẩm Nang Nuôi Dạy Con & Cộng Đồng Mẹ Bỉm Việt Nam</title>
+  <meta name="description" content="Nền tảng chia sẻ kiến thức hữu ích về chăm sóc trẻ sơ sinh, dinh dưỡng, giấc ngủ, bệnh thường gặp và cộng đồng mẹ bỉm sữa trao đổi kinh nghiệm nuôi con khoa học.">
+  <meta name="keywords" content="bé sơ sinh, trẻ sơ sinh, ăn dặm, bé bị sốt, bé ngủ ít, mẹ sau sinh, chăm sóc trẻ sơ sinh, nuôi con khoa học">
+  <meta name="author" content="Mẹ Bỉm Thông Thái">
+  
+  <!-- OpenGraph Meta Tags -->
+  <meta property="og:title" content="Mẹ Bỉm Thông Thái | Đồng hành cùng mẹ nuôi con khỏe mạnh">
+  <meta property="og:description" content="Kho kiến thức y khoa, dinh dưỡng, giấc ngủ của bé và diễn đàn cộng đồng trao đổi kinh nghiệm thực tế.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=1200&auto=format&fit=crop&q=80">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFF0F2'/%3E%3Cstop offset='100%25' stop-color='%23FFE2E6'/%3E%3C/linearGradient%3E%3ClinearGradient id='pinkGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FCA5B3'/%3E%3Cstop offset='100%25' stop-color='%23E04D65'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='30' fill='url(%23bg)'/%3E%3Cg transform='translate(10, 10)'%3E%3Cpath d='M40 70 C15 70, 5 50, 5 30 C5 10, 25 5, 40 22 C55 5, 75 10, 75 30 C75 50, 65 70, 40 70 Z' fill='url(%23pinkGrad)'/%3E%3Ccircle cx='32' cy='35' r='9' fill='%23FFFFFF'/%3E%3Ccircle cx='48' cy='25' r='11' fill='%23FFFFFF'/%3E%3Cpath d='M58 45 L60 48 L63 48 L61 50 L62 53 L58 51 L54 53 L55 50 L53 48 L56 48 Z' fill='%23FFF275'/%3E%3C/g%3E%3C/svg%3E">
+
+  <!-- Core CDNs: TailwindCSS, React 18, Babel (for JSX), Chart.js -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              pink: {
+                light: '#FFF0F2',
+                pastel: '#FCA5B3',
+                dark: '#E04D65',
+              },
+              cream: {
+                light: '#FAF8F2',
+                pastel: '#EFE5D1',
+                dark: '#BA9B76',
+              },
+              mint: {
+                light: '#F0FAF5',
+                pastel: '#A8E6CF',
+                dark: '#2D8E6B',
+              }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Load React and ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  
+  <!-- Load Babel Standalone to compile JSX in browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Load Chart.js for Growth Tracking Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Structured Data (JSON-LD) Placeholder for Homepage -->
+  <script type="application/ld+json" id="seo-schema">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Mẹ Bỉm Thông Thái",
+    "url": "https://mebimthongthai.vn",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://mebimthongthai.vn/?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+</head>
+<body class="gradient-bg min-h-screen">
+
+  <div id="root">
+    <!-- Skeleton Loading Screen trước khi React tải xong -->
+    <div class="flex flex-col items-center justify-center min-h-screen">
+      <div class="relative w-24 h-24 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-full border-4 border-pink-200 animate-ping opacity-75"></div>
+        <div class="relative w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
+          <svg class="w-8 h-8 text-pink-500 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </div>
+      </div>
+      <p class="mt-6 text-neutral-600 font-semibold text-lg animate-pulse font-sans">Đang tải Hành Trình Nuôi Con...</p>
+    </div>
+  </div>
+
+  <!-- Load Database and AI Assistant engines globally -->
+  <script type="module">
+    import { db } from './db.js';
+    import { aiAssistant } from './ai.js';
+    window.parentingDb = db;
+    window.parentingAi = aiAssistant;
+  </script>
+
+  <!-- React Code with Babel Compilation -->
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // --- MỘT SỐ HÀM ICON SVG TỰ ĐỊNH NGHĨA ĐỂ TRÁNH LỖI PHỤ THUỘC THƯ VIỆN ---
+    const Icons = {
+      Baby: () => (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="10" r="8" strokeWidth="2" />
+          <path strokeLinecap="round" strokeWidth="2" d="M8 14s1.5 2 4 2 4-2 4-2M10 8h.01M14 8h.01" />
+        </svg>
+      ),
+      BookOpen: () => (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      ),
+      Users: () => (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      ),
+      Sparkles: () => (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+        </svg>
+      ),
+      Wrench: () => (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      ),
+      Search: () => (
+        <svg className="w-5 h-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      ),
+      ShieldCheck: () => (
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      ),
+      ChevronRight: () => (
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+        </svg>
+      ),
+      ThumbsUp: () => (
+        <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+        </svg>
+      ),
+      Heart: () => (
+        <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      ),
+      Helpful: () => (
+        <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+      ),
+      ChatBubble: () => (
+        <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      )
+    };
+
+    // --- LỊCH TIÊM CHỦNG QUỐC GIA TỔNG HỢP (BỘ Y TẾ) ---
+    const VACCINE_MASTER_SCHEDULE = [
+      { age: 'Sơ sinh (24h đầu)', ageGroup: 'Sơ sinh', name: 'Vắc xin Lao (BCG)', disease: 'Phòng bệnh Lao phổi, Lao màng não', doses: '1 mũi duy nhất', type: 'TCMR (Miễn phí)', note: 'Nên tiêm trong vòng 30 ngày đầu sau sinh, khi trẻ đủ sức khỏe.' },
+      { age: 'Sơ sinh (24h đầu)', ageGroup: 'Sơ sinh', name: 'Vắc xin Viêm gan B (Sơ sinh)', disease: 'Phòng bệnh Viêm gan B lây từ mẹ', doses: '1 mũi sơ sinh', type: 'TCMR (Miễn phí)', note: 'Tiêm càng sớm càng tốt, tối ưu nhất là trong vòng 24 giờ đầu sau khi sinh.' },
+      { age: '2 tháng tuổi', ageGroup: '2-4 tháng', name: 'Vắc xin 6 trong 1 (Hexaxim / Infanrix Hexa)', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib', doses: 'Mũi 1 (Phác đồ 3 mũi cơ bản)', type: 'Dịch vụ (Có phí)', note: 'Có thể thay thế bằng vaccine 5 trong 1 (TCMR) + uống bại liệt + tiêm viêm gan B.' },
+      { age: '2 tháng tuổi', ageGroup: '2-4 tháng', name: 'Vắc xin phòng Phế cầu (Synflorix / Prevenar 13)', disease: 'Phòng Viêm phổi, Viêm màng não, Viêm tai giữa do phế cầu khuẩn', doses: 'Mũi 1 (Phác đồ 3 mũi chính + 1 nhắc)', type: 'Dịch vụ (Có phí)', note: 'Rất quan trọng giúp bảo vệ đường hô hấp còn non yếu của trẻ.' },
+      { age: '2 tháng tuổi', ageGroup: '2-4 tháng', name: 'Vắc xin uống Rotavirus (Rotarix / Rotateq)', disease: 'Phòng bệnh Tiêu chảy cấp do Rotavirus', doses: 'Liều 1 (Uống)', type: 'Dịch vụ (Có phí)', note: 'Lưu ý không cho bé bú quá no trước và sau khi uống 30 phút để tránh nôn trớ.' },
+      { age: '3 tháng tuổi', ageGroup: '2-4 tháng', name: 'Vắc xin 6 trong 1 (Hexaxim / Infanrix Hexa)', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib', doses: 'Mũi 2', type: 'Dịch vụ (Có phí)', note: 'Khoảng cách tối thiểu với mũi 1 là 1 tháng.' },
+      { age: '3 tháng tuổi', ageGroup: '2-4 tháng', name: 'Vắc xin phòng Phế cầu (Synflorix / Prevenar 13)', disease: 'Phòng Viêm phổi, Viêm màng não, Viêm tai giữa do phế cầu khuẩn', doses: 'Mũi 2', type: 'Dịch vụ (Có phí)', note: 'Khoảng cách tối thiểu với mũi 1 là 1 tháng.' },
+      { age: '3 tháng tuổi', ageGroup: '2-4 tháng', name: 'Vắc xin uống Rotavirus (Rotarix / Rotateq)', disease: 'Phòng bệnh Tiêu chảy cấp do Rotavirus', doses: 'Liều 2 (Uống)', type: 'Dịch vụ (Có phí)', note: 'Uống cách liều 1 tối thiểu 1 tháng. Nếu uống Rotarix thì đây là liều cuối.' },
+      { age: '4 tháng tuổi', ageGroup: '2-4 tháng', name: 'Vắc xin 6 trong 1 (Hexaxim / Infanrix Hexa)', disease: 'Phòng Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib', doses: 'Mũi 3 (Hoàn thành phác đồ cơ bản)', type: 'Dịch vụ (Có phí)', note: 'Giúp duy trì nồng độ kháng thể lâu dài.' },
+      { age: '4 tháng tuổi', ageGroup: '2-4 tháng', name: 'Vắc xin phòng Phế cầu (Synflorix / Prevenar 13)', disease: 'Phòng Viêm phổi, Viêm màng não, Viêm tai giữa do phế cầu khuẩn', doses: 'Mũi 3', type: 'Dịch vụ (Có phí)', note: 'Tiêm cách mũi 2 tối thiểu 1 tháng.' },
+      { age: '4 tháng tuổi', ageGroup: '2-4 tháng', name: 'Vắc xin uống Rotavirus (Rotateq)', disease: 'Phòng bệnh Tiêu chảy cấp do Rotavirus', doses: 'Liều 3 (Uống - Chỉ dùng với Rotateq)', type: 'Dịch vụ (Có phí)', note: 'Hoàn tất phác đồ uống ngừa Rotavirus 3 liều.' },
+      { age: '6 tháng tuổi', ageGroup: '6 tháng', name: 'Vắc xin phòng Cúm mùa', disease: 'Phòng ngừa các chủng cúm A và B theo mùa', doses: 'Mũi 1 (Tiêm 2 mũi cách nhau 1 tháng)', type: 'Dịch vụ (Có phí)', note: 'Trẻ em cần tiêm nhắc lại hàng năm vì các chủng cúm thay đổi liên tục.' },
+      { age: '6 tháng tuổi', ageGroup: '6 tháng', name: 'Vắc xin Não mô cầu BC (Mengoc-BC)', disease: 'Phòng Viêm màng não mô cầu tuýp B và C', doses: 'Mũi 1 (Phác đồ gồm 2 mũi cách nhau 6-8 tuần)', type: 'Dịch vụ (Có phí)', note: 'Nên tiêm sớm vì bệnh não mô cầu tiến triển rất nhanh và cực kỳ nguy hiểm.' },
+      { age: '9 tháng tuổi', ageGroup: '9-12 tháng', name: 'Vắc xin Sởi đơn (MVVac)', disease: 'Phòng bệnh Sởi nguy cơ gây biến chứng phổi', doses: 'Mũi 1', type: 'TCMR (Miễn phí)', note: 'Là mốc tiêm bắt buộc trong chương trình TCMR khi kháng thể từ mẹ giảm.' },
+      { age: '9 tháng tuổi', ageGroup: '9-12 tháng', name: 'Vắc xin phòng Quai bị - Sởi - Rubella (MMR II / Priorix)', disease: 'Phòng 3 bệnh truyền nhiễm Sởi, Quai bị, Rubella', doses: 'Mũi 1 (Nếu chưa tiêm sởi đơn)', type: 'Dịch vụ (Có phí)', note: 'Có thể tiêm từ 9 tháng tuổi ở các cơ sở dịch vụ để bảo vệ toàn diện sớm.' },
+      { age: '9 tháng tuổi', ageGroup: '9-12 tháng', name: 'Vắc xin phòng Viêm não Nhật Bản (Imojev)', disease: 'Phòng Viêm não Nhật Bản thế hệ mới', doses: 'Mũi 1 (Mũi nhắc sau 1-2 năm)', type: 'Dịch vụ (Có phí)', note: 'Ưu việt hơn vaccine cũ vì chỉ cần 2 mũi thay vì tiêm nhắc liên tục.' },
+      { age: '9 tháng tuổi', ageGroup: '9-12 tháng', name: 'Vắc xin phòng Não mô cầu ACYW (Menactra)', disease: 'Phòng Viêm màng não, nhiễm khuẩn huyết do não mô cầu A, C, Y, W-135', doses: 'Mũi 1 (Mũi 2 cách tối thiểu 3 tháng)', type: 'Dịch vụ (Có phí)', note: 'Tiêm từ 9 tháng tuổi đến 55 tuổi.' },
+      { age: '12 tháng tuổi', ageGroup: '9-12 tháng', name: 'Vắc xin phòng Thủy đậu (Varilrix / Varivax)', disease: 'Phòng bệnh Thủy đậu (Trái rạ) lây lan mạnh', doses: 'Mũi 1 (Nhắc lại mũi 2 sau 3-4 năm)', type: 'Dịch vụ (Có phí)', note: 'Nên tiêm cho bé trước khi đi học mẫu giáo.' },
+      { age: '12 tháng tuổi', ageGroup: '9-12 tháng', name: 'Vắc xin phòng Viêm gan A (Avaxim)', disease: 'Phòng bệnh Viêm gan A cấp tính', doses: 'Mũi 1 (Mũi nhắc cách tối thiểu 6 tháng)', type: 'Dịch vụ (Có phí)', note: 'Phòng bệnh lây qua đường thức ăn, nước uống.' },
+      { age: '12 tháng tuổi', ageGroup: '9-12 tháng', name: 'Vắc xin phòng Viêm não Nhật Bản (Jevax)', disease: 'Phòng Viêm não Nhật Bản truyền thống', doses: 'Mũi 1 & 2 (Tiêm cách nhau 1-2 tuần)', type: 'TCMR (Miễn phí)', note: 'Mũi 3 tiêm sau đó 1 năm, sau đó cứ 3 năm tiêm nhắc lại 1 lần.' },
+      { age: '18 tháng tuổi', ageGroup: '18-24 tháng', name: 'Vắc xin phối hợp nhắc lại (6 trong 1 hoặc 5 trong 1)', disease: 'Bạch hầu, Ho gà, Uốn ván, Bại liệt, Viêm gan B, Viêm màng não do Hib', doses: 'Mũi 4 (Mũi nhắc lại cực kỳ quan trọng)', type: 'TCMR hoặc Dịch vụ', note: 'Không nên bỏ qua mũi nhắc này vì kháng thể của 3 mũi đầu đã suy giảm.' },
+      { age: '24 tháng tuổi', ageGroup: '18-24 tháng', name: 'Vắc xin phòng Thương hàn (Typhim Vi)', disease: 'Phòng bệnh sốt Thương hàn biến chứng ruột', doses: '1 mũi duy nhất (Tiêm nhắc mỗi 3 năm)', type: 'Dịch vụ (Có phí)', note: 'Dành cho trẻ từ 2 tuổi trở lên.' },
+      { age: '24 tháng tuổi', ageGroup: '18-24 tháng', name: 'Vắc xin uống ngừa bệnh Tả (mORCVAX)', disease: 'Phòng dịch bệnh Tả lây lan qua nguồn nước', doses: '2 liều uống (Cách nhau 2 tuần)', type: 'TCMR/Dịch vụ', note: 'Thường triển khai ở các vùng có nguy cơ dịch tễ cao.' }
+    ];
+
+    // --- MAIN REACT APPLICATION COMPONENT ---
+    function App() {
+      // 1. Core States
+      const [currentTab, setCurrentTab] = useState('home'); // home | articles | article-detail | community | tools | ai | admin
+      const [dbState, setDbState] = useState(null);
+      const [isSyncing, setIsSyncing] = useState(true);
+      const [selectedMilestone, setSelectedMilestone] = useState('m_3m');
+      const [selectedCategory, setSelectedCategory] = useState('Tất cả');
+      const [activeArticle, setActiveArticle] = useState(null);
+      const [searchQuery, setSearchQuery] = useState('');
+      const [showSearchModal, setShowSearchModal] = useState(false);
+      const [searchResults, setSearchResults] = useState({ articles: [], posts: [], keywords: [] });
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      
+      // Admin dashboard sub-tab
+      const [adminTab, setAdminTab] = useState('articles-list'); // articles-list | articles-form | community
+      const [editingArticleId, setEditingArticleId] = useState(null);
+      const [adminSearchQuery, setAdminSearchQuery] = useState('');
+      const [newArticleForm, setNewArticleForm] = useState({
+        title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+        metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
+      });
+      
+      // Community States
+      const [activePost, setActivePost] = useState(null);
+      const [newPostForm, setNewPostForm] = useState({ title: '', content: '', isAnonymous: false, tags: ['trẻ sơ sinh'] });
+      const [showNewPostModal, setShowNewPostModal] = useState(false);
+      const [commentContent, setCommentContent] = useState('');
+
+      // Baby Tracker States
+      const [activeBaby, setActiveBaby] = useState(null);
+      const [showAddBabyModal, setShowAddBabyModal] = useState(false);
+      const [newBabyForm, setNewBabyForm] = useState({ name: '', birthdate: '', gender: 'female' });
+      
+      // State cho tính năng Lịch Tiêm Chủng (Vaccination Schedule)
+      const [vaccineActiveTab, setVaccineActiveTab] = useState('tracker'); // tracker | master
+      const [vaccineFilterAge, setVaccineFilterAge] = useState('Tất cả');
+      const [vaccineSearchQuery, setVaccineSearchQuery] = useState('');
+      
+      // Logs states for tools
+      const [activeToolSubTab, setActiveToolSubTab] = useState('summary'); // summary | feeding | sleep | diaper | growth | vaccine
+      const [feedingForm, setFeedingForm] = useState({ type: 'breast', amount: 100, duration: 15, note: '', time: '' });
+      const [sleepForm, setSleepForm] = useState({ startTime: '13:00', endTime: '14:30', quality: 'good', note: '' });
+      const [diaperForm, setDiaperForm] = useState({ type: 'wet', time: '12:00', note: '' });
+      const [growthForm, setGrowthForm] = useState({ date: new Date().toISOString().split('T')[0], ageMonths: 4, weight: 6.5, height: 61.5, headCircumference: 39.5 });
+
+      // AI Assistant Chat States
+      const [aiMessages, setAiMessages] = useState([
+        { sender: 'ai', text: 'Chào Mẹ! Em là Trợ lý AI của Mẹ Bỉm Thông Thái. Em có thể tư vấn khoa học về giấc ngủ, dinh dưỡng, tiêm phòng hoặc các bệnh thường gặp của bé. Mẹ cần em hỗ trợ gì hôm nay?', time: 'Vừa xong' }
+      ]);
+      const [chatInput, setChatInput] = useState('');
+      const [aiTyping, setAiTyping] = useState(false);
+      const chatEndRef = useRef(null);
+
+      // --- INITIALIZE & SYNC WITH DB ENGINE ---
+      useEffect(() => {
+        // Đợi Database và AI script tải xong
+        const interval = setInterval(() => {
+          if (window.parentingDb && window.parentingAi) {
+            clearInterval(interval);
+            
+            // Gọi init() bất đồng bộ (Neon Postgres Cloud Sync)
+            window.parentingDb.init().then(async () => {
+              // Thực hiện tải dữ liệu thực tế từ đám mây
+              await window.parentingDb.syncFromCloud();
+
+              const user = window.parentingDb.getCurrentUser();
+              const babies = window.parentingDb.getBabyProfiles();
+              const activeB = user ? (babies.find(b => b.id === user.babyId) || babies[0] || null) : null;
+              
+              setActiveBaby(activeB);
+              setDbState({ ...window.parentingDb });
+              setIsSyncing(false);
+            });
+          }
+        }, 100);
+        return () => clearInterval(interval);
+      }, []);
+
+      // Đăng ký cuộn xuống cho Chat AI
+      useEffect(() => {
+        if (chatEndRef.current) {
+          chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, [aiMessages, aiTyping]);
+
+      // --- CHỨC NĂNG DYNAMIC SEO & SCHEMA INJECTION ---
+      useEffect(() => {
+        if (!activeArticle && currentTab !== 'article-detail') {
+          // Reset default SEO
+          document.title = "Mẹ Bỉm Thông Thái | Cẩm Nang Nuôi Dạy Con & Cộng Đồng Mẹ Bỉm Việt Nam";
+          const desc = document.querySelector('meta[name="description"]');
+          if (desc) desc.setAttribute("content", "Nền tảng chia sẻ kiến thức hữu ích về chăm sóc trẻ sơ sinh, dinh dưỡng, giấc ngủ, bệnh thường gặp và cộng đồng mẹ bỉm sữa.");
+        }
+      }, [currentTab, activeArticle]);
+
+      // Vẽ biểu đồ tăng trưởng (Growth Tracker Chart) bằng Chart.js
+      const chartRef = useRef(null);
+      const [growthChartInstance, setGrowthChartInstance] = useState(null);
+
+      useEffect(() => {
+        if (currentTab === 'tools' && activeToolSubTab === 'growth' && activeBaby && chartRef.current) {
+          // Xóa chart cũ nếu có
+          if (growthChartInstance) {
+            growthChartInstance.destroy();
+          }
+
+          const logs = window.parentingDb.getGrowthLogs(activeBaby.id);
+          const labels = logs.map(l => `Tháng ${l.ageMonths}`);
+          const weights = logs.map(l => l.weight);
+          const heights = logs.map(l => l.height);
+
+          const newChart = new Chart(chartRef.current, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Cân nặng của Bé (kg)',
+                  data: weights,
+                  borderColor: '#E04D65',
+                  backgroundColor: 'rgba(224, 77, 101, 0.1)',
+                  borderWidth: 3,
+                  tension: 0.3,
+                  yAxisID: 'y-weight',
+                },
+                {
+                  label: 'Chiều cao của Bé (cm)',
+                  data: heights,
+                  borderColor: '#2D8E6B',
+                  backgroundColor: 'rgba(45, 142, 107, 0.1)',
+                  borderWidth: 3,
+                  tension: 0.3,
+                  yAxisID: 'y-height',
+                  borderDash: [5, 5]
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'top',
+                  labels: {
+                    font: { family: 'Nunito', size: 13 }
+                  }
+                }
+              },
+              scales: {
+                'y-weight': {
+                  type: 'linear',
+                  position: 'left',
+                  title: { display: true, text: 'Cân nặng (kg)', font: { family: 'Nunito', weight: 'bold' } },
+                  grid: { drawOnChartArea: true }
+                },
+                'y-height': {
+                  type: 'linear',
+                  position: 'right',
+                  title: { display: true, text: 'Chiều cao (cm)', font: { family: 'Nunito', weight: 'bold' } },
+                  grid: { drawOnChartArea: false }
+                }
+              }
+            }
+          });
+
+          setGrowthChartInstance(newChart);
+        }
+      }, [currentTab, activeToolSubTab, activeBaby]);
+
+      if (!dbState) {
+        return (
+          <div class="flex flex-col items-center justify-center min-h-screen">
+            <div class="relative w-24 h-24 flex items-center justify-center animate-spin">
+              <div class="w-12 h-12 rounded-full border-4 border-pink-500 border-t-transparent"></div>
+            </div>
+            <p class="mt-6 text-neutral-600 font-semibold text-lg font-sans">Đang chuẩn bị kho dữ liệu...</p>
+          </div>
+        );
+      }
+
+      // --- TRUY XUẤT THÔNG TIN DỰ PHÒNG TỪ DATABASE ---
+      const articles = dbState.getArticles();
+      const posts = dbState.getPosts();
+      const currentUser = dbState.getCurrentUser();
+      const babyProfiles = dbState.getBabyProfiles();
+      const milestones = dbState.getMilestones();
+      
+      // Lọc danh mục bài viết
+      const categories = ['Tất cả', 'Trẻ sơ sinh', 'Dinh dưỡng cho bé', 'Giấc ngủ', 'Sức khỏe trẻ em', 'Phát triển trí tuệ', 'Chăm sóc mẹ sau sinh'];
+      const filteredArticles = selectedCategory === 'Tất cả' 
+        ? articles 
+        : articles.filter(art => art.category === selectedCategory);
+
+      // --- DYNAMIC SEO META UPDATE KHI ĐỌC BÀI VIẾT ---
+      const viewArticleDetail = (art) => {
+        setActiveArticle(art);
+        setCurrentTab('article-detail');
+        
+        // Cập nhật SEO Tags
+        document.title = `${art.title} | Mẹ Bỉm Thông Thái`;
+        const desc = document.querySelector('meta[name="description"]');
+        if (desc) desc.setAttribute("content", art.summary);
+        
+        // Inject Article Schema & FAQ Schema
+        const schemaEl = document.getElementById('seo-schema');
+        if (schemaEl) {
+          const articleSchema = {
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            "headline": art.title,
+            "description": art.summary,
+            "image": [art.image || "https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=600"],
+            "datePublished": art.createdAt,
+            "author": {
+              "@type": "Person",
+              "name": art.author
+            }
+          };
+          schemaEl.innerText = JSON.stringify(articleSchema, null, 2);
+        }
+      };
+
+      // --- XỬ LÝ HỎI AI BOT ---
+      const handleAskAi = (question = null) => {
+        const query = question || chatInput;
+        if (!query.trim()) return;
+
+        // Thêm câu hỏi của user vào chat
+        const newMsgUser = { sender: 'user', text: query, time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) };
+        setAiMessages(prev => [...prev, newMsgUser]);
+        setChatInput('');
+        setAiTyping(true);
+
+        // Giả lập xử lý AI chậm lại một chút tạo cảm giác tự nhiên
+        setTimeout(() => {
+          const aiResponse = window.parentingAi.ask(query);
+          const newMsgAi = {
+            sender: 'ai',
+            text: aiResponse.response,
+            title: aiResponse.title,
+            time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+          };
+          setAiMessages(prev => [...prev, newMsgAi]);
+          setAiTyping(false);
+        }, 1200);
+      };
+
+      // --- HÀM TÌM KIẾM THÔNG MINH ---
+      const handleSearch = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        if (query.trim() === '') {
+          setSearchResults({ articles: [], posts: [], keywords: [] });
+          return;
+        }
+        
+        const results = window.parentingAi.search(query, articles, posts);
+        setSearchResults(results);
+      };
+
+      const handleQuickSearchKeyword = (keyword) => {
+        setSearchQuery(keyword);
+        const results = window.parentingAi.search(keyword, articles, posts);
+        setSearchResults(results);
+      };
+
+      // --- COMMUNTIY ACTIONS ---
+      const handleCreatePost = (e) => {
+        e.preventDefault();
+        if (!newPostForm.title.trim() || !newPostForm.content.trim()) return;
+
+        dbState.addPost(newPostForm);
+        setNewPostForm({ title: '', content: '', isAnonymous: false, tags: ['trẻ sơ sinh'] });
+        setShowNewPostModal(false);
+        // Refresh local UI
+        setDbState({ ...dbState });
+      };
+
+      const handleVote = (postId, voteType) => {
+        dbState.votePost(postId, voteType);
+        setDbState({ ...dbState });
+        if (activePost && activePost.id === postId) {
+          setActivePost(dbState.getPosts().find(p => p.id === postId));
+        }
+      };
+
+      const handleAddComment = (e) => {
+        e.preventDefault();
+        if (!commentContent.trim()) return;
+
+        dbState.addComment(activePost.id, commentContent);
+        setCommentContent('');
+        // Sync active post details
+        setActivePost(dbState.getPosts().find(p => p.id === activePost.id));
+        setDbState({ ...dbState });
+      };
+
+      // --- LOGGING TOOLS ACTIONS ---
+      const handleAddBaby = (e) => {
+        e.preventDefault();
+        if (!newBabyForm.name.trim() || !newBabyForm.birthdate) return;
+
+        const newB = dbState.addBabyProfile(newBabyForm);
+        setActiveBaby(newB);
+        setShowAddBabyModal(false);
+        setNewBabyForm({ name: '', birthdate: '', gender: 'female' });
+        setDbState({ ...dbState });
+      };
+
+      const handleLogFeeding = (e) => {
+        e.preventDefault();
+        if (!activeBaby) return;
+
+        const recordTime = feedingForm.time || new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
+        dbState.addFeedingLog({
+          babyId: activeBaby.id,
+          type: feedingForm.type,
+          time: recordTime,
+          amount: feedingForm.type === 'direct' ? 0 : Number(feedingForm.amount),
+          duration: feedingForm.type === 'direct' ? Number(feedingForm.duration) : 0,
+          note: feedingForm.note
+        });
+
+        setFeedingForm({ type: 'breast', amount: 100, duration: 15, note: '', time: '' });
+        setDbState({ ...dbState });
+      };
+
+      const handleLogSleep = (e) => {
+        e.preventDefault();
+        if (!activeBaby) return;
+
+        const [sh, sm] = sleepForm.startTime.split(':').map(Number);
+        const [eh, em] = sleepForm.endTime.split(':').map(Number);
+        let diffMin = (eh * 60 + em) - (sh * 60 + sm);
+        if (diffMin < 0) diffMin += 24 * 60; // Ngủ qua đêm
+
+        dbState.addSleepLog({
+          babyId: activeBaby.id,
+          startTime: sleepForm.startTime,
+          endTime: sleepForm.endTime,
+          duration: diffMin,
+          quality: sleepForm.quality,
+          note: sleepForm.note
+        });
+
+        setSleepForm({ startTime: '13:00', endTime: '14:30', quality: 'good', note: '' });
+        setDbState({ ...dbState });
+      };
+
+      const handleLogDiaper = (e) => {
+        e.preventDefault();
+        if (!activeBaby) return;
+
+        dbState.addDiaperLog({
+          babyId: activeBaby.id,
+          type: diaperForm.type,
+          time: diaperForm.time,
+          note: diaperForm.note
+        });
+
+        setDiaperForm({ type: 'wet', time: '12:00', note: '' });
+        setDbState({ ...dbState });
+      };
+
+      const handleLogGrowth = (e) => {
+        e.preventDefault();
+        if (!activeBaby) return;
+
+        dbState.addGrowthLog({
+          babyId: activeBaby.id,
+          date: growthForm.date,
+          ageMonths: Number(growthForm.ageMonths),
+          weight: Number(growthForm.weight),
+          height: Number(growthForm.height),
+          headCircumference: Number(growthForm.headCircumference)
+        });
+
+        setGrowthForm({ date: new Date().toISOString().split('T')[0], ageMonths: growthForm.ageMonths + 1, weight: growthForm.weight + 0.5, height: growthForm.height + 2, headCircumference: growthForm.headCircumference + 0.5 });
+        setDbState({ ...dbState });
+      };
+
+      // --- ADMIN ACTION ---
+      const handleSubmitArticle = (e) => {
+        e.preventDefault();
+        if (!newArticleForm.title.trim() || !newArticleForm.content.trim()) return;
+
+        const faqs = [];
+        if (newArticleForm.faqQ1 && newArticleForm.faqA1) {
+          faqs.push({ q: newArticleForm.faqQ1, a: newArticleForm.faqA1 });
+        }
+        if (newArticleForm.faqQ2 && newArticleForm.faqA2) {
+          faqs.push({ q: newArticleForm.faqQ2, a: newArticleForm.faqA2 });
+        }
+
+        const articleData = {
+          title: newArticleForm.title,
+          category: newArticleForm.category,
+          subCategory: newArticleForm.subCategory,
+          tags: newArticleForm.tags.split(',').map(t => t.trim()).filter(Boolean),
+          summary: newArticleForm.summary,
+          content: newArticleForm.content,
+          image: newArticleForm.image || "https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=600",
+          faqs: faqs
+        };
+
+        if (editingArticleId) {
+          // Cập nhật bài viết
+          dbState.updateArticle(editingArticleId, articleData);
+          alert('Cập nhật bài viết thành công!');
+          setEditingArticleId(null);
+        } else {
+          // Tạo mới bài viết
+          dbState.addArticle(articleData);
+          alert('Đăng bài viết chuẩn SEO thành công!');
+        }
+
+        setNewArticleForm({
+          title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+          metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
+        });
+        setDbState({ ...dbState });
+        setAdminTab('articles-list'); // Quay lại trang danh sách bài viết
+      };
+
+      // --- RENDER FUNCTIONS FOR VIEWS ---
+      const renderHome = () => {
+        const featured = articles.filter(a => a.isFeatured);
+        const trending = articles.filter(a => a.isTrending);
+        const currentMilestone = milestones.find(m => m.id === selectedMilestone) || milestones[0];
+
+        return (
+          <div className="fade-in space-y-12 pb-16">
+            {/* HERO SECTION */}
+            <section className="relative overflow-hidden rounded-3xl gradient-header shadow-md p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="max-w-xl space-y-6 text-left">
+                <span className="bg-brand-pink-pastel text-brand-pink-dark px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide shadow-sm">
+                  Nuôi Con Khoa Học v3.0
+                </span>
+                <h1 className="text-3xl md:text-5xl leading-tight font-extrabold text-neutral-800">
+                  Đồng hành cùng mẹ trên hành trình <span className="text-brand-pink-dark">nuôi con khỏe mạnh</span> và hạnh phúc
+                </h1>
+                <p className="text-neutral-600 text-lg leading-relaxed">
+                  Kiến thức hữu ích về trẻ sơ sinh, dinh dưỡng, giấc ngủ, sức khỏe và cộng đồng mẹ bỉm chia sẻ kinh nghiệm thực tế.
+                </p>
+                <div className="flex flex-wrap gap-4 pt-2">
+                  <button onClick={() => setCurrentTab('articles')} className="btn-primary px-8 py-3.5 font-semibold text-white flex items-center">
+                    Khám phá kiến thức <Icons.ChevronRight />
+                  </button>
+                  <button onClick={() => setCurrentTab('community')} className="bg-white border border-brand-pink-pastel text-brand-pink-dark hover:bg-brand-pink-light px-8 py-3.5 rounded-full font-semibold transition-all duration-200 shadow-sm flex items-center gap-1.5">
+                    <Icons.Users /> Tham gia cộng đồng
+                  </button>
+                </div>
+              </div>
+              <div className="relative w-full md:w-1/2 max-w-md">
+                <div className="absolute inset-0 bg-brand-pink-pastel rounded-3xl transform rotate-3 scale-95 opacity-20"></div>
+                <img 
+                  src="/viet_mom_baby.png" 
+                  alt="Mẹ và bé Việt" 
+                  className="relative rounded-3xl shadow-xl w-full object-cover aspect-[4/3] border-4 border-white"
+                />
+              </div>
+            </section>
+
+            {/* QUICK CATEGORIES */}
+            <section className="space-y-6">
+              <div className="text-center md:text-left">
+                <h2 className="text-2xl font-extrabold">Chuyên mục nổi bật</h2>
+                <p className="text-neutral-500 mt-1">Truy cập nhanh kho kiến thức theo từng chủ đề cần thiết</p>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { name: 'Trẻ sơ sinh', icon: '👶', desc: '0 - 12 tháng tuổi', color: 'bg-brand-pink-light text-brand-pink-dark' },
+                  { name: 'Dinh dưỡng cho bé', icon: '🥦', desc: 'Ăn dặm, BLW, sữa', color: 'bg-brand-mint-light text-brand-mint-dark' },
+                  { name: 'Giấc ngủ', icon: '🌙', desc: 'Sleep training, routine', color: 'bg-indigo-50 text-indigo-600' },
+                  { name: 'Sức khỏe trẻ em', icon: '🩺', desc: 'Sốt, ho, bệnh vặt', color: 'bg-red-50 text-red-600' },
+                  { name: 'Phát triển trí tuệ', icon: '🧩', desc: 'Montessori, vận động', color: 'bg-yellow-50 text-yellow-600' },
+                  { name: 'Chăm sóc mẹ sau sinh', icon: '🌸', desc: 'Phục hồi, tâm lý', color: 'bg-purple-50 text-purple-600' },
+                  { name: 'Ăn dặm kiểu Nhật', icon: '🍱', desc: 'Thực đơn ăn dặm', color: 'bg-orange-50 text-orange-600' },
+                  { name: 'Góc mẹ bỉm', icon: '💬', desc: 'Tâm sự, hỏi đáp', color: 'bg-cyan-50 text-cyan-600' }
+                ].map((cat, idx) => (
+                  <div 
+                    key={idx} 
+                    onClick={() => { setSelectedCategory(cat.name === 'Giấc ngủ' ? 'Giấc ngủ' : cat.name); setCurrentTab('articles'); }}
+                    className="soft-card p-5 cursor-pointer flex flex-col items-center md:items-start text-center md:text-left gap-3"
+                  >
+                    <span className={`w-12 h-12 ${cat.color} rounded-2xl flex items-center justify-center text-2xl shadow-sm`}>{cat.icon}</span>
+                    <div>
+                      <h3 className="font-bold text-neutral-800 text-sm md:text-base">{cat.name}</h3>
+                      <p className="text-xs text-neutral-400 mt-0.5">{cat.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* MILESTONE TRACKER */}
+            <section className="soft-card p-6 md:p-8 space-y-6">
+              <div className="text-center space-y-1.5">
+                <span className="text-xs font-semibold tracking-wider text-brand-pink-dark uppercase">Công cụ khoa học</span>
+                <h2 className="text-2xl md:text-3xl font-extrabold">Theo dõi Cột mốc Phát triển của Bé</h2>
+                <p className="text-neutral-500 max-w-xl mx-auto">Chọn độ tuổi của bé để xem các chỉ số cân nặng chiều cao chuẩn và lời khuyên y tế cần thiết.</p>
+              </div>
+
+              {/* Slider tabs */}
+              <div className="flex overflow-x-auto gap-2 pb-2 justify-start md:justify-center border-b border-neutral-100">
+                {milestones.map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setSelectedMilestone(m.id)}
+                    className={`milestone-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                      selectedMilestone === m.id 
+                        ? 'bg-brand-pink-dark text-white shadow-sm' 
+                        : 'bg-neutral-50 text-neutral-600 hover:bg-neutral-100'
+                    }`}
+                  >
+                    {m.ageLabel}
+                  </button>
+                ))}
+              </div>
+
+              {/* Milestone Details Card */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 text-left">
+                <div className="bg-brand-pink-light/40 border border-brand-pink-pastel/30 rounded-2xl p-5 space-y-4">
+                  <h4 className="font-bold text-brand-pink-dark flex items-center gap-1.5 text-lg">
+                    📏 Chỉ số phát triển tham khảo
+                  </h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-white rounded-xl p-3 shadow-sm border border-neutral-100">
+                      <p className="text-xs text-neutral-400">Bé Trai</p>
+                      <p className="font-bold text-neutral-700 text-sm mt-1">{currentMilestone.avgWeightMale} / {currentMilestone.avgHeightMale}</p>
+                    </div>
+                    <div className="bg-white rounded-xl p-3 shadow-sm border border-neutral-100">
+                      <p className="text-xs text-neutral-400">Bé Gái</p>
+                      <p className="font-bold text-neutral-700 text-sm mt-1">{currentMilestone.avgWeightFemale} / {currentMilestone.avgHeightFemale}</p>
+                    </div>
+                  </div>
+                  <div className="text-xs text-neutral-400 mt-2 bg-white/60 p-2.5 rounded-lg">
+                    *Số liệu chuẩn của Tổ chức Y tế Thế giới (WHO)
+                  </div>
+                </div>
+
+                <div className="md:col-span-2 space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <h5 className="font-bold text-neutral-800 flex items-center gap-1">💪 Vận động tinh & thô</h5>
+                      <p className="text-neutral-600 text-sm leading-relaxed">{currentMilestone.motorSkills}</p>
+                    </div>
+                    <div className="space-y-1.5">
+                      <h5 className="font-bold text-neutral-800 flex items-center gap-1">🧠 Trí tuệ & Ngôn ngữ</h5>
+                      <p className="text-neutral-600 text-sm leading-relaxed">{currentMilestone.cognitiveSkills}</p>
+                    </div>
+                  </div>
+                  <hr className="border-neutral-100 my-2" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <h5 className="font-bold text-red-600 flex items-center gap-1">🚨 Lưu ý sức khỏe</h5>
+                      <p className="text-neutral-600 text-sm leading-relaxed">{currentMilestone.healthNotes}</p>
+                    </div>
+                    <div className="space-y-1.5">
+                      <h5 className="font-bold text-brand-mint-dark flex items-center gap-1">💡 Hướng dẫn chăm sóc</h5>
+                      <p className="text-neutral-600 text-sm leading-relaxed">{currentMilestone.careTips}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ARTILCES & COMMUNITY COMBO */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Featured Articles - Left column */}
+              <div className="lg:col-span-2 space-y-6 text-left">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-extrabold">Kiến thức hữu ích nổi bật</h2>
+                  <button onClick={() => { setSelectedCategory('Tất cả'); setCurrentTab('articles'); }} className="text-brand-pink-dark font-semibold text-sm hover:underline flex items-center gap-1">
+                    Xem tất cả <Icons.ChevronRight />
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {articles.slice(0, 4).map((art) => (
+                    <article key={art.id} onClick={() => viewArticleDetail(art)} className="soft-card overflow-hidden cursor-pointer flex flex-col h-full">
+                      <div className="relative aspect-video w-full overflow-hidden bg-neutral-100">
+                        <img src={art.image} alt={art.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+                        <span className="absolute top-3 left-3 bg-brand-pink-dark text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-sm">
+                          {art.category}
+                        </span>
+                      </div>
+                      <div className="p-5 flex flex-col flex-grow justify-between space-y-3">
+                        <div className="space-y-1.5">
+                          <h3 className="font-bold text-neutral-800 text-base line-clamp-2 hover:text-brand-pink-dark">
+                            {art.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 line-clamp-2 leading-relaxed">
+                            {art.summary}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between text-xs text-neutral-400 pt-2 border-t border-neutral-50/60">
+                          <span>Bởi {art.author}</span>
+                          <span className="flex items-center gap-1">👀 {art.views} lượt đọc</span>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              {/* Community Highlights - Right column */}
+              <div className="space-y-6 text-left">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-extrabold">Mẹ bỉm đang hỏi gì?</h2>
+                  <button onClick={() => setCurrentTab('community')} className="text-brand-pink-dark font-semibold text-sm hover:underline flex items-center gap-1">
+                    Diễn đàn <Icons.ChevronRight />
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {posts.slice(0, 3).map((post) => (
+                    <div 
+                      key={post.id} 
+                      onClick={() => { setActivePost(post); setCurrentTab('community'); }}
+                      className="soft-card p-5 cursor-pointer space-y-3 bg-white"
+                    >
+                      <div className="flex items-center gap-2">
+                        <img src={post.author.avatar} alt="avatar" className="w-7 h-7 rounded-full object-cover border border-brand-pink-pastel" />
+                        <div>
+                          <p className="text-xs font-bold text-neutral-700">{post.author.nickname}</p>
+                          <span className="bg-brand-pink-light text-brand-pink-dark border border-brand-pink-pastel/20 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                            {post.author.badge}
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-neutral-400 ml-auto">
+                          {new Date(post.createdAt).toLocaleDateString('vi-VN')}
+                        </span>
+                      </div>
+                      
+                      <h3 className="font-bold text-neutral-800 text-sm hover:text-brand-pink-dark line-clamp-2">
+                        {post.title}
+                      </h3>
+                      
+                      <div className="flex flex-wrap gap-1.5">
+                        {post.tags.map((t, i) => (
+                          <span key={i} className="bg-neutral-50 text-neutral-500 text-[10px] font-medium px-2 py-0.5 rounded-full border border-neutral-100">
+                            #{t}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-3 pt-2 border-t border-neutral-50 text-xs text-neutral-400">
+                        <span className="flex items-center text-brand-pink-dark font-medium">🔼 {post.upvotes} Upvotes</span>
+                        <span className="flex items-center">💬 {post.comments.length} Bình luận</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const renderArticles = () => {
+        return (
+          <div className="fade-in grid grid-cols-1 lg:grid-cols-4 gap-8 pb-16 text-left">
+            {/* Sidebar filter */}
+            <aside className="lg:col-span-1 space-y-4">
+              <div className="soft-card p-5 space-y-4 bg-white">
+                <h3 className="font-bold text-neutral-800 text-lg border-b border-neutral-100 pb-2">📂 Chuyên mục kiến thức</h3>
+                <nav className="flex flex-col gap-1.5">
+                  {categories.map((cat, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`text-left w-full px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-between ${
+                        selectedCategory === cat 
+                          ? 'bg-brand-pink-light text-brand-pink-dark font-bold' 
+                          : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900'
+                      }`}
+                    >
+                      <span>{cat}</span>
+                      <span className="text-xs bg-neutral-100 text-neutral-400 px-2 py-0.5 rounded-full">
+                        {cat === 'Tất cả' ? articles.length : articles.filter(a => a.category === cat).length}
+                      </span>
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            </aside>
+
+            {/* List articles */}
+            <main className="lg:col-span-3 space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-extrabold text-neutral-800">{selectedCategory}</h2>
+                  <p className="text-neutral-500 text-sm mt-0.5">Tìm thấy {filteredArticles.length} bài viết chất lượng cao</p>
+                </div>
+              </div>
+
+              {filteredArticles.length === 0 ? (
+                <div className="soft-card p-12 text-center text-neutral-500">
+                  <p className="text-lg font-semibold">Chưa có bài viết trong danh mục này</p>
+                  <p className="text-sm text-neutral-400 mt-1">Mẹ vui lòng quay lại sau hoặc tham gia đặt câu hỏi thảo luận tại diễn đàn cộng đồng!</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {filteredArticles.map((art) => (
+                    <article key={art.id} onClick={() => viewArticleDetail(art)} className="soft-card overflow-hidden cursor-pointer flex flex-col bg-white">
+                      <div className="relative aspect-video w-full overflow-hidden bg-neutral-100">
+                        <img src={art.image} alt={art.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+                        <span className="absolute top-3 left-3 bg-brand-pink-dark text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-sm">
+                          {art.category}
+                        </span>
+                      </div>
+                      <div className="p-5 flex flex-col justify-between flex-grow space-y-3">
+                        <div className="space-y-1.5">
+                          <h3 className="font-bold text-neutral-800 text-base line-clamp-2 hover:text-brand-pink-dark">
+                            {art.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 line-clamp-2 leading-relaxed">
+                            {art.summary}
+                          </p>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-1">
+                          {art.tags.map((tag, idx) => (
+                            <span key={idx} className="bg-neutral-50 text-[9px] text-neutral-400 px-2 py-0.5 rounded-full border border-neutral-100">
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center justify-between text-xs text-neutral-400 pt-2.5 border-t border-neutral-50">
+                          <span>Tác giả: {art.author}</span>
+                          <span className="flex items-center gap-1">👀 {art.views} lượt xem</span>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </main>
+          </div>
+        );
+      };
+
+      const renderArticleDetail = () => {
+        if (!activeArticle) return null;
+
+        return (
+          <div className="fade-in max-w-4xl mx-auto space-y-8 pb-16 text-left">
+            <button onClick={() => setCurrentTab('articles')} className="text-neutral-500 hover:text-brand-pink-dark font-semibold text-sm flex items-center gap-1">
+              ← Quay lại chuyên mục
+            </button>
+
+            {/* Header article */}
+            <header className="space-y-4">
+              <span className="bg-brand-pink-light text-brand-pink-dark px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm border border-brand-pink-pastel/25">
+                {activeArticle.category} • {activeArticle.subCategory}
+              </span>
+              <h1 className="text-2xl md:text-4xl font-extrabold text-neutral-800 leading-tight">
+                {activeArticle.title}
+              </h1>
+              
+              <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-400 pt-2 border-b border-neutral-100 pb-4">
+                <span>Viết bởi: <strong>{activeArticle.author}</strong></span>
+                <span>• Ngày đăng: {activeArticle.createdAt}</span>
+                <span>• 👀 {activeArticle.views} lượt xem</span>
+                <span>• ❤️ {activeArticle.likes} lượt thích</span>
+              </div>
+            </header>
+
+            {/* Hero image of article */}
+            <div className="rounded-3xl overflow-hidden aspect-[21/9] bg-neutral-100 shadow-md">
+              <img src={activeArticle.image} alt={activeArticle.title} className="w-full h-full object-cover" />
+            </div>
+
+            {/* Markdown styled content */}
+            <main className="prose max-w-none text-neutral-700 bg-white p-6 md:p-10 rounded-3xl shadow-sm border border-neutral-100">
+              {/* Parse raw text markdown headers, bullet points, blockquotes */}
+              <div dangerouslySetInnerHTML={{ 
+                __html: activeArticle.content
+                  .replace(/### (.*)/g, '<h3 class="text-xl font-bold text-neutral-800 mt-6 mb-2 border-b border-neutral-50 pb-1">$1</h3>')
+                  .replace(/\* \*\*(.*?)\*\*(.*)/g, '<li class="my-1"><strong>$1</strong>$2</li>')
+                  .replace(/\* (.*)/g, '<li class="my-1">$1</li>')
+                  .replace(/> \*\*(.*?)\*\*(.*)/g, '<blockquote><strong>$1</strong>$2</blockquote>')
+                  .replace(/> (.*)/g, '<blockquote>$1</blockquote>')
+                  .replace(/\n\n/g, '<p class="my-3 leading-relaxed text-sm md:text-base text-neutral-600"></p>')
+              }} />
+            </main>
+
+            {/* SEO FAQ Schema section rendering visually */}
+            {activeArticle.faqs && activeArticle.faqs.length > 0 && (
+              <section className="soft-card p-6 bg-white space-y-4">
+                <h3 className="font-extrabold text-lg text-neutral-800 flex items-center gap-1.5 border-b border-neutral-50 pb-2">
+                  ❓ Câu hỏi thường gặp (FAQ)
+                </h3>
+                <div className="space-y-3">
+                  {activeArticle.faqs.map((faq, idx) => (
+                    <div key={idx} className="bg-brand-cream-light/50 p-4 rounded-xl border border-brand-cream-pastel/30 space-y-1.5">
+                      <p className="font-bold text-neutral-800 text-sm flex items-start gap-1">
+                        <span className="text-brand-pink-dark">Q:</span> {faq.q}
+                      </p>
+                      <p className="text-neutral-600 text-xs md:text-sm pl-4">
+                        {faq.a}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Action buttons */}
+            <div className="flex items-center gap-4 justify-end pt-2 border-t border-neutral-100">
+              <button 
+                onClick={() => { activeArticle.likes += 1; setDbState({ ...dbState }); }}
+                className="bg-brand-pink-light hover:bg-brand-pink-pastel/25 text-brand-pink-dark font-bold px-5 py-2.5 rounded-full text-sm shadow-sm flex items-center gap-1.5 transition-all"
+              >
+                ❤️ Thích bài viết ({activeArticle.likes})
+              </button>
+            </div>
+          </div>
+        );
+      };
+
+      const renderCommunity = () => {
+        return (
+          <div className="fade-in max-w-5xl mx-auto pb-16 text-left">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+              <div>
+                <h1 className="text-2xl md:text-3xl font-extrabold text-neutral-800">Cộng đồng Mẹ Bỉm Việt Nam</h1>
+                <p className="text-neutral-500 text-sm mt-0.5">Nơi chia sẻ tâm sự, kinh nghiệm thực tế & giải đáp cùng các chuyên gia y tế</p>
+              </div>
+              <button 
+                onClick={() => setShowNewPostModal(true)} 
+                className="btn-primary px-6 py-3 font-semibold flex items-center gap-1 shadow-md hover:scale-105 transform transition-all text-sm"
+              >
+                ➕ Đặt Câu Hỏi / Tâm Sự
+              </button>
+            </div>
+
+            {/* Filters tags row */}
+            <div className="flex flex-wrap gap-2 mb-6 border-b border-neutral-100 pb-4">
+              {['Tất cả', 'trẻ sơ sinh', 'ăn dặm', 'giấc ngủ', 'sữa', 'sức khỏe', 'mẹ sau sinh'].map((t, i) => (
+                <button 
+                  key={i} 
+                  className="bg-white border border-neutral-200 text-neutral-600 hover:border-brand-pink-pastel text-xs font-semibold px-4 py-2 rounded-full transition-all"
+                >
+                  #{t}
+                </button>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Posts Feed */}
+              <div className="lg:col-span-2 space-y-4">
+                {posts.map((post) => (
+                  <div key={post.id} className="soft-card p-6 bg-white space-y-4">
+                    {/* User profile line */}
+                    <div className="flex items-center gap-2.5">
+                      <img src={post.author.avatar} alt="avatar" className="w-10 h-10 rounded-full object-cover border-2 border-brand-pink-pastel" />
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <p className="font-bold text-neutral-800 text-sm">{post.author.nickname}</p>
+                          {post.isAnonymous && (
+                            <span className="bg-neutral-100 text-neutral-500 text-[9px] font-bold px-2 py-0.5 rounded">Ẩn danh</span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="bg-brand-pink-light text-brand-pink-dark border border-brand-pink-pastel/20 text-[9px] font-bold px-2 py-0.5 rounded-full">
+                            {post.author.badge}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="text-xs text-neutral-400 ml-auto">
+                        {new Date(post.createdAt).toLocaleDateString('vi-VN')} {new Date(post.createdAt).toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'})}
+                      </span>
+                    </div>
+
+                    {/* Post Content */}
+                    <div onClick={() => setActivePost(post)} className="cursor-pointer space-y-2">
+                      <h3 className="font-extrabold text-lg text-neutral-800 hover:text-brand-pink-dark transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-neutral-600 text-sm leading-relaxed line-clamp-3">
+                        {post.content}
+                      </p>
+                    </div>
+
+                    {/* Tag bubbles */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {post.tags.map((t, i) => (
+                        <span key={i} className="bg-brand-cream-light/80 text-brand-cream-dark text-xs font-semibold px-3 py-1 rounded-full border border-brand-cream-pastel/20">
+                          #{t}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Interaction toolbar */}
+                    <div className="flex items-center justify-between pt-3 border-t border-neutral-50 text-xs text-neutral-400">
+                      <div className="flex items-center gap-2">
+                        <button 
+                          onClick={() => handleVote(post.id, 'upvote')} 
+                          className="hover:bg-brand-pink-light hover:text-brand-pink-dark p-2 rounded-lg flex items-center font-bold"
+                        >
+                          🔼 Upvote ({post.upvotes})
+                        </button>
+                        <button 
+                          onClick={() => handleVote(post.id, 'helpful')} 
+                          className="hover:bg-brand-mint-light hover:text-brand-mint-dark p-2 rounded-lg flex items-center font-semibold text-brand-mint-dark"
+                        >
+                          💡 Hữu ích ({post.helpfulCount})
+                        </button>
+                        <button 
+                          onClick={() => handleVote(post.id, 'heart')} 
+                          className="hover:bg-red-50 hover:text-red-500 p-2 rounded-lg flex items-center font-semibold text-red-500"
+                        >
+                          ❤️ Tim ({post.heartCount})
+                        </button>
+                      </div>
+                      
+                      <button onClick={() => setActivePost(post)} className="hover:bg-neutral-50 p-2 rounded-lg flex items-center font-semibold">
+                        💬 {post.comments.length} Bình luận
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Sidebar Community details */}
+              <div className="space-y-6">
+                <div className="soft-card p-5 bg-white space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-lg border-b border-neutral-100 pb-2">🏆 Bảng vinh danh mẹ bỉm</h3>
+                  <div className="space-y-3">
+                    {[
+                      { name: 'Mẹ Sữa Bé Gấu', points: '520 điểm', badge: 'Chuyên Gia Ngủ', rank: '🥇', avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150' },
+                      { name: 'Mẹ Bông', points: '340 điểm', badge: 'Mẹ Siêu Chăm', rank: '🥈', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150' },
+                      { name: 'Mẹ Ốc', points: '210 điểm', badge: 'Mẹ Ăn Dặm', rank: '🥉', avatar: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=150' }
+                    ].map((user, idx) => (
+                      <div key={idx} className="flex items-center gap-3 p-2 rounded-xl bg-neutral-50/50 border border-neutral-100">
+                        <span className="text-xl">{user.rank}</span>
+                        <img src={user.avatar} alt="avatar" className="w-9 h-9 rounded-full object-cover border border-brand-pink-pastel" />
+                        <div>
+                          <p className="font-bold text-neutral-700 text-sm">{user.name}</p>
+                          <span className="text-[10px] text-neutral-400">{user.badge} • {user.points}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="soft-card p-5 bg-gradient-to-br from-brand-pink-light/40 to-brand-mint-light/40 space-y-3 text-center">
+                  <h3 className="font-extrabold text-neutral-800 text-lg">💡 Quy định cộng đồng</h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed">
+                    Website hướng tới xây dựng một sân chơi an toàn, tràn đầy sự ấm áp và hỗ trợ lẫn nhau. Vui lòng tôn trọng ý kiến cá nhân và không xúc phạm, chỉ trích mẹ bỉm khác. Mọi thông tin nhi khoa nhạy cảm cần kèm cảnh báo tham khảo y khoa.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* EXPANDED POST VIEW DRAWER / MODAL */}
+            {activePost && (
+              <div className="fixed inset-0 z-50 overflow-y-auto bg-neutral-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+                <div className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl p-6 md:p-8 space-y-6 max-h-[90vh] overflow-y-auto">
+                  <button 
+                    onClick={() => setActivePost(null)}
+                    className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-700 bg-neutral-100 hover:bg-neutral-200 p-2 rounded-full"
+                  >
+                    ✕
+                  </button>
+
+                  {/* Post details */}
+                  <div className="space-y-4 pt-2">
+                    <div className="flex items-center gap-2">
+                      <img src={activePost.author.avatar} alt="avatar" className="w-8 h-8 rounded-full object-cover border" />
+                      <div>
+                        <p className="font-bold text-neutral-800 text-sm">{activePost.author.nickname}</p>
+                        <span className="text-[10px] text-neutral-400">{new Date(activePost.createdAt).toLocaleDateString('vi-VN')}</span>
+                      </div>
+                    </div>
+
+                    <h2 className="font-extrabold text-xl md:text-2xl text-neutral-800">{activePost.title}</h2>
+                    <p className="text-neutral-600 text-sm md:text-base leading-relaxed bg-neutral-50 p-4 rounded-2xl whitespace-pre-line">
+                      {activePost.content}
+                    </p>
+
+                    <div className="flex items-center gap-3 text-xs text-neutral-400 border-b border-neutral-100 pb-4">
+                      <span className="flex items-center text-brand-pink-dark">🔼 Upvotes ({activePost.upvotes})</span>
+                      <span>💡 Hữu ích ({activePost.helpfulCount})</span>
+                      <span>❤️ Tim ({activePost.heartCount})</span>
+                    </div>
+                  </div>
+
+                  {/* Comments section */}
+                  <div className="space-y-4">
+                    <h3 className="font-bold text-neutral-800 text-base">💬 Bình luận ({activePost.comments.length})</h3>
+                    
+                    <div className="space-y-3 max-h-[30vh] overflow-y-auto pr-2">
+                      {activePost.comments.length === 0 ? (
+                        <p className="text-neutral-400 text-xs text-center py-4">Chưa có bình luận nào. Hãy trở thành mẹ đầu tiên chia sẻ lời khuyên!</p>
+                      ) : (
+                        activePost.comments.map((comm) => (
+                          <div key={comm.id} className="p-3.5 bg-neutral-50 rounded-xl space-y-2 border border-neutral-100 text-xs md:text-sm">
+                            <div className="flex items-center gap-1.5">
+                              <img src={comm.author.avatar} alt="avatar" className="w-6 h-6 rounded-full object-cover" />
+                              <span className="font-bold text-neutral-700">{comm.author.nickname}</span>
+                              <span className="bg-brand-pink-light text-brand-pink-dark text-[8px] font-bold px-1.5 py-0.5 rounded">
+                                {comm.author.badge}
+                              </span>
+                              <span className="text-[9px] text-neutral-400 ml-auto">
+                                {new Date(comm.createdAt).toLocaleDateString('vi-VN')}
+                              </span>
+                            </div>
+                            <p className="text-neutral-600 pl-7 leading-relaxed">{comm.content}</p>
+                          </div>
+                        ))
+                      )}
+                    </div>
+
+                    {/* Add comment form */}
+                    <form onSubmit={handleAddComment} className="flex gap-2">
+                      <input 
+                        type="text" 
+                        value={commentContent}
+                        onChange={(e) => setCommentContent(e.target.value)}
+                        placeholder="Lời khuyên hay động viên gửi tới mẹ..."
+                        className="flex-grow bg-neutral-50 border border-neutral-200 focus:border-brand-pink-pastel outline-none px-4 py-2.5 rounded-xl text-sm"
+                      />
+                      <button type="submit" className="btn-primary px-6 py-2.5 font-semibold text-sm">Gửi</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* NEW POST MODAL */}
+            {showNewPostModal && (
+              <div className="fixed inset-0 z-50 bg-neutral-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+                <form onSubmit={handleCreatePost} className="bg-white w-full max-w-xl rounded-3xl p-6 md:p-8 space-y-5 relative shadow-2xl">
+                  <button 
+                    type="button"
+                    onClick={() => setShowNewPostModal(false)}
+                    className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-700 bg-neutral-100 hover:bg-neutral-200 p-2 rounded-full"
+                  >
+                    ✕
+                  </button>
+                  
+                  <h2 className="font-extrabold text-xl text-neutral-800">Đặt câu hỏi / Chia sẻ câu chuyện</h2>
+                  
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Tiêu đề (ngắn gọn, tập trung câu hỏi)</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={newPostForm.title}
+                      onChange={(e) => setNewPostForm({ ...newPostForm, title: e.target.value })}
+                      placeholder="Ví dụ: Bé 3 tháng bú ít đột ngột..."
+                      className="w-full bg-neutral-50 border border-neutral-200 focus:border-brand-pink-pastel outline-none px-4 py-2.5 rounded-xl text-sm"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Nội dung chi tiết (Mô tả cặn kẽ biểu hiện của bé)</label>
+                    <textarea 
+                      required
+                      rows="4"
+                      value={newPostForm.content}
+                      onChange={(e) => setNewPostForm({ ...newPostForm, content: e.target.value })}
+                      placeholder="Mẹ hãy chia sẻ cặn kẽ tuổi bé, cân nặng, biểu hiện và vấn đề mẹ lo lắng..."
+                      className="w-full bg-neutral-50 border border-neutral-200 focus:border-brand-pink-pastel outline-none px-4 py-2.5 rounded-xl text-sm resize-none"
+                    ></textarea>
+                  </div>
+
+                  <div className="flex items-center justify-between bg-neutral-50/50 border border-neutral-100 p-3 rounded-xl">
+                    <div className="space-y-0.5">
+                      <p className="text-xs font-bold text-neutral-800">🔒 Chế độ Ẩn Danh (Anonymous)</p>
+                      <p className="text-[10px] text-neutral-400">Cho phép mẹ chia sẻ các vấn đề nhạy cảm kín đáo</p>
+                    </div>
+                    <input 
+                      type="checkbox" 
+                      checked={newPostForm.isAnonymous}
+                      onChange={(e) => setNewPostForm({ ...newPostForm, isAnonymous: e.target.checked })}
+                      className="w-5 h-5 accent-brand-pink-dark rounded cursor-pointer"
+                    />
+                  </div>
+
+                  <button type="submit" className="w-full btn-primary py-3 font-semibold text-sm">Đăng bài ngay</button>
+                </form>
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      const renderTools = () => {
+        if (!activeBaby) {
+          return (
+            <div className="fade-in max-w-xl mx-auto p-8 soft-card text-center bg-white space-y-4">
+              <p className="text-lg font-bold">Mẹ ơi, vui lòng tạo hồ sơ cho bé trước nhé!</p>
+              <p className="text-sm text-neutral-400">Tạo hồ sơ bé giúp tự động tính lịch tiêm chủng khoa học và quản lý các chỉ số sinh học chính xác hơn.</p>
+              <button onClick={() => setShowAddBabyModal(true)} className="btn-primary px-6 py-2.5 font-semibold text-sm">➕ Tạo hồ sơ bé mới</button>
+            </div>
+          );
+        }
+
+        const feedingLogs = dbState.getFeedingLogs(activeBaby.id);
+        const sleepLogs = dbState.getSleepLogs(activeBaby.id);
+        const diaperLogs = dbState.getDiaperLogs(activeBaby.id);
+        const growthLogs = dbState.getGrowthLogs(activeBaby.id);
+        const vaccinations = dbState.getVaccinations(activeBaby.id);
+
+        const currentGrowth = growthLogs[growthLogs.length - 1] || { weight: 3.2, height: 50, headCircumference: 33.5 };
+
+        return (
+          <div className="fade-in max-w-5xl mx-auto pb-16 text-left space-y-8">
+            {/* Baby selector widget */}
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-white p-5 rounded-3xl border border-neutral-100 shadow-sm">
+              <div className="flex items-center gap-3">
+                <span className="w-12 h-12 rounded-2xl bg-brand-pink-light text-brand-pink-dark flex items-center justify-center text-2xl shadow-sm">👶</span>
+                <div>
+                  <h2 className="font-extrabold text-lg text-neutral-800">{activeBaby.name}</h2>
+                  <p className="text-xs text-neutral-400 mt-0.5">
+                    Sinh ngày: {activeBaby.birthdate} • Giới tính: {activeBaby.gender === 'female' ? 'Bé Gái 🌸' : 'Bé Trai 💎'}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <button onClick={() => setShowAddBabyModal(true)} className="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 text-neutral-600 text-xs font-semibold px-4 py-2 rounded-xl">
+                  ➕ Thêm bé
+                </button>
+              </div>
+            </div>
+
+            {/* Sub navigation tools */}
+            <div className="flex overflow-x-auto gap-2 pb-2 border-b border-neutral-100">
+              {[
+                { tab: 'summary', name: '📊 Tổng quan', color: 'text-neutral-700' },
+                { tab: 'feeding', name: '🍼 Nhật ký Bú sữa', color: 'text-brand-pink-dark' },
+                { tab: 'sleep', name: '🌙 Nhật ký Giấc ngủ', color: 'text-indigo-600' },
+                { tab: 'diaper', name: '🧷 Nhật ký Tã bỉm', color: 'text-amber-600' },
+                { tab: 'growth', name: '📈 Growth Tracker', color: 'text-brand-mint-dark' },
+                { tab: 'vaccine', name: '💉 Lịch Tiêm chủng', color: 'text-red-500' }
+              ].map((sub, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveToolSubTab(sub.tab)}
+                  className={`flex-shrink-0 px-4 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all ${
+                    activeToolSubTab === sub.tab 
+                      ? 'bg-neutral-900 text-white shadow-sm' 
+                      : 'bg-white border border-neutral-150 text-neutral-600 hover:bg-neutral-50'
+                  }`}
+                >
+                  {sub.name}
+                </button>
+              ))}
+            </div>
+
+            {/* TAB PANELS FOR SPECIFIC TRACKERS */}
+            {activeToolSubTab === 'summary' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Stats cards */}
+                <div className="bg-white p-5 rounded-2xl border border-neutral-100 shadow-sm space-y-3">
+                  <h3 className="font-extrabold text-neutral-800 text-base">🍼 Cự bú gần nhất</h3>
+                  <div className="p-3 bg-brand-pink-light/30 border border-brand-pink-pastel/30 rounded-xl text-xs space-y-1">
+                    {feedingLogs[0] ? (
+                      <>
+                        <p className="font-semibold">Cữ {feedingLogs[0].time}</p>
+                        <p className="text-neutral-500">Loại: {feedingLogs[0].type === 'breast' ? 'Sữa mẹ (Bình)' : feedingLogs[0].type === 'formula' ? 'Sữa công thức' : 'Bú trực tiếp'}</p>
+                        {feedingLogs[0].amount > 0 && <p className="text-neutral-500">Lượng: {feedingLogs[0].amount} ml</p>}
+                      </>
+                    ) : <p className="text-neutral-400">Chưa có bản ghi cữ bú nào.</p>}
+                  </div>
+                </div>
+
+                <div className="bg-white p-5 rounded-2xl border border-neutral-100 shadow-sm space-y-3">
+                  <h3 className="font-extrabold text-neutral-800 text-base">🌙 Giấc ngủ gần đây</h3>
+                  <div className="p-3 bg-indigo-50 border border-indigo-100 rounded-xl text-xs space-y-1">
+                    {sleepLogs[0] ? (
+                      <>
+                        <p className="font-semibold">Ngủ lúc {sleepLogs[0].startTime} - {sleepLogs[0].endTime}</p>
+                        <p className="text-neutral-500">Thời lượng: {sleepLogs[0].duration} phút</p>
+                        <p className="text-neutral-500">Đánh giá: {sleepLogs[0].quality === 'good' ? 'Tốt 🌟' : 'Bình thường'}</p>
+                      </>
+                    ) : <p className="text-neutral-400">Chưa ghi nhận giấc ngủ nào.</p>}
+                  </div>
+                </div>
+
+                <div className="bg-white p-5 rounded-2xl border border-neutral-100 shadow-sm space-y-3">
+                  <h3 className="font-extrabold text-neutral-800 text-base">📏 Cân nặng / Chiều cao</h3>
+                  <div className="p-3 bg-brand-mint-light/40 border border-brand-mint-pastel/30 rounded-xl text-xs space-y-1">
+                    <p className="font-semibold">Số đo tháng hiện tại</p>
+                    <p className="text-neutral-500">Cân nặng: {currentGrowth.weight} kg</p>
+                    <p className="text-neutral-500">Chiều cao: {currentGrowth.height} cm</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeToolSubTab === 'feeding' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Form input */}
+                <form onSubmit={handleLogFeeding} className="bg-white p-6 rounded-2xl border border-neutral-100 space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-lg border-b border-neutral-100 pb-2">🍼 Ghi nhận cữ bú mới</h3>
+                  
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Loại bú</label>
+                    <select 
+                      value={feedingForm.type}
+                      onChange={(e) => setFeedingForm({ ...feedingForm, type: e.target.value })}
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2.5 rounded-xl text-xs md:text-sm"
+                    >
+                      <option value="breast">Sữa mẹ vắt bình</option>
+                      <option value="formula">Sữa công thức</option>
+                      <option value="direct">Bú trực tiếp 2 ngực</option>
+                    </select>
+                  </div>
+
+                  {feedingForm.type !== 'direct' ? (
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-neutral-600">Lượng sữa (ml)</label>
+                      <input 
+                        type="number" 
+                        required
+                        value={feedingForm.amount}
+                        onChange={(e) => setFeedingForm({ ...feedingForm, amount: e.target.value })}
+                        className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2.5 rounded-xl text-xs md:text-sm"
+                      />
+                    </div>
+                  ) : (
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-neutral-600">Thời gian bú (phút)</label>
+                      <input 
+                        type="number" 
+                        required
+                        value={feedingForm.duration}
+                        onChange={(e) => setFeedingForm({ ...feedingForm, duration: e.target.value })}
+                        className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2.5 rounded-xl text-xs md:text-sm"
+                      />
+                    </div>
+                  )}
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Thời gian bú (Bỏ trống để lấy giờ hiện tại)</label>
+                    <input 
+                      type="time" 
+                      value={feedingForm.time || ''}
+                      onChange={(e) => setFeedingForm({ ...feedingForm, time: e.target.value })}
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2.5 rounded-xl text-xs md:text-sm font-sans"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Ghi chú (biểu hiện của bé)</label>
+                    <input 
+                      type="text" 
+                      value={feedingForm.note}
+                      onChange={(e) => setFeedingForm({ ...feedingForm, note: e.target.value })}
+                      placeholder="Ví dụ: Bé bú ngon, ợ hơi tốt..."
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2.5 rounded-xl text-xs md:text-sm"
+                    />
+                  </div>
+
+                  <button type="submit" className="w-full btn-primary py-2.5 font-bold text-sm">💾 Lưu cữ bú</button>
+                </form>
+
+                {/* History logs */}
+                <div className="md:col-span-2 bg-white p-6 rounded-2xl border border-neutral-100 space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-lg border-b border-neutral-100 pb-2">📋 Lịch sử cữ bú trong ngày</h3>
+                  <div className="space-y-2 max-h-[40vh] overflow-y-auto pr-2">
+                    {feedingLogs.map((log) => (
+                      <div key={log.id} className="flex justify-between items-center p-3 bg-neutral-50 rounded-xl border border-neutral-100 text-xs md:text-sm">
+                        <div className="flex items-center gap-3">
+                          <span className="w-8 h-8 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center">🍼</span>
+                          <div>
+                            <p className="font-bold">{log.type === 'breast' ? 'Sữa mẹ (bình)' : log.type === 'formula' ? 'Sữa công thức' : 'Bú trực tiếp'}</p>
+                            <p className="text-[10px] text-neutral-400">Giờ bú: {log.time}</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-brand-pink-dark">
+                            {log.type === 'direct' ? `${log.duration} phút` : `${log.amount} ml`}
+                          </p>
+                          <p className="text-[10px] text-neutral-400">{log.note}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeToolSubTab === 'sleep' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Form Input */}
+                <form onSubmit={handleLogSleep} className="bg-white p-6 rounded-2xl border border-neutral-100 space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-lg border-b border-neutral-100 pb-2">🌙 Ghi nhận Giấc ngủ mới</h3>
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-neutral-600">Bắt đầu</label>
+                      <input 
+                        type="time" 
+                        required
+                        value={sleepForm.startTime}
+                        onChange={(e) => setSleepForm({ ...sleepForm, startTime: e.target.value })}
+                        className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2 rounded-xl text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-neutral-600">Tỉnh dậy</label>
+                      <input 
+                        type="time" 
+                        required
+                        value={sleepForm.endTime}
+                        onChange={(e) => setSleepForm({ ...sleepForm, endTime: e.target.value })}
+                        className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2 rounded-xl text-xs"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Chất lượng giấc ngủ</label>
+                    <select 
+                      value={sleepForm.quality}
+                      onChange={(e) => setSleepForm({ ...sleepForm, quality: e.target.value })}
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2.5 rounded-xl text-xs md:text-sm"
+                    >
+                      <option value="good">Tốt (Sâu giấc, tự ngủ)</option>
+                      <option value="medium">Bình thường (Giật mình nhẹ)</option>
+                      <option value="poor">Kém (Quấy khóc nhiều)</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Ghi chú giấc ngủ</label>
+                    <input 
+                      type="text" 
+                      value={sleepForm.note}
+                      onChange={(e) => setSleepForm({ ...sleepForm, note: e.target.value })}
+                      placeholder="Ví dụ: Ngủ trong cũi yên tĩnh..."
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2.5 rounded-xl text-xs md:text-sm"
+                    />
+                  </div>
+
+                  <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-full py-2.5 font-bold text-sm shadow-md">💾 Lưu giấc ngủ</button>
+                </form>
+
+                {/* History logs */}
+                <div className="md:col-span-2 bg-white p-6 rounded-2xl border border-neutral-100 space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-lg border-b border-neutral-100 pb-2">📋 Nhật ký giấc ngủ gần đây</h3>
+                  <div className="space-y-2 max-h-[40vh] overflow-y-auto pr-2">
+                    {sleepLogs.map((log) => (
+                      <div key={log.id} className="flex justify-between items-center p-3 bg-neutral-50 rounded-xl border border-neutral-100 text-xs md:text-sm">
+                        <div className="flex items-center gap-3">
+                          <span className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">🌙</span>
+                          <div>
+                            <p className="font-bold">Ngủ: {log.startTime} - {log.endTime}</p>
+                            <p className="text-[10px] text-neutral-400">Chất lượng: {log.quality === 'good' ? 'Tốt ⭐' : log.quality === 'medium' ? 'Tạm' : 'Kém'}</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-indigo-600">
+                            {log.duration} phút
+                          </p>
+                          <p className="text-[10px] text-neutral-400">{log.note}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeToolSubTab === 'diaper' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Form Input */}
+                <form onSubmit={handleLogDiaper} className="bg-white p-6 rounded-2xl border border-neutral-100 space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-lg border-b border-neutral-100 pb-2">🧷 Ghi nhận Thay tã bỉm</h3>
+                  
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Loại tã bỉm</label>
+                    <select 
+                      value={diaperForm.type}
+                      onChange={(e) => setDiaperForm({ ...diaperForm, type: e.target.value })}
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2.5 rounded-xl text-xs md:text-sm"
+                    >
+                      <option value="wet">Tè nước tiểu (Wet)</option>
+                      <option value="dirty">Đi ngoài phân (Dirty)</option>
+                      <option value="both">Cả hai (Wet & Dirty)</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Thời gian thay</label>
+                    <input 
+                      type="time" 
+                      required
+                      value={diaperForm.time}
+                      onChange={(e) => setDiaperForm({ ...diaperForm, time: e.target.value })}
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2 rounded-xl text-xs"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Màu phân / Ghi chú</label>
+                    <input 
+                      type="text" 
+                      value={diaperForm.note}
+                      onChange={(e) => setDiaperForm({ ...diaperForm, note: e.target.value })}
+                      placeholder="Ví dụ: Phân vàng sệt, hạt cải..."
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2.5 rounded-xl text-xs md:text-sm"
+                    />
+                  </div>
+
+                  <button type="submit" className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-full py-2.5 font-bold text-sm shadow-md">💾 Lưu cữ tã</button>
+                </form>
+
+                {/* History logs */}
+                <div className="md:col-span-2 bg-white p-6 rounded-2xl border border-neutral-100 space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-lg border-b border-neutral-100 pb-2">📋 Lịch sử tã bỉm trong ngày</h3>
+                  <div className="space-y-2 max-h-[40vh] overflow-y-auto pr-2">
+                    {diaperLogs.map((log) => (
+                      <div key={log.id} className="flex justify-between items-center p-3 bg-neutral-50 rounded-xl border border-neutral-100 text-xs md:text-sm">
+                        <div className="flex items-center gap-3">
+                          <span className="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center">🧷</span>
+                          <div>
+                            <p className="font-bold">Thay tã: {log.type === 'wet' ? 'Tè nước' : log.type === 'dirty' ? 'Đi ngoài' : 'Cả tè và đi ngoài'}</p>
+                            <p className="text-[10px] text-neutral-400">Giờ thay: {log.time}</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-[10px] text-neutral-400">{log.note}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeToolSubTab === 'growth' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Form Input */}
+                <form onSubmit={handleLogGrowth} className="bg-white p-6 rounded-2xl border border-neutral-100 space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-lg border-b border-neutral-100 pb-2">📈 Ghi nhận Chỉ số mới</h3>
+                  
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Độ tuổi của bé (Tháng)</label>
+                    <input 
+                      type="number" 
+                      required
+                      value={growthForm.ageMonths}
+                      onChange={(e) => setGrowthForm({ ...growthForm, ageMonths: Number(e.target.value) })}
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-3.5 py-2 rounded-xl text-xs"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-bold text-neutral-600">Cân nặng (kg)</label>
+                      <input 
+                        type="number" 
+                        step="0.1"
+                        required
+                        value={growthForm.weight}
+                        onChange={(e) => setGrowthForm({ ...growthForm, weight: Number(e.target.value) })}
+                        className="w-full bg-neutral-50 border border-neutral-200 outline-none px-2 py-1.5 rounded-lg text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-bold text-neutral-600">Chiều cao (cm)</label>
+                      <input 
+                        type="number" 
+                        step="0.1"
+                        required
+                        value={growthForm.height}
+                        onChange={(e) => setGrowthForm({ ...growthForm, height: Number(e.target.value) })}
+                        className="w-full bg-neutral-50 border border-neutral-200 outline-none px-2 py-1.5 rounded-lg text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-bold text-neutral-600">Chu vi đầu (cm)</label>
+                      <input 
+                        type="number" 
+                        step="0.1"
+                        required
+                        value={growthForm.headCircumference}
+                        onChange={(e) => setGrowthForm({ ...growthForm, headCircumference: Number(e.target.value) })}
+                        className="w-full bg-neutral-50 border border-neutral-200 outline-none px-2 py-1.5 rounded-lg text-xs"
+                      />
+                    </div>
+                  </div>
+
+                  <button type="submit" className="w-full btn-mint py-2.5 font-bold text-sm">💾 Lưu chỉ số</button>
+                </form>
+
+                {/* Graph Visualization */}
+                <div className="md:col-span-2 bg-white p-6 rounded-2xl border border-neutral-100 space-y-4">
+                  <h3 className="font-extrabold text-neutral-800 text-lg border-b border-neutral-100 pb-2">📈 Biểu đồ Tăng trưởng WHO</h3>
+                  <div className="w-full relative min-h-[30vh]">
+                    <canvas ref={chartRef}></canvas>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeToolSubTab === 'vaccine' && (
+              <div className="space-y-6 text-left">
+                {/* 1. Header controls & Toggles */}
+                <div className="bg-white p-6 rounded-2xl border border-neutral-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="font-extrabold text-neutral-800 text-xl flex items-center gap-2">
+                      💉 Sổ tay Lịch tiêm chủng Quốc gia
+                    </h3>
+                    <p className="text-xs text-neutral-500 mt-1">
+                      Tổng hợp chuẩn y khoa từ Bộ Y tế & các dòng vắc-xin dịch vụ thiết yếu cho bé từ 0-24 tháng tuổi.
+                    </p>
+                  </div>
+                  
+                  {/* Toggle view buttons */}
+                  <div className="flex bg-neutral-100 p-1 rounded-xl self-start md:self-auto">
+                    <button
+                      onClick={() => setVaccineActiveTab('tracker')}
+                      className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                        vaccineActiveTab === 'tracker'
+                          ? 'bg-white text-brand-pink-dark shadow-sm'
+                          : 'text-neutral-500 hover:text-neutral-800'
+                      }`}
+                    >
+                      📋 Sổ tiêm bé {activeBaby ? `(${activeBaby.name})` : ''}
+                    </button>
+                    <button
+                      onClick={() => setVaccineActiveTab('master')}
+                      className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                        vaccineActiveTab === 'master'
+                          ? 'bg-white text-brand-pink-dark shadow-sm'
+                          : 'text-neutral-500 hover:text-neutral-800'
+                      }`}
+                    >
+                      📖 Tra cứu Lịch Bộ Y Tế
+                    </button>
+                  </div>
+                </div>
+
+                {/* 2. Vaccine Active Tab Views */}
+                {vaccineActiveTab === 'tracker' ? (
+                  // TRACKER VIEW
+                  <div className="bg-white p-6 md:p-8 rounded-2xl border border-neutral-100 space-y-4">
+                    <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
+                      <h4 className="font-bold text-neutral-800 text-base">📋 Tiến độ tiêm chủng của bé</h4>
+                      <span className="bg-red-50 text-red-600 text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                        Đã hoàn thành {vaccinations.filter(v => v.status === 'done').length}/{vaccinations.length} mũi tiêm
+                      </span>
+                    </div>
+                    
+                    <p className="text-xs text-neutral-400 leading-relaxed bg-brand-pink-light/35 p-3 rounded-xl border border-brand-pink-pastel/20">
+                      💡 <strong>Gợi ý thông thái:</strong> Hệ thống tự động tính toán ngày tiêm dự kiến dựa trên ngày sinh <strong>{activeBaby.birthdate}</strong> của bé. Khi bé đi tiêm về, mẹ hãy tick chọn hoàn thành để cập nhật tiến trình phát triển miễn dịch.
+                    </p>
+
+                    <div className="space-y-2.5 max-h-[60vh] overflow-y-auto pr-1">
+                      {vaccinations.length === 0 ? (
+                        <p className="text-xs text-neutral-400 text-center py-4">Chưa có lịch tiêm chủng được khởi tạo.</p>
+                      ) : (
+                        vaccinations.map((vac) => (
+                          <div 
+                            key={vac.id}
+                            className={`flex flex-col md:flex-row md:items-center justify-between p-4 rounded-2xl border text-xs md:text-sm transition-all ${
+                              vac.status === 'done' 
+                                ? 'bg-neutral-50/50 border-neutral-200 opacity-80' 
+                                : 'bg-white border-neutral-150 shadow-sm hover:border-red-300'
+                            }`}
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className="relative flex items-center justify-center mt-0.5">
+                                <input 
+                                  type="checkbox" 
+                                  checked={vac.status === 'done'}
+                                  onChange={() => { dbState.toggleVaccinationStatus(vac.id); setDbState({ ...dbState }); }}
+                                  className="w-5 h-5 accent-red-500 rounded-full cursor-pointer"
+                                />
+                              </div>
+                              <div>
+                                <p className="font-extrabold text-neutral-800 text-sm md:text-base">{vac.vaccineName}</p>
+                                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-1 text-[10px] text-neutral-500">
+                                  <span className="bg-neutral-100 px-2 py-0.5 rounded-full font-bold text-neutral-600">🛡️ {vac.disease}</span>
+                                  <span>•</span>
+                                  <span>Độ tuổi khuyến nghị: <strong>{vac.scheduleAge}</strong></span>
+                                </div>
+                                {vac.completedDate && (
+                                  <p className="text-[10px] text-brand-mint-dark font-extrabold mt-1 flex items-center gap-1">
+                                    ✓ Hoàn thành ngày: {vac.completedDate}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="text-left md:text-right mt-3 md:mt-0 pl-8 md:pl-0 flex flex-col items-start md:items-end justify-center">
+                              <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold shadow-sm ${
+                                vac.status === 'done' 
+                                  ? 'bg-brand-mint-light text-brand-mint-dark' 
+                                  : 'bg-red-50 text-red-600'
+                              }`}>
+                                {vac.status === 'done' ? '✓ Đã tiêm' : '⏳ Chờ tiêm'}
+                              </span>
+                              <p className="text-[10px] text-neutral-400 mt-1">Dự kiến: <span className="font-semibold">{vac.dueDate}</span></p>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  // MASTER SCHEDULE REFERENCE VIEW
+                  <div className="bg-white p-6 md:p-8 rounded-2xl border border-neutral-100 space-y-6">
+                    {/* Header info */}
+                    <div className="border-b border-neutral-100 pb-4 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="bg-brand-mint-light text-brand-mint-dark text-xs font-bold px-2.5 py-1 rounded-md">Bộ Y Tế</span>
+                        <h4 className="font-bold text-neutral-800 text-base">📖 Biểu đồ Lịch tiêm chủng Quốc gia từ 0 - 24 tháng</h4>
+                      </div>
+                      <p className="text-xs text-neutral-500 leading-relaxed">
+                        Hệ thống dữ liệu bao gồm Chương trình Tiêm chủng Mở rộng (TCMR - miễn phí tại các Trạm y tế Phường/Xã) và các mũi vắc-xin dịch vụ (Có phí tại các Trung tâm tiêm chủng như VNVC, phòng khám) được khuyến khích tiêm đầy đủ để bảo vệ bé.
+                      </p>
+                    </div>
+
+                    {/* Filter and Search Bar */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                      {/* Search */}
+                      <div className="lg:col-span-1 relative">
+                        <input
+                          type="text"
+                          value={vaccineSearchQuery}
+                          onChange={(e) => setVaccineSearchQuery(e.target.value)}
+                          placeholder="Tìm vắc-xin hoặc tên bệnh (vd: Lao, Sởi...)"
+                          className="w-full bg-neutral-50 border border-neutral-200 outline-none pl-9 pr-4 py-2 rounded-xl text-xs md:text-sm font-sans"
+                        />
+                        <div className="absolute left-3 top-2.5">
+                          <Icons.Search />
+                        </div>
+                      </div>
+
+                      {/* Age group filter scrollable buttons */}
+                      <div className="lg:col-span-2 flex overflow-x-auto gap-2 pb-1 pr-2 border-b lg:border-none border-neutral-50">
+                        {['Tất cả', 'Sơ sinh', '2-4 tháng', '6 tháng', '9-12 tháng', '18-24 tháng'].map((ageGroup) => (
+                          <button
+                            key={ageGroup}
+                            onClick={() => setVaccineFilterAge(ageGroup)}
+                            className={`flex-shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                              vaccineFilterAge === ageGroup
+                                ? 'bg-brand-pink-dark text-white shadow-sm'
+                                : 'bg-neutral-50 text-neutral-600 hover:bg-neutral-100'
+                            }`}
+                          >
+                            {ageGroup}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Vaccination lookup grid cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {VACCINE_MASTER_SCHEDULE
+                        .filter((item) => {
+                          const matchesAge = vaccineFilterAge === 'Tất cả' || item.ageGroup === vaccineFilterAge;
+                          const matchesQuery = vaccineSearchQuery.trim() === '' || 
+                            item.name.toLowerCase().includes(vaccineSearchQuery.toLowerCase()) ||
+                            item.disease.toLowerCase().includes(vaccineSearchQuery.toLowerCase());
+                          return matchesAge && matchesQuery;
+                        })
+                        .map((item, index) => (
+                          <div 
+                            key={index}
+                            className="bg-neutral-50/65 border border-neutral-150 hover:border-brand-pink-pastel/50 rounded-2xl p-5 space-y-3.5 transition-all duration-200 flex flex-col justify-between"
+                          >
+                            <div className="space-y-2">
+                              {/* Header Card */}
+                              <div className="flex justify-between items-start gap-2">
+                                <span className="bg-brand-pink-pastel text-brand-pink-dark text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                                  ⏱️ {item.age}
+                                </span>
+                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                                  item.type.includes('Miễn phí')
+                                    ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                                    : item.type.includes('Có phí')
+                                    ? 'bg-amber-50 text-amber-600 border-amber-100'
+                                    : 'bg-indigo-50 text-indigo-600 border-indigo-100'
+                                }`}>
+                                  {item.type}
+                                </span>
+                              </div>
+
+                              {/* Title */}
+                              <h5 className="font-extrabold text-neutral-800 text-sm md:text-base leading-snug">
+                                {item.name}
+                              </h5>
+                              
+                              {/* Disease */}
+                              <div className="text-xs text-neutral-600 space-y-1">
+                                <p className="font-bold flex items-center gap-1.5 text-neutral-700">
+                                  🛡️ Phòng bệnh: <span className="font-medium text-neutral-600">{item.disease}</span>
+                                </p>
+                                <p className="font-bold flex items-center gap-1.5 text-neutral-700">
+                                  💉 Phác đồ: <span className="font-bold text-brand-pink-dark">{item.doses}</span>
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Medical Tip / Footnote */}
+                            <div className="bg-white border border-neutral-100 rounded-xl p-3 text-[11px] text-neutral-500 leading-relaxed italic">
+                              💡 <strong>Lưu ý:</strong> {item.note}
+                            </div>
+                          </div>
+                        ))
+                      }
+                      
+                      {/* Empty state search */}
+                      {VACCINE_MASTER_SCHEDULE
+                        .filter((item) => {
+                          const matchesAge = vaccineFilterAge === 'Tất cả' || item.ageGroup === vaccineFilterAge;
+                          const matchesQuery = vaccineSearchQuery.trim() === '' || 
+                            item.name.toLowerCase().includes(vaccineSearchQuery.toLowerCase()) ||
+                            item.disease.toLowerCase().includes(vaccineSearchQuery.toLowerCase());
+                          return matchesAge && matchesQuery;
+                        }).length === 0 && (
+                          <div className="col-span-1 md:col-span-2 text-center py-12 text-neutral-400">
+                            🔍 Không tìm thấy vắc-xin hay bệnh lý nào phù hợp với từ khóa của mẹ.
+                          </div>
+                      )}
+                    </div>
+
+                    {/* Disclaimer */}
+                    <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-4 text-[10px] text-neutral-500 leading-relaxed">
+                      ⚠️ <strong>Tuyên bố miễn trừ trách nhiệm y tế:</strong> Lịch tiêm trên đây được tổng hợp dựa trên Phác đồ Tiêm chủng Mở rộng Quốc gia của Bộ Y tế Việt Nam và khuyến cáo nhi khoa chuẩn. Tuy nhiên, lịch tiêm thực tế của mỗi trẻ có thể được điều chỉnh linh hoạt dựa trên tình trạng sức khỏe cụ thể, tiền sử bệnh án và chỉ định trực tiếp từ Bác sĩ khám sàng lọc trước tiêm tại các cơ sở y tế. Bố mẹ nên trao đổi trực tiếp với bác sĩ để có lộ trình chính xác nhất.
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* ADD BABY MODAL */}
+            {showAddBabyModal && (
+              <div className="fixed inset-0 z-50 bg-neutral-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+                <form onSubmit={handleAddBaby} className="bg-white w-full max-w-sm rounded-3xl p-6 md:p-8 space-y-4 relative shadow-2xl">
+                  <button 
+                    type="button"
+                    onClick={() => setShowAddBabyModal(false)}
+                    className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-700 bg-neutral-100 hover:bg-neutral-200 p-2 rounded-full"
+                  >
+                    ✕
+                  </button>
+                  
+                  <h2 className="font-extrabold text-xl text-neutral-800">Thêm hồ sơ Bé yêu</h2>
+                  
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Tên của bé</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={newBabyForm.name}
+                      onChange={(e) => setNewBabyForm({ ...newBabyForm, name: e.target.value })}
+                      placeholder="Ví dụ: Nguyễn Tuệ Lâm"
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Ngày sinh của bé</label>
+                    <input 
+                      type="date" 
+                      required
+                      value={newBabyForm.birthdate}
+                      onChange={(e) => setNewBabyForm({ ...newBabyForm, birthdate: e.target.value })}
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Giới tính</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button 
+                        type="button"
+                        onClick={() => setNewBabyForm({ ...newBabyForm, gender: 'female' })}
+                        className={`py-2 rounded-xl text-xs font-semibold border transition-all ${
+                          newBabyForm.gender === 'female' ? 'border-brand-pink-dark text-brand-pink-dark bg-brand-pink-light/40' : 'border-neutral-200 text-neutral-500'
+                        }`}
+                      >
+                        🌸 Bé Gái
+                      </button>
+                      <button 
+                        type="button"
+                        onClick={() => setNewBabyForm({ ...newBabyForm, gender: 'male' })}
+                        className={`py-2 rounded-xl text-xs font-semibold border transition-all ${
+                          newBabyForm.gender === 'male' ? 'border-blue-400 text-blue-500 bg-blue-50/40' : 'border-neutral-200 text-neutral-500'
+                        }`}
+                      >
+                        💎 Bé Trai
+                      </button>
+                    </div>
+                  </div>
+
+                  <button type="submit" className="w-full btn-primary py-3 font-semibold text-sm shadow-md">Đăng ký hồ sơ bé</button>
+                </form>
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      const renderAi = () => {
+        return (
+          <div className="fade-in max-w-4xl mx-auto pb-16 text-left flex flex-col h-[75vh] bg-white rounded-3xl shadow-sm border border-neutral-100 overflow-hidden">
+            {/* Header info */}
+            <div className="bg-brand-pink-light/60 border-b border-neutral-150 p-4 md:p-5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="w-10 h-10 rounded-2xl bg-brand-pink-dark text-white flex items-center justify-center text-xl shadow-md chat-pulse">🤖</span>
+                <div>
+                  <h2 className="font-extrabold text-neutral-800 text-sm md:text-base flex items-center gap-1.5">
+                    Trợ lý AI Mẹ Bỉm
+                  </h2>
+                  <p className="text-[10px] text-brand-pink-dark font-bold">● Đang trực tuyến hỗ trợ mẹ bỉm 24/7</p>
+                </div>
+              </div>
+              
+              <span className="bg-neutral-150 text-neutral-500 text-[10px] font-bold px-3 py-1.5 rounded-full border border-neutral-200">
+                Medical Disclaimer Active
+              </span>
+            </div>
+
+            {/* Conversation Messages area */}
+            <div className="flex-grow overflow-y-auto p-4 md:p-6 space-y-4">
+              {aiMessages.map((msg, idx) => (
+                <div key={idx} className={`flex items-start gap-2.5 max-w-[85%] ${msg.sender === 'user' ? 'ml-auto flex-row-reverse' : ''}`}>
+                  <span className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-sm shadow-sm ${
+                    msg.sender === 'user' ? 'bg-brand-mint-dark text-white' : 'bg-brand-pink-dark text-white'
+                  }`}>
+                    {msg.sender === 'user' ? '👩' : '🤖'}
+                  </span>
+                  
+                  <div className={`p-4 rounded-2xl text-xs md:text-sm leading-relaxed ${
+                    msg.sender === 'user' 
+                      ? 'bg-brand-mint-dark text-white bubble-user shadow-sm' 
+                      : 'bg-neutral-50 text-neutral-700 border border-neutral-150 bubble-ai shadow-sm space-y-2'
+                  }`}>
+                    {msg.title && (
+                      <h4 className="font-bold text-neutral-800 text-sm md:text-base border-b border-neutral-200/50 pb-1 mb-2">{msg.title}</h4>
+                    )}
+                    
+                    {msg.sender === 'ai' ? (
+                      <div dangerouslySetInnerHTML={{ 
+                        __html: msg.text
+                          .replace(/### (.*)/g, '<h4 class="text-sm font-bold text-neutral-800 mt-4 mb-1">$1</h4>')
+                          .replace(/\* \*\*(.*?)\*\*(.*)/g, '<li class="my-0.5"><strong>$1</strong>$2</li>')
+                          .replace(/\* (.*)/g, '<li class="my-0.5">$1</li>')
+                          .replace(/> \*\*(.*?)\*\*(.*)/g, '<div class="border-l-4 border-brand-pink-pastel pl-3 my-3 italic text-neutral-600 bg-brand-pink-light/30 rounded p-1.5"><strong>$1</strong>$2</div>')
+                          .replace(/> (.*)/g, '<div class="border-l-4 border-brand-pink-pastel pl-3 my-3 italic text-neutral-600 bg-brand-pink-light/30 rounded p-1.5">$1</div>')
+                          .replace(/\n\n/g, '<p class="my-2"></p>')
+                      }} />
+                    ) : (
+                      <p>{msg.text}</p>
+                    )}
+                    
+                    <p className={`text-[9px] mt-2 block text-right ${msg.sender === 'user' ? 'text-white/60' : 'text-neutral-400'}`}>{msg.time}</p>
+                  </div>
+                </div>
+              ))}
+              {aiTyping && (
+                <div className="flex items-center gap-2 max-w-[50%]">
+                  <span className="w-8 h-8 rounded-full bg-brand-pink-dark text-white flex items-center justify-center text-sm">🤖</span>
+                  <div className="bg-neutral-50 border border-neutral-150 p-3 rounded-2xl flex gap-1 items-center justify-center">
+                    <span className="w-2 h-2 rounded-full bg-neutral-400 animate-bounce"></span>
+                    <span className="w-2 h-2 rounded-full bg-neutral-400 animate-bounce delay-150"></span>
+                    <span className="w-2 h-2 rounded-full bg-neutral-400 animate-bounce delay-300"></span>
+                  </div>
+                </div>
+              )}
+
+              <div ref={chatEndRef}></div>
+            </div>
+
+            {/* Quick suggested queries */}
+            <div className="bg-neutral-50 px-4 py-2 border-t border-neutral-100 flex overflow-x-auto gap-2">
+              {[
+                'Bé sốt 38.5 độ phải làm sao?',
+                'Bé ngủ ngày cày đêm phải xử lý thế nào?',
+                'Bé 5 cự biếng ăn lười bú?',
+                'Khi nào bé táo bón thật sự?',
+                'Cách bắt đầu ăn dặm BLW?'
+              ].map((query, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleAskAi(query)}
+                  className="flex-shrink-0 bg-white hover:bg-brand-pink-light/30 border border-neutral-200 hover:border-brand-pink-pastel text-neutral-600 hover:text-brand-pink-dark text-[10px] md:text-xs font-semibold px-3 py-1.5 rounded-full transition-all"
+                >
+                  {query}
+                </button>
+              ))}
+            </div>
+
+            {/* Footer input form */}
+            <div className="p-4 border-t border-neutral-150 flex gap-2">
+              <input 
+                type="text" 
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleAskAi()}
+                placeholder="Hỏi AI trợ lý: Ví dụ bé 2 tháng khó ngủ, sốt tiêm chủng..."
+                className="flex-grow bg-neutral-50 border border-neutral-200 focus:border-brand-pink-pastel outline-none px-4 py-2.5 rounded-xl text-sm"
+              />
+              <button 
+                onClick={() => handleAskAi()}
+                className="btn-primary px-6 py-2.5 font-bold text-sm shadow-md"
+              >
+                Gửi câu hỏi
+              </button>
+            </div>
+          </div>
+        );
+      };
+
+      const renderAdmin = () => {
+        const reportedCount = dbState.getReports().filter(r => r.status === 'pending').length;
+
+        // Lọc danh sách bài viết theo thanh tìm kiếm của Admin
+        const adminFilteredArticles = articles.filter(art => 
+          art.title.toLowerCase().includes(adminSearchQuery.toLowerCase()) || 
+          art.category.toLowerCase().includes(adminSearchQuery.toLowerCase())
+        );
+
+        return (
+          <div className="fade-in max-w-5xl mx-auto pb-16 text-left space-y-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-neutral-100 pb-3 gap-2">
+              <div>
+                <h1 className="text-2xl md:text-3xl font-extrabold text-neutral-800">Admin Control Panel</h1>
+                <p className="text-neutral-500 text-sm mt-0.5">Quản lý nội dung kiến thức chuyên sâu và kiểm duyệt diễn đàn mẹ bỉm</p>
+              </div>
+              
+              <span className="bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold px-4 py-1.5 rounded-full">
+                Tài khoản: Bác sĩ Lê Hải Anh (Chuyên Gia)
+              </span>
+            </div>
+
+            {/* High-level Analytics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-white p-4 rounded-xl border border-neutral-100 shadow-sm">
+                <p className="text-xs text-neutral-400">Tổng Bài Viết Kiến Thức</p>
+                <p className="text-2xl font-extrabold text-neutral-800 mt-1">{articles.length}</p>
+              </div>
+              <div className="bg-white p-4 rounded-xl border border-neutral-100 shadow-sm">
+                <p className="text-xs text-neutral-400">Bài thảo luận cộng đồng</p>
+                <p className="text-2xl font-extrabold text-neutral-800 mt-1">{posts.length}</p>
+              </div>
+              <div className="bg-white p-4 rounded-xl border border-neutral-100 shadow-sm">
+                <p className="text-xs text-neutral-400">Thành viên đăng ký</p>
+                <p className="text-2xl font-extrabold text-neutral-800 mt-1">{dbState.getUsers().length}</p>
+              </div>
+              <div className="bg-white p-4 rounded-xl border border-neutral-100 shadow-sm">
+                <p className="text-xs text-neutral-400">Báo cáo vi phạm đang chờ</p>
+                <p className="text-2xl font-extrabold text-red-500 mt-1">{reportedCount}</p>
+              </div>
+            </div>
+
+            {/* Admin sub-tabs */}
+            <div className="flex flex-wrap gap-2 border-b border-neutral-150 pb-2">
+              <button 
+                onClick={() => setAdminTab('articles-list')}
+                className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all ${
+                  adminTab === 'articles-list' ? 'bg-neutral-900 text-white' : 'bg-white border border-neutral-200 text-neutral-600'
+                }`}
+              >
+                📂 Danh sách Bài viết ({articles.length})
+              </button>
+              <button 
+                onClick={() => {
+                  setAdminTab('articles-form');
+                  // Nếu không ở trạng thái chỉnh sửa thì làm trống form
+                  if (!editingArticleId) {
+                    setNewArticleForm({
+                      title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+                      metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
+                    });
+                  }
+                }}
+                className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all ${
+                  adminTab === 'articles-form' ? 'bg-neutral-900 text-white' : 'bg-white border border-neutral-200 text-neutral-600'
+                }`}
+              >
+                {editingArticleId ? '✏️ Sửa Bài viết' : '✍️ Đăng Bài viết mới'}
+              </button>
+              <button 
+                onClick={() => setAdminTab('community')}
+                className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all ${
+                  adminTab === 'community' ? 'bg-neutral-900 text-white' : 'bg-white border border-neutral-200 text-neutral-600'
+                }`}
+              >
+                🛡️ Kiểm duyệt diễn đàn ({posts.length})
+              </button>
+            </div>
+
+            {/* SUB-TABS VIEWS */}
+            {adminTab === 'articles-list' && (
+              <div className="bg-white p-6 rounded-2xl border border-neutral-100 space-y-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <h3 className="font-extrabold text-lg text-neutral-800">📂 Quản lý Bài viết Cẩm Nang</h3>
+                  <div className="flex gap-2 w-full sm:w-auto">
+                    <input 
+                      type="text"
+                      value={adminSearchQuery}
+                      onChange={(e) => setAdminSearchQuery(e.target.value)}
+                      placeholder="Tìm kiếm bài viết..."
+                      className="bg-neutral-50 border border-neutral-200 focus:border-brand-pink-pastel outline-none px-4 py-2 rounded-xl text-xs w-full sm:w-64"
+                    />
+                    <button 
+                      onClick={() => {
+                        setEditingArticleId(null);
+                        setNewArticleForm({
+                          title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+                          metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
+                        });
+                        setAdminTab('articles-form');
+                      }}
+                      className="bg-brand-pink-dark hover:bg-brand-pink-dark/95 text-white font-bold text-xs px-4 py-2 rounded-xl whitespace-nowrap"
+                    >
+                      + Đăng bài mới
+                    </button>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm border-collapse">
+                    <thead>
+                      <tr className="border-b border-neutral-100 text-neutral-400 font-bold">
+                        <th className="py-3 px-4 w-20">Ảnh</th>
+                        <th className="py-3 px-4">Bài viết</th>
+                        <th className="py-3 px-4">Chuyên mục</th>
+                        <th className="py-3 px-4 w-24">Tương tác</th>
+                        <th className="py-3 px-4 w-32">Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {adminFilteredArticles.map((art) => (
+                        <tr key={art.id} className="border-b border-neutral-50 hover:bg-neutral-50/50 transition-all">
+                          <td className="py-3 px-4">
+                            <img src={art.image} alt={art.title} className="w-12 h-12 object-cover rounded-lg border border-neutral-200" />
+                          </td>
+                          <td className="py-3 px-4">
+                            <p className="font-bold text-neutral-800 line-clamp-1 hover:text-brand-pink-dark cursor-pointer transition-colors" onClick={() => viewArticleDetail(art)}>{art.title}</p>
+                            <p className="text-[10px] text-neutral-400 mt-0.5">Ngày đăng: {art.createdAt} • Tác giả: {art.author}</p>
+                          </td>
+                          <td className="py-3 px-4">
+                            <span className="bg-brand-pink-light text-brand-pink-dark text-xs font-semibold px-2.5 py-1 rounded-full">
+                              {art.category}
+                            </span>
+                          </td>
+                          <td className="py-3 px-4 text-xs text-neutral-500">
+                            <p>👀 {art.views}</p>
+                            <p>❤️ {art.likes}</p>
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex gap-2">
+                              <button 
+                                onClick={() => {
+                                  setEditingArticleId(art.id);
+                                  setNewArticleForm({
+                                    title: art.title,
+                                    category: art.category,
+                                    subCategory: art.subCategory || '',
+                                    tags: art.tags ? art.tags.join(', ') : '',
+                                    summary: art.summary,
+                                    content: art.content,
+                                    image: art.image,
+                                    faqQ1: art.faqs?.[0]?.q || '',
+                                    faqA1: art.faqs?.[0]?.a || '',
+                                    faqQ2: art.faqs?.[1]?.q || '',
+                                    faqA2: art.faqs?.[1]?.a || '',
+                                    metaTitle: '',
+                                    metaDescription: ''
+                                  });
+                                  setAdminTab('articles-form');
+                                }}
+                                className="bg-blue-50 text-blue-600 hover:bg-blue-100 p-2 rounded-lg font-bold text-xs transition-colors"
+                                title="Chỉnh sửa bài viết"
+                              >
+                                ✏️ Sửa
+                              </button>
+                              <button 
+                                onClick={() => {
+                                  if (confirm(`Mẹ có chắc chắn muốn xóa bài viết "${art.title}" không?`)) {
+                                    dbState.deleteArticle(art.id);
+                                    setDbState({ ...dbState });
+                                    alert('Xóa bài viết thành công!');
+                                  }
+                                }}
+                                className="bg-red-50 text-red-600 hover:bg-red-100 p-2 rounded-lg font-bold text-xs transition-colors"
+                                title="Xóa bài viết"
+                              >
+                                🗑️ Xóa
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                      {adminFilteredArticles.length === 0 && (
+                        <tr>
+                          <td colSpan="5" className="text-center py-8 text-neutral-400 text-xs">
+                            Không tìm thấy bài viết nào phù hợp.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {adminTab === 'articles-form' && (
+              <form onSubmit={handleSubmitArticle} className="bg-white p-6 rounded-2xl border border-neutral-100 space-y-6 animate-fade-in">
+                <div className="flex justify-between items-center border-b border-neutral-100 pb-3">
+                  <h3 className="font-extrabold text-lg text-neutral-800">
+                    {editingArticleId ? `✏️ Chỉnh sửa bài viết: ${newArticleForm.title}` : '📢 Tạo mới bài viết cẩm nang y khoa & parenting'}
+                  </h3>
+                  {editingArticleId && (
+                    <button 
+                      type="button"
+                      onClick={() => {
+                        setEditingArticleId(null);
+                        setNewArticleForm({
+                          title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+                          metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
+                        });
+                      }}
+                      className="bg-neutral-100 hover:bg-neutral-200 text-neutral-600 font-bold text-xs px-4 py-2 rounded-xl transition-colors"
+                    >
+                      ❌ Hủy sửa & Viết bài mới
+                    </button>
+                  )}
+                </div>
+                
+                {editingArticleId && (
+                  <div className="bg-brand-pink-light border border-brand-pink-pastel/30 rounded-xl p-4 text-brand-pink-dark text-xs flex items-center justify-between">
+                    <span>💡 Mẹ đang trong chế độ <strong>chỉnh sửa bài viết</strong>. Dữ liệu bài viết cũ đã được tự động điền bên dưới.</span>
+                  </div>
+                )}
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Tiêu đề bài viết (Hồ sơ SEO tiêu đề)</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={newArticleForm.title}
+                      onChange={(e) => setNewArticleForm({ ...newArticleForm, title: e.target.value })}
+                      placeholder="Ví dụ: Cách vệ sinh mắt cho trẻ sơ sinh đúng cách..."
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm focus:border-brand-pink-pastel focus:bg-white transition-all"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-neutral-600">Chuyên mục lớn</label>
+                      <select 
+                        value={newArticleForm.category}
+                        onChange={(e) => setNewArticleForm({ ...newArticleForm, category: e.target.value })}
+                        className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm focus:border-brand-pink-pastel focus:bg-white transition-all"
+                      >
+                        <option value="Trẻ sơ sinh">Trẻ sơ sinh</option>
+                        <option value="Dinh dưỡng cho bé">Dinh dưỡng cho bé</option>
+                        <option value="Giấc ngủ">Giấc ngủ</option>
+                        <option value="Sức khỏe trẻ em">Sức khỏe trẻ em</option>
+                        <option value="Phát triển trí tuệ">Phát triển trí tuệ</option>
+                        <option value="Chăm sóc mẹ sau sinh">Chăm sóc mẹ sau sinh</option>
+                      </select>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-neutral-600">Danh mục con</label>
+                      <input 
+                        type="text" 
+                        value={newArticleForm.subCategory}
+                        onChange={(e) => setNewArticleForm({ ...newArticleForm, subCategory: e.target.value })}
+                        placeholder="Ví dụ: Tắm bé..."
+                        className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm focus:border-brand-pink-pastel focus:bg-white transition-all"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Tags từ khóa (phân tách bằng dấu phẩy)</label>
+                    <input 
+                      type="text" 
+                      value={newArticleForm.tags}
+                      onChange={(e) => setNewArticleForm({ ...newArticleForm, tags: e.target.value })}
+                      placeholder="trẻ sơ sinh, tắm bé, mẹ mới"
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm focus:border-brand-pink-pastel focus:bg-white transition-all"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-600">Link hình ảnh đại diện (Unsplash/Web)</label>
+                    <input 
+                      type="text" 
+                      value={newArticleForm.image}
+                      onChange={(e) => setNewArticleForm({ ...newArticleForm, image: e.target.value })}
+                      placeholder="https://images.unsplash.com/..."
+                      className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm focus:border-brand-pink-pastel focus:bg-white transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-neutral-600">Tóm tắt ngắn gọn bài viết (Meta Description chuẩn SEO)</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={newArticleForm.summary}
+                    onChange={(e) => setNewArticleForm({ ...newArticleForm, summary: e.target.value })}
+                    placeholder="Mô tả tóm tắt dài khoảng 120-160 ký tự giúp đạt tối ưu hóa điểm SEO Google..."
+                    className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm focus:border-brand-pink-pastel focus:bg-white transition-all"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-neutral-600">Nội dung bài viết chuẩn Markdown HTML</label>
+                  <textarea 
+                    required
+                    rows="8"
+                    value={newArticleForm.content}
+                    onChange={(e) => setNewArticleForm({ ...newArticleForm, content: e.target.value })}
+                    placeholder="Soạn thảo bài viết: hỗ trợ markdown như ### Tiêu đề con, * Gạch đầu dòng, > Trích dẫn..."
+                    className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm font-mono focus:border-brand-pink-pastel focus:bg-white transition-all"
+                  ></textarea>
+                </div>
+
+                {/* FAQ Schema fields */}
+                <div className="bg-neutral-50 p-4 rounded-xl border border-neutral-200 space-y-4">
+                  <p className="text-xs font-bold text-neutral-800">🛠️ Cài đặt FAQ Schema (Tìm kiếm Google sẽ hiển thị trực tiếp accordion câu hỏi)</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div className="space-y-2">
+                      <input 
+                        type="text" 
+                        value={newArticleForm.faqQ1} 
+                        onChange={(e) => setNewArticleForm({...newArticleForm, faqQ1: e.target.value})} 
+                        placeholder="Câu hỏi thường gặp 1..." 
+                        className="w-full bg-white border border-neutral-200 outline-none px-3 py-2 rounded-lg focus:border-brand-pink-pastel transition-all" 
+                      />
+                      <input 
+                        type="text" 
+                        value={newArticleForm.faqA1} 
+                        onChange={(e) => setNewArticleForm({...newArticleForm, faqA1: e.target.value})} 
+                        placeholder="Câu trả lời thường gặp 1..." 
+                        className="w-full bg-white border border-neutral-200 outline-none px-3 py-2 rounded-lg focus:border-brand-pink-pastel transition-all" 
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <input 
+                        type="text" 
+                        value={newArticleForm.faqQ2} 
+                        onChange={(e) => setNewArticleForm({...newArticleForm, faqQ2: e.target.value})} 
+                        placeholder="Câu hỏi thường gặp 2..." 
+                        className="w-full bg-white border border-neutral-200 outline-none px-3 py-2 rounded-lg" 
+                      />
+                      <input 
+                        type="text" 
+                        value={newArticleForm.faqA2} 
+                        onChange={(e) => setNewArticleForm({...newArticleForm, faqA2: e.target.value})} 
+                        placeholder="Câu trả lời thường gặp 2..." 
+                        className="w-full bg-white border border-neutral-200 outline-none px-3 py-2 rounded-lg" 
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" className="btn-primary w-full py-3 font-semibold text-sm">📢 Xuất bản bài viết chuẩn SEO Google</button>
+              </form>
+            )}
+
+            {adminTab === 'community' && (
+              <div className="bg-white p-6 rounded-2xl border border-neutral-100 space-y-4">
+                <h3 className="font-extrabold text-neutral-800 text-lg">🛡️ Kiểm duyệt diễn đàn & Bình luận</h3>
+                <div className="space-y-3">
+                  {posts.map((post) => (
+                    <div key={post.id} className="p-4 bg-neutral-50 rounded-xl border border-neutral-200 flex justify-between items-center text-xs md:text-sm">
+                      <div>
+                        <p className="font-bold text-neutral-800">{post.title}</p>
+                        <p className="text-[10px] text-neutral-400 mt-0.5">
+                          Đăng bởi: {post.author.nickname} • Ngày đăng: {new Date(post.createdAt).toLocaleDateString('vi-VN')}
+                        </p>
+                      </div>
+                      
+                      <button 
+                        onClick={() => { dbState.deletePost(post.id); setDbState({ ...dbState }); alert('Xóa bài thành công!'); }}
+                        className="bg-red-50 text-red-600 hover:bg-red-100 px-3.5 py-1.5 rounded-lg font-bold"
+                      >
+                        🗑️ Xóa bài
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      // --- RENDER AUTHENTICATION (LOGIN / REGISTER) ---
+      const renderAuth = (type) => {
+        const isLogin = type === 'login';
+        
+        const handleAuthSubmit = (e) => {
+          e.preventDefault();
+          // Demo: Giả lập đăng nhập thành công bằng user mẫu đầu tiên
+          const sampleUser = window.parentingDb.getUsers()[0];
+          window.parentingDb.setCurrentUser(sampleUser);
+          alert(isLogin ? 'Đăng nhập thành công! Chào mừng Mẹ Bông.' : 'Đăng ký thành công! Đã tự động đăng nhập.');
+          window.location.reload();
+        };
+
+        return (
+          <div className="fade-in max-w-md mx-auto w-full py-12">
+            <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 p-8 relative overflow-hidden">
+              {/* Trang trí góc */}
+              <div className="absolute -top-16 -right-16 w-32 h-32 bg-brand-pink-pastel/30 rounded-full blur-2xl"></div>
+              <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-brand-mint-pastel/30 rounded-full blur-2xl"></div>
+
+              <div className="relative z-10 space-y-6">
+                <div className="text-center space-y-2">
+                  <div className="w-16 h-16 bg-brand-pink-light rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-sm mb-4">
+                    👶
+                  </div>
+                  <h2 className="text-2xl font-extrabold text-neutral-800">
+                    {isLogin ? 'Mẹ trở lại rồi!' : 'Bắt đầu hành trình'}
+                  </h2>
+                  <p className="text-sm text-neutral-500">
+                    {isLogin ? 'Đăng nhập để xem nhật ký của bé' : 'Tạo tài khoản để đồng hành cùng con'}
+                  </p>
+                </div>
+
+                <form onSubmit={handleAuthSubmit} className="space-y-4 text-left">
+                  {!isLogin && (
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-neutral-700 ml-1">Tên của mẹ</label>
+                      <input type="text" placeholder="VD: Mẹ Bông" className="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200 rounded-xl text-sm focus:bg-white focus:border-brand-pink-pastel focus:ring-4 focus:ring-brand-pink-pastel/10 outline-none transition-all" required />
+                    </div>
+                  )}
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-neutral-700 ml-1">Email / Số điện thoại</label>
+                    <input type="text" placeholder="Nhập email hoặc số điện thoại..." className="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200 rounded-xl text-sm focus:bg-white focus:border-brand-pink-pastel focus:ring-4 focus:ring-brand-pink-pastel/10 outline-none transition-all" required />
+                  </div>
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between ml-1">
+                      <label className="text-xs font-bold text-neutral-700">Mật khẩu</label>
+                      {isLogin && <a href="#" className="text-xs text-brand-pink-dark font-semibold hover:underline">Quên mật khẩu?</a>}
+                    </div>
+                    <input type="password" placeholder="••••••••" className="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200 rounded-xl text-sm focus:bg-white focus:border-brand-pink-pastel focus:ring-4 focus:ring-brand-pink-pastel/10 outline-none transition-all" required />
+                  </div>
+
+                  <button type="submit" className="w-full py-3.5 bg-brand-pink-dark hover:bg-brand-pink-dark/90 text-white font-bold rounded-xl shadow-lg shadow-brand-pink-dark/20 transform hover:-translate-y-0.5 transition-all mt-2">
+                    {isLogin ? 'Đăng nhập' : 'Đăng ký tài khoản'}
+                  </button>
+                </form>
+
+                <div className="pt-4 text-center text-sm text-neutral-500">
+                  {isLogin ? "Mẹ chưa có tài khoản? " : "Mẹ đã có tài khoản? "}
+                  <button 
+                    onClick={() => setCurrentTab(isLogin ? 'register' : 'login')}
+                    className="text-brand-pink-dark font-bold hover:underline"
+                  >
+                    {isLogin ? 'Đăng ký ngay' : 'Đăng nhập'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      // --- RENDER DƯỚI DẠNG FOOTER & INFO PAGES ---
+      const renderInfoPage = (title, content) => (
+        <div className="fade-in max-w-3xl mx-auto p-6 md:p-10 soft-card bg-white space-y-4 text-left pb-16">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-neutral-800 border-b border-neutral-100 pb-3">{title}</h1>
+          <div className="text-neutral-600 text-sm md:text-base leading-relaxed space-y-4 whitespace-pre-line">
+            {content}
+          </div>
+        </div>
+      );
+
+      return (
+        <div className="min-h-screen flex flex-col justify-between">
+          
+          {/* Cloud Sync Loading Overlay */}
+          {isSyncing && (
+            <div className="fixed inset-0 z-[100] bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center fade-in">
+              <div className="relative w-24 h-24 flex items-center justify-center">
+                <div className="absolute inset-0 rounded-full border-4 border-brand-pink-pastel animate-ping opacity-75"></div>
+                <div className="relative w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
+                  <svg className="w-8 h-8 text-brand-pink-dark animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                </div>
+              </div>
+              <p className="mt-6 text-neutral-700 font-bold text-lg animate-pulse font-sans">Đang tải dữ liệu đám mây Neon...</p>
+              <p className="text-xs text-neutral-500 mt-2">Vui lòng chờ trong giây lát</p>
+            </div>
+          )}
+
+          {/* HEADER & MAIN NAVIGATION */}
+          <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-100 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between gap-4">
+              
+              {/* Logo / Brand */}
+              <div 
+                onClick={() => setCurrentTab('home')} 
+                className="flex items-center gap-2.5 cursor-pointer hover:scale-102 transform transition-all flex-shrink-0"
+              >
+                <span className="w-10 h-10 bg-brand-pink-dark rounded-2xl flex items-center justify-center text-white text-2xl shadow-md">👶</span>
+                <span className="font-extrabold text-neutral-800 tracking-tight text-lg md:text-xl font-sans">
+                  Mẹ Bỉm <span className="text-brand-pink-dark">Thông Thái</span>
+                </span>
+              </div>
+
+              {/* Smart search bar */}
+              <div className="relative hidden md:flex flex-grow max-w-md">
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  onFocus={() => setShowSearchModal(true)}
+                  placeholder="Tìm kiếm thông minh như Google: bé sốt 38 độ, bé lười bú..."
+                  className="w-full bg-neutral-50 hover:bg-neutral-100 focus:bg-white border border-neutral-200 focus:border-brand-pink-pastel outline-none pl-10 pr-4 py-2.5 rounded-full text-xs md:text-sm shadow-inner transition-all"
+                />
+                <span className="absolute left-3.5 top-3"><Icons.Search /></span>
+              </div>
+
+              {/* Navigation Tabs - Desktop */}
+              <nav className="hidden lg:flex items-center gap-1">
+                {[
+                  { tab: 'home', name: 'Trang chủ' },
+                  { tab: 'articles', name: 'Kiến thức' },
+                  { tab: 'community', name: 'Cộng đồng' },
+                  { tab: 'tools', name: 'Công cụ cho mẹ' },
+                  { tab: 'ai', name: 'Trợ lý AI' }
+                ].map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentTab(item.tab)}
+                    className={`px-4 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                      currentTab === item.tab 
+                        ? 'nav-link-active' 
+                        : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900'
+                    }`}
+                  >
+                    {item.name}
+                  </button>
+                ))}
+                
+                {currentUser?.role === 'admin' && (
+                  <button 
+                    onClick={() => setCurrentTab('admin')} 
+                    className={`px-4 py-2.5 rounded-full text-sm font-bold border transition-all ${
+                      currentTab === 'admin' ? 'bg-indigo-600 text-white' : 'border-indigo-200 text-indigo-600 hover:bg-indigo-50'
+                    }`}
+                  >
+                    🛡️ Admin Panel
+                  </button>
+                )}
+              </nav>
+
+              {/* Collapsible Mobile Menu toggle */}
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 bg-neutral-50 hover:bg-neutral-100 rounded-xl"
+              >
+                <svg className="w-6 h-6 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  {mobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+
+              {/* User Avatar dropdown */}
+              {currentUser ? (
+                <div className="hidden md:flex items-center gap-2.5 pl-3 border-l border-neutral-150 flex-shrink-0 relative group cursor-pointer">
+                  <img src={currentUser.avatar} alt="User avatar" className="w-9 h-9 rounded-full object-cover border border-brand-pink-pastel shadow-sm" />
+                  <div className="text-left text-xs">
+                    <p className="font-bold text-neutral-800">{currentUser.nickname}</p>
+                    <p className="text-[10px] text-neutral-400">{currentUser.badge} • 🏆 {currentUser.points} đ</p>
+                  </div>
+
+                  {/* Logout Menu Popup */}
+                  <div className="absolute top-full right-0 mt-2 w-32 bg-white border border-neutral-100 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <button onClick={() => { window.parentingDb.setCurrentUser(null); window.location.reload(); }} className="w-full text-left px-4 py-2.5 text-sm text-red-600 font-semibold hover:bg-red-50 rounded-xl flex items-center gap-2">
+                      🚪 Đăng xuất
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="hidden md:flex items-center gap-2 pl-3 border-l border-neutral-150 flex-shrink-0">
+                  <button onClick={() => setCurrentTab('login')} className="px-4 py-2 text-sm font-semibold text-neutral-600 hover:text-brand-pink-dark transition-all">Đăng nhập</button>
+                  <button onClick={() => setCurrentTab('register')} className="px-4 py-2 text-sm font-bold text-white bg-brand-pink-dark hover:bg-brand-pink-dark/90 rounded-full shadow-md transition-all">Đăng ký</button>
+                </div>
+              )}
+
+            </div>
+          </header>
+
+          {/* MOBILE NAVIGATION DRAWER */}
+          {mobileMenuOpen && (
+            <div className="lg:hidden bg-white border-b border-neutral-100 px-4 py-3 flex flex-col gap-2 shadow-inner">
+              {/* Search bar inside drawer */}
+              <div className="relative w-full mb-2">
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  onFocus={() => setShowSearchModal(true)}
+                  placeholder="Tìm kiếm thông minh..."
+                  className="w-full bg-neutral-50 border border-neutral-200 outline-none pl-10 pr-4 py-2.5 rounded-full text-xs shadow-inner"
+                />
+                <span className="absolute left-3.5 top-3.5"><Icons.Search /></span>
+              </div>
+
+              {[
+                { tab: 'home', name: '🏠 Trang chủ' },
+                { tab: 'articles', name: '📚 Kiến thức cẩm nang' },
+                { tab: 'community', name: '💬 Diễn đàn Mẹ bỉm' },
+                { tab: 'tools', name: '📊 Công cụ cho mẹ' },
+                { tab: 'ai', name: '🤖 Trợ lý AI' }
+              ].map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => { setCurrentTab(item.tab); setMobileMenuOpen(false); }}
+                  className={`text-left w-full px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                    currentTab === item.tab 
+                      ? 'bg-brand-pink-light text-brand-pink-dark font-bold' 
+                      : 'text-neutral-600 hover:bg-neutral-50'
+                  }`}
+                >
+                  {item.name}
+                </button>
+              ))}
+
+              {currentUser?.role === 'admin' && (
+                <button
+                  onClick={() => { setCurrentTab('admin'); setMobileMenuOpen(false); }}
+                  className="text-left w-full px-4 py-2.5 rounded-xl text-sm font-bold bg-indigo-50 text-indigo-600"
+                >
+                  🛡️ Admin Panel
+                </button>
+              )}
+
+              {/* User summary in drawer */}
+              {currentUser ? (
+                <div className="flex flex-col gap-2 p-3 bg-neutral-50 rounded-xl border border-neutral-100 mt-2">
+                  <div className="flex items-center gap-3">
+                    <img src={currentUser.avatar} alt="User avatar" className="w-10 h-10 rounded-full object-cover" />
+                    <div className="text-left flex-grow">
+                      <p className="font-bold text-neutral-800 text-sm">{currentUser.nickname}</p>
+                      <p className="text-xs text-neutral-400">{currentUser.badge} • 🏆 {currentUser.points} điểm</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => { window.parentingDb.setCurrentUser(null); window.location.reload(); }}
+                    className="w-full text-center px-4 py-2 mt-1 text-sm text-red-600 font-semibold bg-red-50 hover:bg-red-100 rounded-lg border border-red-100 transition-all"
+                  >
+                    🚪 Đăng xuất tài khoản
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2 p-3 mt-2">
+                  <button onClick={() => { setCurrentTab('login'); setMobileMenuOpen(false); }} className="w-full text-center px-4 py-2.5 text-sm font-semibold text-brand-pink-dark bg-brand-pink-light rounded-xl transition-all">Đăng nhập</button>
+                  <button onClick={() => { setCurrentTab('register'); setMobileMenuOpen(false); }} className="w-full text-center px-4 py-2.5 text-sm font-bold text-white bg-brand-pink-dark rounded-xl shadow-md transition-all">Đăng ký</button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* MAIN BODY LAYOUT */}
+          <main className="flex-grow max-w-7xl mx-auto px-4 md:px-6 py-8 w-full">
+            {currentTab === 'login' && renderAuth('login')}
+            {currentTab === 'register' && renderAuth('register')}
+            {currentTab === 'home' && renderHome()}
+            {currentTab === 'articles' && renderArticles()}
+            {currentTab === 'article-detail' && renderArticleDetail()}
+            {currentTab === 'community' && renderCommunity()}
+            {currentTab === 'tools' && renderTools()}
+            {currentTab === 'ai' && renderAi()}
+            {currentTab === 'admin' && renderAdmin()}
+            {currentTab === 'about' && renderInfoPage(
+              "Về chúng tôi - Mẹ Bỉm Thông Thái",
+              `Chào mừng Mẹ đến với Mẹ Bỉm Thông Thái!
+
+              Mẹ Bỉm Thông Thái là nền tảng số hóa cẩm nang y tế khoa học kết hợp diễn đàn trao đổi kinh nghiệm thực tế lớn nhất dành cho mẹ bầu, mẹ sau sinh và các gia đình có con nhỏ từ 0 - 6 tuổi tại Việt Nam.
+
+              **Sứ mệnh của chúng tôi:**
+              Đồng hành cùng hàng triệu bà mẹ Việt Nam giảm bớt áp lực, lo lắng trên hành trình nuôi dạy con. Chúng tôi tin rằng nuôi dạy con không cần phải là một cuộc chiến đầy nước mắt, mà là một hành trình kỳ diệu hạnh phúc nếu có sự thấu hiểu, kiên trì và ứng dụng y khoa khoa học đúng đắn.
+
+              **Tại Mẹ Bỉm Thông Thái, Mẹ có thể:**
+              1. Tìm kiếm nhanh chóng các chỉ dẫn y tế an toàn được biên soạn bởi Bác sĩ nhi khoa hàng đầu (Xử lý hạ sốt, vàng da, tắm bé, rơ lưỡi).
+              2. Áp dụng các phương pháp luyện tự ngủ (Sleep training) nhân văn, an toàn, thiết lập Wake window phù hợp sinh lý bé.
+              3. Quản lý chỉ số sinh học của bé (nhật ký bú, ngủ, thay tã, biểu đồ chiều cao cân nặng WHO) hoàn toàn tự động.
+              4. Kết nối, giãi bày tâm sự và nhận được sự đồng cảm sâu sắc từ cộng đồng hàng triệu mẹ bỉm Việt Nam khác.`
+            )}
+            {currentTab === 'contact' && renderInfoPage(
+              "Liên hệ với chúng tôi",
+              `Chúng tôi luôn mong muốn lắng nghe những chia sẻ, góp ý hoặc cơ hội hợp tác quảng cáo của quý đối tác.
+
+              **Địa chỉ trụ sở chính:**
+              Tầng 6, Tòa nhà Mẹ và Bé Việt, Đường Hoàng Quốc Việt, Cầu Giấy, Hà Nội.
+
+              **Đường dây nóng hỗ trợ 24/7:**
+              Hotline: 1800 6868 (Miễn phí cuộc gọi nội mạng)
+              Email hỗ trợ chuyên môn: bacsi@mebimthongthai.vn
+              Email hợp tác truyền thông: media@mebimthongthai.vn
+
+              **Gửi thông điệp hợp tác:**
+              Nếu mẹ bỉm hoặc các đơn vị phân phối sữa, tã, đồ chơi giáo dục chất lượng cao có nhu cầu đồng hành, vui lòng gửi email trực tiếp để đội ngũ ban trị sự duyệt hồ sơ.`
+            )}
+            {currentTab === 'privacy' && renderInfoPage(
+              "Chính sách bảo mật riêng tư",
+              `Mẹ Bỉm Thông Thái cam kết bảo mật thông tin hồ sơ của mẹ và bé an toàn tuyệt đối.
+
+              1. **Thông tin thu thập:** Chúng tôi chỉ lưu trữ cục bộ các số liệu sinh học của bé (Cân nặng, chiều cao, nhật ký bú sữa, giờ ngủ) để tạo lập biểu đồ tăng trưởng chính xác. Mẹ hoàn toàn kiểm soát việc xóa dữ liệu.
+              2. **Chế độ ẩn danh (Anonymous mode):** Khi mẹ đăng câu hỏi trong diễn đàn ở chế độ ẩn danh, toàn bộ thông tin tài khoản bao gồm tên thật, email, nickname sẽ được che giấu tuyệt đối.
+              3. **Quảng cáo & Bên thứ ba:** Chúng tôi cam kết tuyệt đối không bán hay phân phối số liệu sinh học của bé hoặc số điện thoại của mẹ cho các đơn vị tiếp thị bên ngoài.`
+            )}
+            {currentTab === 'terms' && renderInfoPage(
+              "Điều khoản sử dụng dịch vụ",
+              `Chào mừng bạn đến với Mẹ Bỉm Thông Thái. Bằng việc truy cập sử dụng website, bạn cam kết tuân thủ các quy tắc hoạt động của chúng tôi:
+
+              1. **Tuyên bố miễn trừ trách nhiệm y tế (Medical Disclaimer):** Toàn bộ thông tin được cung cấp bởi bài viết hoặc Trợ lý AI chỉ mang tính chất tham khảo chung. Nó không thay thế bất kỳ chẩn đoán hoặc đơn thuốc của bác sĩ nhi khoa. Mẹ cần đưa bé đến bệnh viện nếu có dấu hiệu sốt cao, khó thở.
+              2. **Quy tắc diễn đàn:** Không đăng nội dung thô tục, chửi bới xúc phạm thành viên khác. Không spam quảng cáo hoặc bán thuốc giả trong các bài thảo luận. Mọi bài viết vi phạm sẽ bị Admin xóa vĩnh viễn và khóa tài khoản.`
+            )}
+          </main>
+
+          {/* FLOATING AI ASSISTANT CHAT TRIGGER BUTTON */}
+          <div 
+            onClick={() => setCurrentTab('ai')}
+            className="fixed bottom-6 right-6 z-40 bg-brand-pink-dark hover:bg-brand-pink-dark/95 text-white p-4 rounded-2xl shadow-xl hover:scale-110 cursor-pointer transform transition-all chat-pulse flex items-center gap-2"
+          >
+            <span className="text-xl">🤖</span>
+            <span className="font-bold text-xs hidden md:inline">Hỏi Trợ lý AI</span>
+          </div>
+
+          {/* SMART SEARCH MODAL */}
+          {showSearchModal && (
+            <div className="fixed inset-0 z-50 bg-neutral-950/40 backdrop-blur-xs flex items-start justify-center pt-24 px-4">
+              <div className="bg-white w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden border border-neutral-100">
+                
+                {/* Input row */}
+                <div className="relative p-4 border-b border-neutral-150">
+                  <input 
+                    type="text" 
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    autoFocus
+                    placeholder="Tìm kiếm: Bé sốt, Bé khóc đêm, Ăn dặm..."
+                    className="w-full bg-neutral-50 outline-none pl-10 pr-12 py-3 rounded-2xl text-sm border border-neutral-200 focus:border-brand-pink-pastel focus:bg-white transition-all font-sans"
+                  />
+                  <span className="absolute left-7 top-7"><Icons.Search /></span>
+                  <button 
+                    onClick={() => { setShowSearchModal(false); setSearchQuery(''); setSearchResults({ articles: [], posts: [], keywords: [] }); }}
+                    className="absolute right-7 top-7 text-xs font-bold text-neutral-400 hover:text-neutral-700"
+                  >
+                    ✕ Đóng
+                  </button>
+                </div>
+
+                {/* Results dropdown panel */}
+                <div className="max-h-[60vh] overflow-y-auto p-4 space-y-4 text-left text-xs md:text-sm">
+                  {searchQuery.trim() === '' ? (
+                    <div className="space-y-3">
+                      <p className="font-bold text-neutral-500">🔥 Từ khóa được tìm kiếm nhiều nhất</p>
+                      <div className="flex flex-wrap gap-2">
+                        {['Bé bị sốt', 'Bé ngủ ngày cày đêm', 'Táo bón sinh lý', 'Tập bú bình', 'Ăn dặm tự chỉ huy BLW', 'Trầm cảm sau sinh'].map((kw, idx) => (
+                          <button 
+                            key={idx}
+                            onClick={() => handleQuickSearchKeyword(kw)}
+                            className="bg-neutral-50 hover:bg-brand-pink-light/40 border border-neutral-200 hover:border-brand-pink-pastel text-neutral-600 hover:text-brand-pink-dark px-3 py-1.5 rounded-xl font-semibold transition-all"
+                          >
+                            {kw}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      {/* Keyword suggestions */}
+                      {searchResults.keywords.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="font-bold text-neutral-400">💡 Gợi ý chủ đề liên quan</p>
+                          <div className="flex flex-wrap gap-2">
+                            {searchResults.keywords.map((kw, idx) => (
+                              <button 
+                                key={idx}
+                                onClick={() => handleQuickSearchKeyword(kw)}
+                                className="bg-brand-pink-light/30 border border-brand-pink-pastel/20 text-brand-pink-dark px-2.5 py-1 rounded-lg text-xs font-bold"
+                              >
+                                {kw}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Matched articles */}
+                      {searchResults.articles.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="font-bold text-brand-pink-dark">📚 Bài viết cẩm nang ({searchResults.articles.length})</p>
+                          <div className="space-y-1.5">
+                            {searchResults.articles.map((art) => (
+                              <div 
+                                key={art.id}
+                                onClick={() => { viewArticleDetail(art); setShowSearchModal(false); }}
+                                className="p-2.5 rounded-xl hover:bg-neutral-50 border border-transparent hover:border-neutral-100 cursor-pointer flex items-center justify-between"
+                              >
+                                <span className="font-bold text-neutral-700 text-xs md:text-sm line-clamp-1">{art.title}</span>
+                                <span className="text-[10px] bg-brand-pink-light text-brand-pink-dark px-2 py-0.5 rounded-full">{art.category}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Matched community posts */}
+                      {searchResults.posts.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="font-bold text-indigo-600">💬 Câu hỏi diễn đàn ({searchResults.posts.length})</p>
+                          <div className="space-y-1.5">
+                            {searchResults.posts.map((post) => (
+                              <div 
+                                key={post.id}
+                                onClick={() => { setActivePost(post); setCurrentTab('community'); setShowSearchModal(false); }}
+                                className="p-2.5 rounded-xl hover:bg-neutral-50 border border-transparent hover:border-neutral-100 cursor-pointer flex items-center justify-between"
+                              >
+                                <span className="font-bold text-neutral-700 text-xs md:text-sm line-clamp-1">{post.title}</span>
+                                <span className="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full">Forum</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {searchResults.articles.length === 0 && searchResults.posts.length === 0 && (
+                        <p className="text-neutral-400 text-xs text-center py-6">Không tìm thấy kết quả. Thử hỏi Trợ lý AI hoặc đăng bài viết hỏi đáp ngay!</p>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* FOOTER AREA */}
+          <footer className="bg-neutral-900 text-neutral-400 pt-16 pb-8 border-t border-neutral-800 text-left text-xs md:text-sm">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+              
+              {/* Col 1 Brand details */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="w-9 h-9 bg-brand-pink-dark rounded-xl flex items-center justify-center text-white text-xl">👶</span>
+                  <span className="font-extrabold text-white text-base font-sans">
+                    Mẹ Bỉm <span className="text-brand-pink-dark">Thông Thái</span>
+                  </span>
+                </div>
+                <p className="text-neutral-500 leading-relaxed text-xs">
+                  Cẩm nang số hóa nuôi dạy con chuẩn khoa học nhi khoa Việt Nam kết hợp diễn đàn đồng hành và thấu cảm.
+                </p>
+              </div>
+
+              {/* Col 2 Quick links */}
+              <div className="space-y-3">
+                <h4 className="font-bold text-white text-sm">Chuyên mục chính</h4>
+                <ul className="space-y-2 text-neutral-500 text-xs">
+                  <li><button onClick={() => { setSelectedCategory('Trẻ sơ sinh'); setCurrentTab('articles'); }} className="hover:text-white">👶 Chăm sóc trẻ sơ sinh</button></li>
+                  <li><button onClick={() => { setSelectedCategory('Dinh dưỡng cho bé'); setCurrentTab('articles'); }} className="hover:text-white">🥦 Thực đơn ăn dặm & sữa</button></li>
+                  <li><button onClick={() => { setSelectedCategory('Giấc ngủ'); setCurrentTab('articles'); }} className="hover:text-white">🌙 Luyện tự ngủ khoa học</button></li>
+                  <li><button onClick={() => { setSelectedCategory('Sức khỏe trẻ em'); setCurrentTab('articles'); }} className="hover:text-white">🩺 Xử lý bệnh thường gặp</button></li>
+                </ul>
+              </div>
+
+              {/* Col 3 Policy & Support */}
+              <div className="space-y-3">
+                <h4 className="font-bold text-white text-sm">Chính sách & Hỗ trợ</h4>
+                <ul className="space-y-2 text-neutral-500 text-xs">
+                  <li><button onClick={() => setCurrentTab('about')} className="hover:text-white">🏵️ Về chúng tôi</button></li>
+                  <li><button onClick={() => setCurrentTab('privacy')} className="hover:text-white">🔒 Chính sách bảo mật</button></li>
+                  <li><button onClick={() => setCurrentTab('terms')} className="hover:text-white">⚖️ Điều khoản sử dụng</button></li>
+                </ul>
+              </div>
+
+              {/* Col 4 Disclaimer */}
+              <div className="space-y-3">
+                <h4 className="font-bold text-white text-sm">Miễn trừ trách nhiệm</h4>
+                <p className="text-neutral-500 leading-relaxed text-xs">
+                  Mọi thông tin trên website chỉ mang tính chất tham khảo chung. Nó không thay thế bất kỳ chẩn đoán hoặc đơn thuốc của bác sĩ y khoa.
+                </p>
+                <div className="flex items-center gap-1.5 text-[10px] text-brand-pink-pastel font-bold bg-neutral-800 p-2 rounded-lg border border-neutral-700">
+                  🛡️ BẢO VỆ SỨC KHỎE BÉ YÊU 100%
+                </div>
+              </div>
+
+            </div>
+
+            <hr className="border-neutral-800 my-8 max-w-7xl mx-auto" />
+
+            <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-500 text-center md:text-left">
+              <div className="flex flex-col md:flex-row items-center gap-3">
+                <p>© 2026 Mẹ Bỉm Thông Thái. Phát triển với trọn vẹn tình yêu thương dành cho thế hệ mầm non Việt Nam.</p>
+                {window.IS_NEON_CONNECTED ? (
+                  <span className="flex bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2.5 py-0.5 rounded-full items-center gap-1.5 shadow-sm" title="Đã kết nối và đồng bộ đám mây Neon Postgres an toàn.">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Neon Active
+                  </span>
+                ) : (
+                  <span className="flex bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] font-bold px-2.5 py-0.5 rounded-full items-center gap-1.5 shadow-sm" title="Chạy ngoại tuyến bằng LocalStorage của trình duyệt.">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Local Offline
+                  </span>
+                )}
+              </div>
+              <p>Mã nguồn dự án startup đã sẵn sàng production-ready.</p>
+            </div>
+          </footer>
+
+        </div>
+      );
+    }
+
+    // Render the React application to the root container
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

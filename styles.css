@@ -1,0 +1,262 @@
+/* 
+ * Mẹ Bỉm Thông Thái - Custom Premium Styling (styles.css)
+ * Hợp nhất triết lý thiết kế: Minimal + Soft Parenting Style + Modern Community Platform.
+ * Tông màu chủ đạo: Hồng Pastel nhẹ nhàng, Kem/Be ấm áp, Xanh Mint mát mẻ và Trắng sạch sẽ.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* HSL Color Palette */
+  --color-pink-light: 350, 100%, 97%;      /* #FFF0F2 */
+  --color-pink-pastel: 348, 85%, 85%;     /* #FCA5B3 */
+  --color-pink-dark: 348, 70%, 55%;       /* #E04D65 */
+  
+  --color-cream-light: 40, 60%, 97%;      /* #FAF8F2 */
+  --color-cream-pastel: 38, 45%, 90%;     /* #EFE5D1 */
+  --color-cream-dark: 32, 35%, 65%;       /* #BA9B76 */
+  
+  --color-mint-light: 155, 60%, 96%;      /* #F0FAF5 */
+  --color-mint-pastel: 158, 45%, 82%;     /* #A8E6CF */
+  --color-mint-dark: 160, 50%, 40%;       /* #2D8E6B */
+  
+  --color-neutral-dark: 220, 20%, 25%;    /* #33363F */
+  --color-neutral-light: 210, 20%, 98%;   /* #F7F8FA */
+  --color-white: 0, 0%, 100%;             /* #FFFFFF */
+  
+  /* Fonts */
+  --font-family-body: 'Nunito', 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-family-heading: 'Be Vietnam Pro', 'Nunito', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-family-body);
+  background-color: hsl(var(--color-cream-light));
+  color: hsl(var(--color-neutral-dark));
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+  font-weight: 700;
+  color: hsl(var(--color-neutral-dark));
+}
+
+/* Glassmorphism & Soft Card Styles */
+.soft-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 30px -10px rgba(224, 77, 101, 0.06);
+  border-radius: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.soft-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px -5px rgba(224, 77, 101, 0.1);
+  border-color: rgba(252, 165, 179, 0.4);
+}
+
+/* Custom Gradients */
+.gradient-bg {
+  background: linear-gradient(135deg, hsl(var(--color-pink-light)) 0%, hsl(var(--color-cream-light)) 50%, hsl(var(--color-mint-light)) 100%);
+}
+
+.gradient-header {
+  background: linear-gradient(135deg, hsl(348, 85%, 88%) 0%, hsl(38, 45%, 93%) 100%);
+}
+
+.gradient-mint {
+  background: linear-gradient(135deg, hsl(var(--color-mint-light)) 0%, hsl(158, 45%, 91%) 100%);
+}
+
+/* Premium Navigation Elements */
+.nav-link-active {
+  color: hsl(var(--color-pink-dark)) !important;
+  background-color: rgba(252, 165, 179, 0.25);
+  font-weight: 600;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--color-cream-light));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--color-pink-pastel));
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--color-pink-dark));
+}
+
+/* Buttons with micro-interactions */
+.btn-primary {
+  background-color: hsl(var(--color-pink-dark));
+  color: white;
+  transition: all 0.2s ease-in-out;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px 0 rgba(224, 77, 101, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: hsl(348, 70%, 48%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(224, 77, 101, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-mint {
+  background-color: hsl(var(--color-mint-dark));
+  color: white;
+  transition: all 0.2s ease-in-out;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px 0 rgba(45, 142, 107, 0.3);
+}
+
+.btn-mint:hover {
+  background-color: hsl(160, 50%, 34%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(45, 142, 107, 0.4);
+}
+
+/* Skeleton Loading Effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Interactive Milestone Selector */
+.milestone-btn {
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.milestone-btn.active {
+  border-color: hsl(var(--color-pink-dark));
+  background-color: hsl(var(--color-pink-light));
+  color: hsl(var(--color-pink-dark));
+}
+
+/* Forum Vote Styles */
+.vote-active-up {
+  color: hsl(var(--color-pink-dark)) !important;
+  background-color: rgba(224, 77, 101, 0.1);
+}
+
+.vote-active-help {
+  color: hsl(var(--color-mint-dark)) !important;
+  background-color: rgba(45, 142, 107, 0.1);
+}
+
+.vote-active-heart {
+  color: #E02424 !important;
+  background-color: rgba(224, 36, 36, 0.1);
+}
+
+/* Floating AI Chat Assist button */
+.chat-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(224, 77, 101, 0.5); }
+  70% { box-shadow: 0 0 0 15px rgba(224, 77, 101, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(224, 77, 101, 0); }
+}
+
+/* Animations for route transitions */
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bubble styling for AI chat */
+.bubble-ai {
+  border-bottom-left-radius: 4px;
+}
+
+.bubble-user {
+  border-bottom-right-radius: 4px;
+}
+
+/* Markdown styling inside Article and Posts */
+.prose h3 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: hsl(var(--color-neutral-dark));
+}
+
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.prose ul, .prose ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-bottom: 0.25rem;
+  list-style-type: disc;
+}
+
+.prose blockquote {
+  border-left: 4px solid hsl(var(--color-pink-pastel));
+  padding-left: 1rem;
+  font-style: italic;
+  margin: 1.5rem 0;
+  color: #555;
+  background-color: hsl(var(--color-pink-light));
+  border-radius: 4px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.prose th, .prose td {
+  border: 1px solid hsl(var(--color-cream-pastel));
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.prose th {
+  background-color: hsl(var(--color-cream-pastel));
+  font-weight: 600;
+}
