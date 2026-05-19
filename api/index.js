@@ -365,6 +365,11 @@ app.post('/api/logs/:type', async (req, res) => {
   }
 });
 
+// Phục vụ trang index.html cho các route còn lại (trang chủ và SPA routing)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
+
 // Khởi chạy server lắng nghe kết nối nếu không phải môi trường serverless Vercel
 if (process.env.VERCEL !== '1') {
   app.listen(PORT, () => {
