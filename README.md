@@ -1,6 +1,8 @@
 # 👶 Mẹ Bỉm Thông Thái - Nền Tảng Chăm Sóc Bé Yêu Khoa Học
 
 > Nền tảng số hóa cẩm nang nuôi con chuẩn y khoa kết hợp diễn đàn chia sẻ và trợ lý trí tuệ nhân tạo (AI) thấu cảm dành riêng cho các mẹ bỉm sữa Việt Nam.
+>
+> 🌐 **Website chính thức:** [mebimthongthai.io.vn](https://mebimthongthai.io.vn)
 
 Dự án được xây dựng với cấu trúc **Production-Ready**, tích hợp cơ chế đồng bộ dữ liệu đám mây thời gian thực với **Neon Postgres** và có hệ thống Fallback an toàn về LocalStorage khi chạy ngoại tuyến (Offline).
 
