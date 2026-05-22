@@ -283,6 +283,119 @@ app.post('/api/users/login', async (req, res) => {
   }
 });
 
+// --- DYNAMIC GOOGLE SEO DỰ PHÒNG CỦA MẸ BỈM THÔNG THÁI ---
+// Cung cấp Sitemap.xml động cập nhật theo thời gian thực từ Neon Postgres
+app.get('/sitemap.xml', async (req, res) => {
+  res.header('Content-Type', 'application/xml');
+  const baseUrl = `${req.protocol}://${req.get('host')}`;
+  
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Trang chủ chính -->
+  <url>
+    <loc>${baseUrl}/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Các Tab và trang chức năng chính -->
+  <url>
+    <loc>${baseUrl}/#community</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/#tools</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/#ai</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+`;
+
+  try {
+    // 1. Quét toàn bộ chuyên mục hoạt động thực tế
+    const categoriesRes = await pool.query('SELECT name FROM categories ORDER BY id');
+    if (categoriesRes.rows && categoriesRes.rows.length > 0) {
+      categoriesRes.rows.forEach(cat => {
+        xml += `  <url>
+    <loc>${baseUrl}/#articles?category=${encodeURIComponent(cat.name)}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>\n`;
+      });
+    }
+
+    // 2. Quét toàn bộ 65 bài viết y khoa y đức chuẩn SEO
+    const articlesRes = await pool.query('SELECT id, created_at FROM articles ORDER BY created_at DESC');
+    if (articlesRes.rows && articlesRes.rows.length > 0) {
+      articlesRes.rows.forEach(art => {
+        const dateStr = art.created_at ? new Date(art.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+        xml += `  <url>
+    <loc>${baseUrl}/#article-${art.id}</loc>
+    <lastmod>${dateStr}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>\n`;
+      });
+    }
+
+    // 3. Quét toàn bộ bài viết thảo luận cộng đồng
+    const postsRes = await pool.query('SELECT id, created_at FROM posts ORDER BY created_at DESC');
+    if (postsRes.rows && postsRes.rows.length > 0) {
+      postsRes.rows.forEach(post => {
+        const dateStr = post.created_at ? new Date(post.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+        xml += `  <url>
+    <loc>${baseUrl}/#community-post-${post.id}</loc>
+    <lastmod>${dateStr}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>\n`;
+      });
+    }
+  } catch (err) {
+    console.error("Lỗi khi kết xuất sitemap.xml động:", err.message);
+    xml += `  <!-- Dự phòng khi lỗi kết nối Neon Cloud -->
+  <url>
+    <loc>${baseUrl}/#articles</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>\n`;
+  }
+
+  xml += `</urlset>`;
+  res.send(xml);
+});
+
+// Cung cấp Robots.txt bảo mật phân cấp điều hướng cho Googlebot
+app.get('/robots.txt', (req, res) => {
+  res.header('Content-Type', 'text/plain');
+  const baseUrl = `${req.protocol}://${req.get('host')}`;
+  
+  const robots = `User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /styles.css
+Allow: /db.js
+Allow: /ai.js
+Allow: /api/articles
+Allow: /api/categories
+Allow: /api/posts
+Allow: /sitemap.xml
+
+# Chặn thu thập các trang bảo mật, bảng admin kiểm soát
+Disallow: /admin.html
+Disallow: /admin-login.html
+Disallow: /api/admin/
+Disallow: /api/users/
+
+Sitemap: ${baseUrl}/sitemap.xml
+`;
+  res.send(robots);
+});
+
 app.get('/api/status', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');

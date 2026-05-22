@@ -539,6 +539,94 @@
         }
       }, [currentTab, activeArticle, activePost, selectedCategory, selectedMilestone]);
 
+      // --- CLIENT-SIDE ROUTER FROM HASH FOR SEO AND BACK BUTTONS ---
+      useEffect(() => {
+        if (isSyncing) return;
+
+        const handleRouting = () => {
+          const hash = window.location.hash;
+          if (!hash || hash === '#home') {
+            if (currentTab !== 'home' && !['login', 'register', 'admin'].includes(currentTab)) {
+              setCurrentTab('home');
+              setActiveArticle(null);
+              setActivePost(null);
+            }
+            return;
+          }
+
+          if (hash.startsWith('#article-')) {
+            const articleId = hash.replace('#article-', '');
+            const art = window.parentingDb.getArticles().find(a => a.id === articleId);
+            if (art && (!activeArticle || activeArticle.id !== articleId || currentTab !== 'article-detail')) {
+              setActiveArticle(art);
+              setCurrentTab('article-detail');
+            }
+          } else if (hash.startsWith('#community-post-')) {
+            const postId = hash.replace('#community-post-', '');
+            const post = window.parentingDb.getPosts().find(p => p.id === postId);
+            if (post && (!activePost || activePost.id !== postId || currentTab !== 'community')) {
+              setActivePost(post);
+              setCurrentTab('community');
+            }
+          } else if (hash.startsWith('#articles?category=')) {
+            const catName = decodeURIComponent(hash.replace('#articles?category=', ''));
+            if (selectedCategory !== catName || currentTab !== 'articles') {
+              setSelectedCategory(catName);
+              setCurrentTab('articles');
+            }
+          } else if (hash === '#community') {
+            if (currentTab !== 'community' || activePost !== null) {
+              setCurrentTab('community');
+              setActivePost(null);
+            }
+          } else if (hash === '#tools') {
+            if (currentTab !== 'tools') {
+              setCurrentTab('tools');
+            }
+          } else if (hash === '#ai') {
+            if (currentTab !== 'ai') {
+              setCurrentTab('ai');
+            }
+          }
+        };
+
+        // Chạy lần đầu khi sync xong dữ liệu từ Neon Cloud
+        handleRouting();
+
+        window.addEventListener('hashchange', handleRouting);
+        return () => window.removeEventListener('hashchange', handleRouting);
+      }, [isSyncing, dbState]);
+
+      // --- SYNCHRONIZE STATE TO HASH FOR CRAWLING ---
+      useEffect(() => {
+        if (isSyncing) return;
+
+        let newHash = "";
+        if (currentTab === 'article-detail' && activeArticle) {
+          newHash = `#article-${activeArticle.id}`;
+        } else if (currentTab === 'community' && activePost) {
+          newHash = `#community-post-${activePost.id}`;
+        } else if (currentTab === 'articles') {
+          if (selectedCategory && selectedCategory !== 'Tất cả') {
+            newHash = `#articles?category=${encodeURIComponent(selectedCategory)}`;
+          } else {
+            newHash = '#articles';
+          }
+        } else if (currentTab === 'community') {
+          newHash = '#community';
+        } else if (currentTab === 'tools') {
+          newHash = '#tools';
+        } else if (currentTab === 'ai') {
+          newHash = '#ai';
+        } else if (currentTab === 'home') {
+          newHash = '#home';
+        }
+
+        if (newHash && window.location.hash !== newHash) {
+          window.location.hash = newHash;
+        }
+      }, [currentTab, activeArticle, activePost, selectedCategory, isSyncing]);
+
       // Vẽ biểu đồ tăng trưởng (Growth Tracker Chart) bằng Chart.js
       const chartRef = useRef(null);
       const [growthChartInstance, setGrowthChartInstance] = useState(null);
