@@ -15,6 +15,10 @@
   <meta property="og:description" content="Kho kiến thức y khoa, dinh dưỡng, giấc ngủ của bé và diễn đàn cộng đồng trao đổi kinh nghiệm thực tế.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=1200&auto=format&fit=crop&q=80">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mebimthongthai.io.vn/">
+
+  <!-- Canonical URL Link -->
+  <link id="canonical-link" rel="canonical" href="https://mebimthongthai.io.vn/">
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFF0F2'/%3E%3Cstop offset='100%25' stop-color='%23FFE2E6'/%3E%3C/linearGradient%3E%3ClinearGradient id='pinkGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FCA5B3'/%3E%3Cstop offset='100%25' stop-color='%23E04D65'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='30' fill='url(%23bg)'/%3E%3Cg transform='translate(10, 10)'%3E%3Cpath d='M40 70 C15 70, 5 50, 5 30 C5 10, 25 5, 40 22 C55 5, 75 10, 75 30 C75 50, 65 70, 40 70 Z' fill='url(%23pinkGrad)'/%3E%3Ccircle cx='32' cy='35' r='9' fill='%23FFFFFF'/%3E%3Ccircle cx='48' cy='25' r='11' fill='%23FFFFFF'/%3E%3Cpath d='M58 45 L60 48 L63 48 L61 50 L62 53 L58 51 L54 53 L55 50 L53 48 L56 48 Z' fill='%23FFF275'/%3E%3C/g%3E%3C/svg%3E">
 
@@ -217,7 +221,7 @@
       const [editingArticleId, setEditingArticleId] = useState(null);
       const [adminSearchQuery, setAdminSearchQuery] = useState('');
       const [newArticleForm, setNewArticleForm] = useState({
-        title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+        title: '', category: 'Mang thai', subCategory: '', tags: '', summary: '', content: '', image: '',
         metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
       });
       
@@ -288,13 +292,252 @@
 
       // --- CHỨC NĂNG DYNAMIC SEO & SCHEMA INJECTION ---
       useEffect(() => {
-        if (!activeArticle && currentTab !== 'article-detail') {
-          // Reset default SEO
-          document.title = "Mẹ Bỉm Thông Thái | Cẩm Nang Nuôi Dạy Con & Cộng Đồng Mẹ Bỉm Việt Nam";
-          const desc = document.querySelector('meta[name="description"]');
-          if (desc) desc.setAttribute("content", "Nền tảng chia sẻ kiến thức hữu ích về chăm sóc trẻ sơ sinh, dinh dưỡng, giấc ngủ, bệnh thường gặp và cộng đồng mẹ bỉm sữa.");
+        const descEl = document.querySelector('meta[name="description"]');
+        const keywordsEl = document.querySelector('meta[name="keywords"]');
+        const ogTitleEl = document.querySelector('meta[property="og:title"]');
+        const ogDescEl = document.querySelector('meta[property="og:description"]');
+        const ogImageEl = document.querySelector('meta[property="og:image"]');
+        const ogUrlEl = document.querySelector('meta[property="og:url"]');
+        const canonicalEl = document.getElementById('canonical-link');
+        const schemaEl = document.getElementById('seo-schema');
+
+        let title = "";
+        let description = "";
+        let keywords = "";
+        let ogTitle = "";
+        let ogDesc = "";
+        let ogImage = "https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=1200&auto=format&fit=crop&q=80";
+        let ogUrl = window.location.origin + window.location.pathname;
+        let schemaData = null;
+
+        if (currentTab === 'article-detail' && activeArticle) {
+          title = `${activeArticle.title} | Mẹ Bỉm Thông Thái`;
+          description = activeArticle.summary || activeArticle.content.substring(0, 155) + "...";
+          keywords = `${activeArticle.category}, ${activeArticle.subCategory || ''}, ${activeArticle.tags || ''}, nuôi con khoa học, mẹ bỉm thông thái`;
+          ogTitle = title;
+          ogDesc = description;
+          if (activeArticle.image) ogImage = activeArticle.image;
+          ogUrl = `${window.location.origin}${window.location.pathname}#article-${activeArticle.id}`;
+
+          // NewsArticle Schema
+          const articleSchema = {
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            "headline": activeArticle.title,
+            "description": description,
+            "image": [ogImage],
+            "datePublished": activeArticle.createdAt || new Date().toISOString().split('T')[0],
+            "author": {
+              "@type": "Person",
+              "name": activeArticle.author || "Bác sĩ Hải Anh"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Mẹ Bỉm Thông Thái",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=200"
+              }
+            }
+          };
+
+          // FAQ Schema if article has FAQs
+          if (activeArticle.faqs && activeArticle.faqs.length > 0) {
+            schemaData = {
+              "@context": "https://schema.org",
+              "@graph": [
+                articleSchema,
+                {
+                  "@type": "FAQPage",
+                  "mainEntity": activeArticle.faqs.map(faq => ({
+                    "@type": "Question",
+                    "name": faq.question,
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": faq.answer
+                    }
+                  }))
+                }
+              ]
+            };
+          } else {
+            schemaData = articleSchema;
+          }
+        } else if (currentTab === 'articles') {
+          title = selectedCategory === 'Tất cả' 
+            ? "Kho Kiến Thức Nuôi Dạy Con Khoa Học Mới Nhất | Mẹ Bỉm Thông Thái" 
+            : `Cẩm Nang ${selectedCategory} Cho Bé & Mẹ | Mẹ Bỉm Thông Thái`;
+          description = selectedCategory === 'Tất cả'
+            ? "Tuyển tập các bài viết y khoa, cẩm nang nuôi dạy con, thực đơn ăn dặm BLW, phương pháp EASY và kỹ năng chăm sóc trẻ sơ sinh chuẩn xác."
+            : `Tìm hiểu các bài viết chia sẻ về chủ đề ${selectedCategory} cho mẹ bỉm Việt Nam. Kiến thức chuẩn y khoa giúp nuôi con nhàn tênh, bé phát triển toàn diện.`;
+          keywords = `${selectedCategory}, cẩm nang chăm con, nuôi con khoa học, mẹ bỉm sữa, y tế nhi khoa, me bim thong thai`;
+          ogTitle = title;
+          ogDesc = description;
+          ogUrl = `${window.location.origin}${window.location.pathname}#articles?category=${encodeURIComponent(selectedCategory)}`;
+
+          schemaData = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Trang chủ",
+                "item": window.location.origin
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Kiến thức",
+                "item": `${window.location.origin}/#articles`
+              },
+              ...(selectedCategory !== 'Tất cả' ? [{
+                "@type": "ListItem",
+                "position": 3,
+                "name": selectedCategory,
+                "item": ogUrl
+              }] : [])
+            ]
+          };
+        } else if (currentTab === 'community') {
+          if (activePost) {
+            title = `${activePost.title} - Diễn đàn Mẹ Bỉm Sữa | Mẹ Bỉm Thông Thái`;
+            description = activePost.content.substring(0, 155) + "...";
+            keywords = `${activePost.tags ? activePost.tags.join(', ') : ''}, diễn đàn mẹ bỉm, tâm sự nuôi con, chia sẻ kinh nghiệm`;
+            ogTitle = title;
+            ogDesc = description;
+            ogUrl = `${window.location.origin}${window.location.pathname}#community-post-${activePost.id}`;
+
+            // DiscussionForumPosting Schema for Google "Perspectives"
+            schemaData = {
+              "@context": "https://schema.org",
+              "@type": "DiscussionForumPosting",
+              "headline": activePost.title,
+              "articleBody": activePost.content,
+              "author": {
+                "@type": "Person",
+                "name": activePost.isAnonymous ? "Mẹ ẩn danh" : (activePost.author || "Thành viên Cộng đồng")
+              },
+              "datePublished": activePost.createdAt || new Date().toISOString(),
+              "interactionStatistic": [
+                {
+                  "@type": "InteractionCounter",
+                  "interactionType": "https://schema.org/LikeAction",
+                  "userInteractionCount": activePost.upvotes || 0
+                },
+                {
+                  "@type": "InteractionCounter",
+                  "interactionType": "https://schema.org/CommentAction",
+                  "userInteractionCount": activePost.comments ? activePost.comments.length : 0
+                }
+              ],
+              "comment": activePost.comments ? activePost.comments.map(c => ({
+                "@type": "Comment",
+                "text": c.text,
+                "author": {
+                  "@type": "Person",
+                  "name": c.author || "Mẹ bỉm"
+                },
+                "dateCreated": c.createdAt || new Date().toISOString()
+              })) : []
+            };
+          } else {
+            title = "Diễn Đàn Cộng Đồng Mẹ Bỉm Sữa Chia Sẻ & Trải Lòng | Mẹ Bỉm Thông Thái";
+            description = "Nơi các mẹ bỉm Việt Nam kết nối, đặt câu hỏi, chia sẻ kinh nghiệm thực tế về rèn ngủ EASY, sữa mẹ, trầm cảm sau sinh và hôn nhân gia đình.";
+            keywords = "diễn đàn mẹ bỉm sữa, cộng đồng nuôi con, chia sẻ kinh nghiệm chăm con, góc tâm sự làm mẹ";
+            ogTitle = title;
+            ogDesc = description;
+            ogUrl = `${window.location.origin}${window.location.pathname}#community`;
+
+            schemaData = {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Trang chủ",
+                  "item": window.location.origin
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Cộng đồng",
+                  "item": ogUrl
+                }
+              ]
+            };
+          }
+        } else if (currentTab === 'tools') {
+          title = "Bộ Công Cụ Theo Dõi Sức Khỏe & Lịch Tiêm Chủng Cho Bé | Mẹ Bỉm Thông Thái";
+          description = "Công cụ tính lịch tiêm chủng trọn đời cho bé, vẽ biểu đồ tăng trưởng cân nặng chiều cao chuẩn WHO khoa học và ghi nhật ký ăn ngủ cho bé.";
+          keywords = "lịch tiêm chủng, biểu đồ tăng trưởng, nhật ký chăm bé, theo dõi sức khỏe trẻ em";
+          ogTitle = title;
+          ogDesc = description;
+          ogUrl = `${window.location.origin}${window.location.pathname}#tools`;
+
+          schemaData = {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Bộ Công Cụ Theo Dõi Sức Khỏe Cho Bé",
+            "operatingSystem": "All",
+            "applicationCategory": "HealthApplication",
+            "browserRequirements": "Requires HTML5 compatible browser",
+            "description": description
+          };
+        } else if (currentTab === 'ai') {
+          title = "Hỏi Đáp Trợ Lý AI Chăm Bé Y Khoa Thông Minh 24/7 | Mẹ Bỉm Thông Thái";
+          description = "Trò chuyện cùng trợ lý AI để nhận được các tư vấn và giải đáp y khoa nhanh chóng, tin cậy về tình trạng bé biếng ăn, sốt, ho, khó ngủ.";
+          keywords = "hỏi trợ lý AI, trợ lý chăm con AI, tư vấn y khoa mẹ bé, chăm bé thông minh";
+          ogTitle = title;
+          ogDesc = description;
+          ogUrl = `${window.location.origin}${window.location.pathname}#ai`;
+
+          schemaData = {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Trợ Lý AI Chăm Bé Thông Minh",
+            "operatingSystem": "All",
+            "applicationCategory": "HealthApplication",
+            "browserRequirements": "Requires HTML5 compatible browser",
+            "description": description
+          };
+        } else {
+          // Trang chủ (Tab 'home')
+          title = "Mẹ Bỉm Thông Thái | Cẩm Nang Nuôi Dạy Con & Cộng Đồng Mẹ Bỉm Việt Nam";
+          description = "Nền tảng chia sẻ kiến thức hữu ích về chăm sóc trẻ sơ sinh, dinh dưỡng, giấc ngủ, bệnh thường gặp và diễn đàn cộng đồng mẹ bỉm sữa trao đổi kinh nghiệm nuôi con khoa học.";
+          keywords = "bé sơ sinh, trẻ sơ sinh, ăn dặm, bé bị sốt, bé ngủ ít, mẹ sau sinh, chăm sóc trẻ sơ sinh, nuôi con khoa học, me bim thong thai";
+          ogTitle = "Mẹ Bỉm Thông Thái | Đồng hành cùng mẹ nuôi con khỏe mạnh";
+          ogDesc = description;
+          ogUrl = `${window.location.origin}${window.location.pathname}`;
+
+          schemaData = {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Mẹ Bỉm Thông Thái",
+            "url": window.location.origin,
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": `${window.location.origin}/?search={search_term_string}`,
+              "query-input": "required name=search_term_string"
+            }
+          };
         }
-      }, [currentTab, activeArticle]);
+
+        // Cập nhật DOM
+        document.title = title;
+        if (descEl) descEl.setAttribute("content", description);
+        if (keywordsEl) keywordsEl.setAttribute("content", keywords);
+        if (ogTitleEl) ogTitleEl.setAttribute("content", ogTitle);
+        if (ogDescEl) ogDescEl.setAttribute("content", ogDesc);
+        if (ogImageEl) ogImageEl.setAttribute("content", ogImage);
+        if (ogUrlEl) ogUrlEl.setAttribute("content", ogUrl);
+        if (canonicalEl) canonicalEl.setAttribute("href", ogUrl);
+
+        if (schemaEl && schemaData) {
+          schemaEl.innerText = JSON.stringify(schemaData, null, 2);
+        }
+      }, [currentTab, activeArticle, activePost, selectedCategory, selectedMilestone]);
 
       // Vẽ biểu đồ tăng trưởng (Growth Tracker Chart) bằng Chart.js
       const chartRef = useRef(null);
@@ -397,29 +640,6 @@
       const viewArticleDetail = (art) => {
         setActiveArticle(art);
         setCurrentTab('article-detail');
-        
-        // Cập nhật SEO Tags
-        document.title = `${art.title} | Mẹ Bỉm Thông Thái`;
-        const desc = document.querySelector('meta[name="description"]');
-        if (desc) desc.setAttribute("content", art.summary);
-        
-        // Inject Article Schema & FAQ Schema
-        const schemaEl = document.getElementById('seo-schema');
-        if (schemaEl) {
-          const articleSchema = {
-            "@context": "https://schema.org",
-            "@type": "NewsArticle",
-            "headline": art.title,
-            "description": art.summary,
-            "image": [art.image || "https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=600"],
-            "datePublished": art.createdAt,
-            "author": {
-              "@type": "Person",
-              "name": art.author
-            }
-          };
-          schemaEl.innerText = JSON.stringify(articleSchema, null, 2);
-        }
       };
 
       // --- XỬ LÝ HỎI AI BOT ---
@@ -629,7 +849,7 @@
         }
 
         setNewArticleForm({
-          title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+          title: '', category: 'Mang thai', subCategory: '', tags: '', summary: '', content: '', image: '',
           metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
         });
         setDbState({ ...dbState });
@@ -2304,7 +2524,7 @@
                   // Nếu không ở trạng thái chỉnh sửa thì làm trống form
                   if (!editingArticleId) {
                     setNewArticleForm({
-                      title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+                      title: '', category: 'Mang thai', subCategory: '', tags: '', summary: '', content: '', image: '',
                       metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
                     });
                   }
@@ -2342,7 +2562,7 @@
                       onClick={() => {
                         setEditingArticleId(null);
                         setNewArticleForm({
-                          title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+                          title: '', category: 'Mang thai', subCategory: '', tags: '', summary: '', content: '', image: '',
                           metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
                         });
                         setAdminTab('articles-form');
@@ -2453,7 +2673,7 @@
                       onClick={() => {
                         setEditingArticleId(null);
                         setNewArticleForm({
-                          title: '', category: 'Trẻ sơ sinh', subCategory: '', tags: '', summary: '', content: '', image: '',
+                          title: '', category: 'Mang thai', subCategory: '', tags: '', summary: '', content: '', image: '',
                           metaTitle: '', metaDescription: '', faqQ1: '', faqA1: '', faqQ2: '', faqA2: ''
                         });
                       }}
@@ -2491,12 +2711,9 @@
                         onChange={(e) => setNewArticleForm({ ...newArticleForm, category: e.target.value })}
                         className="w-full bg-neutral-50 border border-neutral-200 outline-none px-4 py-2.5 rounded-xl text-sm focus:border-brand-pink-pastel focus:bg-white transition-all"
                       >
-                        <option value="Trẻ sơ sinh">Trẻ sơ sinh</option>
-                        <option value="Dinh dưỡng cho bé">Dinh dưỡng cho bé</option>
-                        <option value="Giấc ngủ">Giấc ngủ</option>
-                        <option value="Sức khỏe trẻ em">Sức khỏe trẻ em</option>
-                        <option value="Phát triển trí tuệ">Phát triển trí tuệ</option>
-                        <option value="Chăm sóc mẹ sau sinh">Chăm sóc mẹ sau sinh</option>
+                        {dbState.getCategories().map((c) => (
+                          <option key={c.id} value={c.name}>{c.name}</option>
+                        ))}
                       </select>
                     </div>
                     <div className="space-y-1.5">
