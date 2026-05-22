@@ -297,19 +297,24 @@ app.get('/sitemap.xml', async (req, res) => {
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- Các Tab và trang chức năng chính -->
   <url>
-    <loc>${baseUrl}/#community</loc>
+    <loc>${baseUrl}/trangchu</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Các Tab và trang chức năng chính dạng Clean Path -->
+  <url>
+    <loc>${baseUrl}/diendan</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>${baseUrl}/#tools</loc>
+    <loc>${baseUrl}/congcu</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>${baseUrl}/#ai</loc>
+    <loc>${baseUrl}/trolyai</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -317,24 +322,25 @@ app.get('/sitemap.xml', async (req, res) => {
 
   try {
     // 1. Quét toàn bộ chuyên mục hoạt động thực tế
-    const categoriesRes = await pool.query('SELECT name FROM categories ORDER BY id');
+    const categoriesRes = await pool.query('SELECT name, slug FROM categories ORDER BY id');
     if (categoriesRes.rows && categoriesRes.rows.length > 0) {
       categoriesRes.rows.forEach(cat => {
+        const slug = cat.slug || encodeURIComponent(cat.name);
         xml += `  <url>
-    <loc>${baseUrl}/#articles?category=${encodeURIComponent(cat.name)}</loc>
+    <loc>${baseUrl}/chuyen-muc/${slug}</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>\n`;
       });
     }
 
-    // 2. Quét toàn bộ 65 bài viết y khoa y đức chuẩn SEO
+    // 2. Quét toàn bộ bài viết y khoa y đức chuẩn SEO
     const articlesRes = await pool.query('SELECT id, created_at FROM articles ORDER BY created_at DESC');
     if (articlesRes.rows && articlesRes.rows.length > 0) {
       articlesRes.rows.forEach(art => {
         const dateStr = art.created_at ? new Date(art.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
         xml += `  <url>
-    <loc>${baseUrl}/#article-${art.id}</loc>
+    <loc>${baseUrl}/bai-viet/${art.id}</loc>
     <lastmod>${dateStr}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -348,7 +354,7 @@ app.get('/sitemap.xml', async (req, res) => {
       postsRes.rows.forEach(post => {
         const dateStr = post.created_at ? new Date(post.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
         xml += `  <url>
-    <loc>${baseUrl}/#community-post-${post.id}</loc>
+    <loc>${baseUrl}/thao-luan/${post.id}</loc>
     <lastmod>${dateStr}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -359,7 +365,7 @@ app.get('/sitemap.xml', async (req, res) => {
     console.error("Lỗi khi kết xuất sitemap.xml động:", err.message);
     xml += `  <!-- Dự phòng khi lỗi kết nối Neon Cloud -->
   <url>
-    <loc>${baseUrl}/#articles</loc>
+    <loc>${baseUrl}/chuyen-muc/mang-thai</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>\n`;
@@ -384,6 +390,13 @@ Allow: /api/articles
 Allow: /api/categories
 Allow: /api/posts
 Allow: /sitemap.xml
+Allow: /bai-viet/
+Allow: /chuyen-muc/
+Allow: /thao-luan/
+Allow: /diendan
+Allow: /congcu
+Allow: /trolyai
+Allow: /trangchu
 
 # Chặn thu thập các trang bảo mật, bảng admin kiểm soát
 Disallow: /admin.html
@@ -731,6 +744,202 @@ app.post('/api/logs/:type', async (req, res) => {
   }
 });
 
+// --- DYNAMIC GOOGLE SSR META ENGINE ---
+const fs = require('fs');
+
+async function handleSeoRoute(req, res) {
+  const baseUrl = `${req.protocol}://${req.get('host')}`;
+  const fullUrl = `${baseUrl}${req.path}`;
+  
+  let title = "Mẹ Bỉm Thông Thái | Cẩm Nang Nuôi Dạy Con & Cộng Đồng Mẹ Bỉm Việt Nam";
+  let description = "Nền tảng chia sẻ kiến thức hữu ích về chăm sóc trẻ sơ sinh, dinh dưỡng, giấc ngủ, bệnh thường gặp và cộng đồng mẹ bỉm sữa trao đổi kinh nghiệm nuôi con khoa học.";
+  let keywords = "bé sơ sinh, trẻ sơ sinh, ăn dặm, bé bị sốt, bé ngủ ít, mẹ sau sinh, chăm sóc trẻ sơ sinh, nuôi con khoa học";
+  let ogImage = "https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=1200&auto=format&fit=crop&q=80";
+  let schema = null;
+
+  try {
+    const routePath = req.path;
+    if (routePath.startsWith('/bai-viet/')) {
+      const artId = routePath.split('/').pop();
+      const artRes = await pool.query('SELECT * FROM articles WHERE id = $1', [artId]);
+      if (artRes.rows.length > 0) {
+        const art = artRes.rows[0];
+        title = `${art.title} | Mẹ Bỉm Thông Thái`;
+        description = art.summary || art.content.substring(0, 160);
+        keywords = art.tags || keywords;
+        ogImage = art.image || ogImage;
+
+        // Custom NewsArticle schema
+        schema = {
+          "@context": "https://schema.org",
+          "@type": "NewsArticle",
+          "headline": art.title,
+          "image": [ art.image || ogImage ],
+          "datePublished": art.created_at ? new Date(art.created_at).toISOString() : new Date().toISOString(),
+          "dateModified": art.created_at ? new Date(art.created_at).toISOString() : new Date().toISOString(),
+          "author": {
+            "@type": "Person",
+            "name": art.author || "Dr. Hải Anh"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Mẹ Bỉm Thông Thái",
+            "logo": {
+              "@type": "ImageObject",
+              "url": `${baseUrl}/logo.png`
+            }
+          },
+          "description": description
+        };
+
+        // Add FAQPage elements if article has FAQs
+        if (art.faqs) {
+          let faqsArr = [];
+          try {
+            faqsArr = typeof art.faqs === 'string' ? JSON.parse(art.faqs) : art.faqs;
+          } catch(e){}
+          if (Array.isArray(faqsArr) && faqsArr.length > 0) {
+            schema = [
+              schema,
+              {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": faqsArr.map(faq => ({
+                  "@type": "Question",
+                  "name": faq.q,
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.a
+                  }
+                }))
+              }
+            ];
+          }
+        }
+      }
+    } else if (routePath.startsWith('/chuyen-muc/')) {
+      const categorySlug = decodeURIComponent(routePath.split('/').pop());
+      // Query categories
+      const catRes = await pool.query('SELECT * FROM categories WHERE slug = $1 OR name = $2', [categorySlug, categorySlug]);
+      let category = null;
+      if (catRes.rows.length > 0) {
+        category = catRes.rows[0];
+      } else {
+        // Fallback default list
+        const defaults = [
+          { name: 'Mang thai', slug: 'mang-thai', description: 'Kinh nghiệm mang thai, chăm sóc sức khỏe mẹ bầu và chuẩn bị sinh.' },
+          { name: 'Sau sinh', slug: 'sau-sinh', description: 'Chăm sóc mẹ sau sinh, phục hồi sức khỏe, tâm lý và giảm stress.' },
+          { name: 'Chăm sóc bé', slug: 'cham-soc-be', description: 'Kinh nghiệm nuôi dưỡng, tắm bé, chăm sóc sức khỏe và lịch tiêm chủng.' },
+          { name: 'Ăn dặm', slug: 'an-dam', description: 'Công thức ăn dặm, ăn dặm tự chỉ huy (BLW), dinh dưỡng cho bé từng tháng tuổi.' },
+          { name: 'Giáo dục sớm', slug: 'giao-duc-som', description: 'Phương pháp giáo dục sớm như Montessori, Glenn Doman và các hoạt động phát triển trí não.' },
+          { name: 'Tâm lý trẻ em', slug: 'tam-ly-tre-em', description: 'Thấu hiểu cảm xúc của con, xử lý khủng hoảng tuổi lên 2, lên 3 và kết nối yêu thương.' },
+          { name: 'Mẹo tiết kiệm cho mẹ bỉm', slug: 'meo-tiet-kiem-cho-me-bim', description: 'Bí quyết quản lý chi tiêu gia đình, săn sale bỉm sữa và tiết kiệm tài chính.' },
+          { name: 'Review sản phẩm mẹ & bé', slug: 'review-san-pham-me-and-be', description: 'Đánh giá chân thực các sản phẩm bỉm, sữa, xe đẩy, nôi cũi và đồ dùng gia đình.' },
+          { name: 'Kinh nghiệm nuôi con', slug: 'kinh-nghiem-nuoi-con', description: 'Các bài viết đúc kết kinh nghiệm thực tế nuôi dạy con từ các thế hệ mẹ bỉm.' },
+          { name: 'Kiếm tiền online cho mẹ bỉm', slug: 'kiem-tien-online-cho-me-bim', description: 'Gợi ý các công việc freelance, cộng tác viên, affiliate marketing phù hợp cho mẹ bỉm tại nhà.' },
+          { name: 'Cộng đồng mẹ bỉm', slug: 'cong-dong-me-bim', description: 'Nơi kết nối các mẹ bỉm, chia sẻ các hoạt động nhóm, hội thảo và hỗ trợ lẫn nhau.' },
+          { name: 'Chuyện thật làm mẹ', slug: 'chuyen-that-lam-me', description: 'Những câu chuyện cảm động, chân thực, niềm vui và cả những giọt nước mắt trên hành trình làm mẹ.' },
+          { name: 'Góc tâm sự', slug: 'goc-tam-su', description: 'Không gian trải lòng, chia sẻ tâm tư thầm kín về hôn nhân, gia đình và cuộc sống làm mẹ.' },
+          { name: 'Hỏi đáp mẹ & bé', slug: 'hoi-dap-me-and-be', description: 'Giải đáp nhanh các thắc mắc về sức khỏe, chăm sóc và nuôi dạy bé từ chuyên gia và cộng đồng.' }
+        ];
+        category = defaults.find(d => d.slug === categorySlug || d.name.toLowerCase() === categorySlug.toLowerCase());
+      }
+
+      if (category) {
+        title = `${category.name} - Chuyên Mục Cẩm Nang Nuôi Con Khoa Học | Mẹ Bỉm Thông Thái`;
+        description = category.description;
+        keywords = `${category.name.toLowerCase()}, cẩm nang ${category.name.toLowerCase()}, nuôi con khoa học, mẹ bỉm`;
+      }
+    } else if (routePath.startsWith('/thao-luan/')) {
+      const postId = routePath.split('/').pop();
+      const postRes = await pool.query('SELECT * FROM posts WHERE id = $1', [postId]);
+      if (postRes.rows.length > 0) {
+        const post = postRes.rows[0];
+        title = `${post.title} | Diễn Đàn Mẹ Bỉm Thông Thái`;
+        description = post.content ? post.content.substring(0, 160) : description;
+        keywords = post.tags || keywords;
+
+        // Custom DiscussionForumPosting schema
+        schema = {
+          "@context": "https://schema.org",
+          "@type": "DiscussionForumPosting",
+          "headline": post.title,
+          "articleBody": post.content || "",
+          "author": {
+            "@type": "Person",
+            "name": post.is_anonymous ? "Ẩn danh" : (post.author_nickname || "Thành viên")
+          },
+          "datePublished": post.created_at ? new Date(post.created_at).toISOString() : new Date().toISOString(),
+          "publisher": {
+            "@type": "Organization",
+            "name": "Diễn Đàn Mẹ Bỉm Thông Thái"
+          }
+        };
+      }
+    } else if (routePath === '/diendan') {
+      title = "Diễn Đàn Mẹ Bỉm Thông Thái - Tâm Sự, Chia Sẻ Kinh Nghiệm Nuôi Con";
+      description = "Nơi các mẹ bỉm sữa cùng chia sẻ, giao lưu, học hỏi kinh nghiệm mang thai, nuôi con sữa mẹ, chăm sóc giấc ngủ, ăn dặm và cách giải quyết khó khăn trong gia đình.";
+    } else if (routePath === '/congcu') {
+      title = "Bộ Công Cụ Nuôi Con Tiện Ích Chuẩn Khoa Học | Mẹ Bỉm Thông Thái";
+      description = "Theo dõi sinh hoạt của bé (ăn, ngủ, bỉm), biểu đồ tăng trưởng chiều cao cân nặng WHO, và lịch tiêm chủng trọn đời cho con.";
+    } else if (routePath === '/trolyai') {
+      title = "Trợ Lý Trí Tuệ Nhân Tạo AI Chuyên Gia Mẹ & Bé | Mẹ Bỉm Thông Thái";
+      description = "Hỏi đáp nhanh mọi thắc mắc về sức khỏe trẻ em, dinh dưỡng, giáo dục sớm 24/7 với Trợ lý AI y khoa uy tín.";
+    } else if (routePath === '/trangchu') {
+      title = "Mẹ Bỉm Thông Thái | Cẩm Nang Nuôi Dạy Con & Cộng Đồng Mẹ Bỉm Việt Nam";
+      description = "Nền tảng chia sẻ kiến thức hữu ích về chăm sóc trẻ sơ sinh, dinh dưỡng, giấc ngủ, bệnh thường gặp và cộng đồng mẹ bỉm sữa trao đổi kinh nghiệm nuôi con khoa học.";
+    }
+
+    if (!schema) {
+      schema = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Mẹ Bỉm Thông Thái",
+        "url": baseUrl,
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": `${baseUrl}/?search={search_term_string}`,
+          "query-input": "required name=search_term_string"
+        }
+      };
+    }
+
+    // Đọc index.html
+    const indexHtmlPath = path.join(__dirname, '../index.html');
+    let html = await fs.promises.readFile(indexHtmlPath, 'utf8');
+
+    // Tiến hành thay thế siêu dữ liệu y khoa chính xác
+    html = html.replace(/<title>.*?<\/title>/, `<title>${title}</title>`);
+    html = html.replace(/<meta name="description" content=".*?">/, `<meta name="description" content="${description}">`);
+    html = html.replace(/<meta name="keywords" content=".*?">/, `<meta name="keywords" content="${keywords}">`);
+    
+    html = html.replace(/<meta property="og:title" content=".*?">/, `<meta property="og:title" content="${title}">`);
+    html = html.replace(/<meta property="og:description" content=".*?">/, `<meta property="og:description" content="${description}">`);
+    html = html.replace(/<meta property="og:image" content=".*?">/, `<meta property="og:image" content="${ogImage}">`);
+    html = html.replace(/<meta property="og:url" content=".*?">/, `<meta property="og:url" content="${fullUrl}">`);
+    
+    html = html.replace(/<link id="canonical-link" rel="canonical" href=".*?">/, `<link id="canonical-link" rel="canonical" href="${fullUrl}">`);
+
+    // Thay thế Schema JSON-LD cấu trúc
+    const schemaString = JSON.stringify(schema, null, 2);
+    html = html.replace(/<script type="application\/ld\+json" id="seo-schema">[\s\S]*?<\/script>/, `<script type="application/ld+json" id="seo-schema">\n${schemaString}\n</script>`);
+
+    res.send(html);
+  } catch (err) {
+    console.error("Lỗi kết xuất SSR Meta Engine:", err.message);
+    res.sendFile(path.join(__dirname, '../index.html'));
+  }
+}
+
+// Đăng ký các route sạch cho công cụ SEO tìm kiếm của Google
+app.get('/bai-viet/:id', handleSeoRoute);
+app.get('/chuyen-muc/:slug', handleSeoRoute);
+app.get('/thao-luan/:id', handleSeoRoute);
+app.get('/diendan', handleSeoRoute);
+app.get('/congcu', handleSeoRoute);
+app.get('/trolyai', handleSeoRoute);
+app.get('/trangchu', handleSeoRoute);
+
 // Phục vụ trang index.html cho các route còn lại (trang chủ và SPA routing)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));
@@ -748,6 +957,14 @@ async function initializeDatabaseSchema() {
   try {
     // 1. Tạo các bảng cơ sở dữ liệu
     await pool.query(`
+      CREATE TABLE IF NOT EXISTS categories (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR UNIQUE,
+        slug VARCHAR,
+        description TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
       CREATE TABLE IF NOT EXISTS users (
         id TEXT PRIMARY KEY,
         email_or_phone TEXT UNIQUE NOT NULL,
@@ -876,6 +1093,31 @@ async function initializeDatabaseSchema() {
       console.log('🛡️ Đang tự động nạp tài khoản admin mặc định...');
       const defaultPasswordHash = await bcrypt.hash('admin123', 10);
       await pool.query('INSERT INTO admins (email, password_hash, name) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING;', ['admin@mebim.vn', defaultPasswordHash, 'Quản trị viên']);
+    }
+
+    // Tự động nạp các chuyên mục mặc định vào bảng categories nếu rỗng
+    const catCheck = await pool.query('SELECT COUNT(*) FROM categories');
+    if (parseInt(catCheck.rows[0].count) === 0) {
+      console.log('📝 Đang tự động nạp các chuyên mục mặc định vào database...');
+      const defaultCategories = [
+        ['Mang thai', 'mang-thai', 'Kinh nghiệm mang thai, chăm sóc sức khỏe mẹ bầu và chuẩn bị sinh.'],
+        ['Sau sinh', 'sau-sinh', 'Chăm sóc mẹ sau sinh, phục hồi sức khỏe, tâm lý và giảm stress.'],
+        ['Chăm sóc bé', 'cham-soc-be', 'Kinh nghiệm nuôi dưỡng, tắm bé, chăm sóc sức khỏe và lịch tiêm chủng.'],
+        ['Ăn dặm', 'an-dam', 'Công thức ăn dặm, ăn dặm tự chỉ huy (BLW), dinh dưỡng cho bé từng tháng tuổi.'],
+        ['Giáo dục sớm', 'giao-duc-som', 'Phương pháp giáo dục sớm như Montessori, Glenn Doman và các hoạt động phát triển trí não.'],
+        ['Tâm lý trẻ em', 'tam-ly-tre-em', 'Thấu hiểu cảm xúc của con, xử lý khủng hoảng tuổi lên 2, lên 3 và kết nối yêu thương.'],
+        ['Mẹo tiết kiệm cho mẹ bỉm', 'meo-tiet-kiem-cho-me-bim', 'Bí quyết quản lý chi tiêu gia đình, săn sale bỉm sữa và tiết kiệm tài chính.'],
+        ['Review sản phẩm mẹ & bé', 'review-san-pham-me-and-be', 'Đánh giá chân thực các sản phẩm bỉm, sữa, xe đẩy, nôi cũi và đồ dùng gia đình.'],
+        ['Kinh nghiệm nuôi con', 'kinh-nghiem-nuoi-con', 'Các bài viết đúc kết kinh nghiệm thực tế nuôi dạy con từ các thế hệ mẹ bỉm.'],
+        ['Kiếm tiền online cho mẹ bỉm', 'kiem-tien-online-cho-me-bim', 'Gợi ý các công việc freelance, cộng tác viên, affiliate marketing phù hợp cho mẹ bỉm tại nhà.'],
+        ['Cộng đồng mẹ bỉm', 'cong-dong-me-bim', 'Nơi kết nối các mẹ bỉm, chia sẻ các hoạt động nhóm, hội thảo và hỗ trợ lẫn nhau.'],
+        ['Chuyện thật làm mẹ', 'chuyện-that-lam-me', 'Những câu chuyện cảm động, chân thực, niềm vui và cả những giọt nước mắt trên hành trình làm mẹ.'],
+        ['Góc tâm sự', 'goc-tam-su', 'Không gian trải lòng, chia sẻ tâm tư thầm kín về hôn nhân, gia đình và cuộc sống làm mẹ.'],
+        ['Hỏi đáp mẹ & bé', 'hoi-dap-me-and-be', 'Giải đáp nhanh các thắc mắc về sức khỏe, chăm sóc và nuôi dạy bé từ chuyên gia và cộng đồng.']
+      ];
+      for (const [name, slug, desc] of defaultCategories) {
+        await pool.query('INSERT INTO categories (name, slug, description) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING;', [name, slug, desc]);
+      }
     }
 
     // 3. Nạp dữ liệu mẫu nếu bảng articles rỗng

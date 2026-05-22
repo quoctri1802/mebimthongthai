@@ -317,7 +317,7 @@
           ogTitle = title;
           ogDesc = description;
           if (activeArticle.image) ogImage = activeArticle.image;
-          ogUrl = `${window.location.origin}${window.location.pathname}#article-${activeArticle.id}`;
+          ogUrl = `${window.location.origin}/bai-viet/${activeArticle.id}`;
 
           // NewsArticle Schema
           const articleSchema = {
@@ -373,7 +373,10 @@
           keywords = `${selectedCategory}, cẩm nang chăm con, nuôi con khoa học, mẹ bỉm sữa, y tế nhi khoa, me bim thong thai`;
           ogTitle = title;
           ogDesc = description;
-          ogUrl = `${window.location.origin}${window.location.pathname}#articles?category=${encodeURIComponent(selectedCategory)}`;
+          const categories = window.parentingDb.getCategories();
+          const cat = categories.find(c => c.name === selectedCategory);
+          const slug = cat ? cat.slug : encodeURIComponent(selectedCategory);
+          ogUrl = `${window.location.origin}/chuyen-muc/${slug}`;
 
           schemaData = {
             "@context": "https://schema.org",
@@ -406,7 +409,7 @@
             keywords = `${activePost.tags ? activePost.tags.join(', ') : ''}, diễn đàn mẹ bỉm, tâm sự nuôi con, chia sẻ kinh nghiệm`;
             ogTitle = title;
             ogDesc = description;
-            ogUrl = `${window.location.origin}${window.location.pathname}#community-post-${activePost.id}`;
+            ogUrl = `${window.location.origin}/thao-luan/${activePost.id}`;
 
             // DiscussionForumPosting Schema for Google "Perspectives"
             schemaData = {
@@ -447,7 +450,7 @@
             keywords = "diễn đàn mẹ bỉm sữa, cộng đồng nuôi con, chia sẻ kinh nghiệm chăm con, góc tâm sự làm mẹ";
             ogTitle = title;
             ogDesc = description;
-            ogUrl = `${window.location.origin}${window.location.pathname}#community`;
+            ogUrl = `${window.location.origin}/diendan`;
 
             schemaData = {
               "@context": "https://schema.org",
@@ -474,7 +477,7 @@
           keywords = "lịch tiêm chủng, biểu đồ tăng trưởng, nhật ký chăm bé, theo dõi sức khỏe trẻ em";
           ogTitle = title;
           ogDesc = description;
-          ogUrl = `${window.location.origin}${window.location.pathname}#tools`;
+          ogUrl = `${window.location.origin}/congcu`;
 
           schemaData = {
             "@context": "https://schema.org",
@@ -491,7 +494,7 @@
           keywords = "hỏi trợ lý AI, trợ lý chăm con AI, tư vấn y khoa mẹ bé, chăm bé thông minh";
           ogTitle = title;
           ogDesc = description;
-          ogUrl = `${window.location.origin}${window.location.pathname}#ai`;
+          ogUrl = `${window.location.origin}/trolyai`;
 
           schemaData = {
             "@context": "https://schema.org",
@@ -509,7 +512,7 @@
           keywords = "bé sơ sinh, trẻ sơ sinh, ăn dặm, bé bị sốt, bé ngủ ít, mẹ sau sinh, chăm sóc trẻ sơ sinh, nuôi con khoa học, me bim thong thai";
           ogTitle = "Mẹ Bỉm Thông Thái | Đồng hành cùng mẹ nuôi con khỏe mạnh";
           ogDesc = description;
-          ogUrl = `${window.location.origin}${window.location.pathname}`;
+          ogUrl = `${window.location.origin}/trangchu`;
 
           schemaData = {
             "@context": "https://schema.org",
@@ -539,12 +542,81 @@
         }
       }, [currentTab, activeArticle, activePost, selectedCategory, selectedMilestone]);
 
-      // --- CLIENT-SIDE ROUTER FROM HASH FOR SEO AND BACK BUTTONS ---
+      // --- CLIENT-SIDE ROUTER FROM PATHNAME & HASH FOR SEO AND BACK BUTTONS ---
       useEffect(() => {
         if (isSyncing) return;
 
         const handleRouting = () => {
+          const pathname = window.location.pathname;
           const hash = window.location.hash;
+
+          // 1. Định tuyến theo Đường dẫn Sạch (Clean SEO Pathname) nếu có
+          if (pathname && pathname !== '/' && pathname !== '/index.html') {
+            if (pathname.startsWith('/bai-viet/')) {
+              const articleId = pathname.replace('/bai-viet/', '');
+              const art = window.parentingDb.getArticles().find(a => a.id === articleId);
+              if (art && (!activeArticle || activeArticle.id !== articleId || currentTab !== 'article-detail')) {
+                setActiveArticle(art);
+                setCurrentTab('article-detail');
+              }
+              return;
+            }
+            
+            if (pathname.startsWith('/thao-luan/')) {
+              const postId = pathname.replace('/thao-luan/', '');
+              const post = window.parentingDb.getPosts().find(p => p.id === postId);
+              if (post && (!activePost || activePost.id !== postId || currentTab !== 'community')) {
+                setActivePost(post);
+                setCurrentTab('community');
+              }
+              return;
+            }
+            
+            if (pathname.startsWith('/chuyen-muc/')) {
+              const slug = decodeURIComponent(pathname.replace('/chuyen-muc/', ''));
+              const categories = window.parentingDb.getCategories();
+              const cat = categories.find(c => c.slug === slug || c.name.toLowerCase() === slug.toLowerCase() || encodeURIComponent(c.name) === slug);
+              const catName = cat ? cat.name : slug;
+              if (selectedCategory !== catName || currentTab !== 'articles') {
+                setSelectedCategory(catName);
+                setCurrentTab('articles');
+              }
+              return;
+            }
+            
+            if (pathname === '/diendan') {
+              if (currentTab !== 'community' || activePost !== null) {
+                setCurrentTab('community');
+                setActivePost(null);
+              }
+              return;
+            }
+            
+            if (pathname === '/congcu') {
+              if (currentTab !== 'tools') {
+                setCurrentTab('tools');
+              }
+              return;
+            }
+            
+            if (pathname === '/trolyai') {
+              if (currentTab !== 'ai') {
+                setCurrentTab('ai');
+              }
+              return;
+            }
+            
+            if (pathname === '/trangchu') {
+              if (currentTab !== 'home') {
+                setCurrentTab('home');
+                setActiveArticle(null);
+                setActivePost(null);
+              }
+              return;
+            }
+          }
+
+          // 2. Dự phòng: Định tuyến theo Hash-routing tĩnh cũ (để tương thích ngược)
           if (!hash || hash === '#home') {
             if (currentTab !== 'home' && !['login', 'register', 'admin'].includes(currentTab)) {
               setCurrentTab('home');
@@ -594,34 +666,57 @@
         handleRouting();
 
         window.addEventListener('hashchange', handleRouting);
-        return () => window.removeEventListener('hashchange', handleRouting);
+        window.addEventListener('popstate', handleRouting);
+        return () => {
+          window.removeEventListener('hashchange', handleRouting);
+          window.removeEventListener('popstate', handleRouting);
+        };
       }, [isSyncing, dbState]);
 
-      // --- SYNCHRONIZE STATE TO HASH FOR CRAWLING ---
+      // --- SYNCHRONIZE STATE TO CLEAN SEO PATHS & HASH FOR CRAWLING ---
       useEffect(() => {
         if (isSyncing) return;
 
+        let newPath = "/";
         let newHash = "";
+        
         if (currentTab === 'article-detail' && activeArticle) {
+          newPath = `/bai-viet/${activeArticle.id}`;
           newHash = `#article-${activeArticle.id}`;
         } else if (currentTab === 'community' && activePost) {
+          newPath = `/thao-luan/${activePost.id}`;
           newHash = `#community-post-${activePost.id}`;
         } else if (currentTab === 'articles') {
           if (selectedCategory && selectedCategory !== 'Tất cả') {
+            const categories = window.parentingDb.getCategories();
+            const cat = categories.find(c => c.name === selectedCategory);
+            const slug = cat ? cat.slug : encodeURIComponent(selectedCategory);
+            newPath = `/chuyen-muc/${slug}`;
             newHash = `#articles?category=${encodeURIComponent(selectedCategory)}`;
           } else {
+            newPath = "/chuyen-muc/mang-thai"; // Cung cấp đường dẫn sạch mặc định
             newHash = '#articles';
           }
         } else if (currentTab === 'community') {
+          newPath = '/diendan';
           newHash = '#community';
         } else if (currentTab === 'tools') {
+          newPath = '/congcu';
           newHash = '#tools';
         } else if (currentTab === 'ai') {
+          newPath = '/trolyai';
           newHash = '#ai';
         } else if (currentTab === 'home') {
+          newPath = '/trangchu';
           newHash = '#home';
         }
 
+        // Cập nhật địa chỉ đường dẫn sạch (pushState) để tạo trải nghiệm mượt mà
+        if (newPath && window.location.pathname !== newPath) {
+          window.history.pushState(null, "", newPath);
+        }
+
+        // Đồng thời cập nhật hash để giữ tương thích ngược
         if (newHash && window.location.hash !== newHash) {
           window.location.hash = newHash;
         }
