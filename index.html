@@ -896,40 +896,115 @@
             </section>
 
             {/* QUICK CATEGORIES */}
-            <section className="space-y-6">
+            <section className="space-y-6 bg-gradient-to-br from-neutral-50/70 via-white/50 to-brand-pink-light/25 p-6 md:p-8 rounded-[2.5rem] border border-neutral-100/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.005)]">
               <div className="text-center md:text-left">
-                <h2 className="text-2xl font-extrabold">Chuyên mục nổi bật</h2>
+                <h2 className="text-2xl font-extrabold bg-gradient-to-r from-neutral-900 via-brand-pink-dark to-neutral-900 bg-clip-text text-transparent inline-block">Chuyên mục nổi bật</h2>
                 <p className="text-neutral-500 mt-1">Truy cập nhanh kho kiến thức theo từng chủ đề cần thiết</p>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {dbState.getCategories().map((cat, idx) => {
                   const categoryMeta = {
-                    'Mang thai': { icon: '🤰', desc: 'Mẹ bầu khỏe mạnh', color: 'bg-rose-50 text-rose-600 border-rose-100/50' },
-                    'Sau sinh': { icon: '🌸', desc: 'Phục hồi, làm đẹp', color: 'bg-purple-50 text-purple-600 border-purple-100/50' },
-                    'Chăm sóc bé': { icon: '👶', desc: '0 - 3 tuổi ngoan ngoãn', color: 'bg-blue-50 text-blue-600 border-blue-100/50' },
-                    'Ăn dặm': { icon: '🥦', desc: 'Dinh dưỡng khoa học', color: 'bg-emerald-50 text-emerald-600 border-emerald-100/50' },
-                    'Giáo dục sớm': { icon: '🧩', desc: 'Montessori, trí não', color: 'bg-amber-50 text-amber-600 border-amber-100/50' },
-                    'Tâm lý trẻ em': { icon: '🧸', desc: 'Khủng hoảng tuổi lên 2, 3', color: 'bg-orange-50 text-orange-600 border-orange-100/50' },
-                    'Mẹo tiết kiệm cho mẹ bỉm': { icon: '💰', desc: 'Quản lý chi tiêu tốt', color: 'bg-teal-50 text-teal-600 border-teal-100/50' },
-                    'Review sản phẩm mẹ & bé': { icon: '🛍️', desc: 'Đánh giá chân thực nhất', color: 'bg-indigo-50 text-indigo-600 border-indigo-100/50' },
-                    'Kinh nghiệm nuôi con': { icon: '📝', desc: 'Bí quyết bỏ túi quý giá', color: 'bg-sky-50 text-sky-600 border-sky-100/50' },
-                    'Kiếm tiền online cho mẹ bỉm': { icon: '💻', desc: 'Tại nhà linh hoạt', color: 'bg-violet-50 text-violet-600 border-violet-100/50' },
-                    'Cộng đồng mẹ bỉm': { icon: '👥', desc: 'Kết nối mẹ bỉm muôn nơi', color: 'bg-cyan-50 text-cyan-600 border-cyan-100/50' },
-                    'Chuyện thật làm mẹ': { icon: '💝', desc: 'Nhiều bài học nhân văn', color: 'bg-pink-50 text-pink-600 border-pink-100/50' },
-                    'Góc tâm sự': { icon: '💬', desc: 'Hôn nhân & gia đình', color: 'bg-fuchsia-50 text-fuchsia-600 border-fuchsia-100/50' },
-                    'Hỏi đáp mẹ & bé': { icon: '❓', desc: 'Giải đáp nhanh chóng', color: 'bg-red-50 text-red-600 border-red-100/50' }
+                    'Mang thai': { 
+                      icon: '🤰', 
+                      desc: 'Mẹ bầu khỏe mạnh', 
+                      color: 'bg-rose-100/80 text-rose-600 border-rose-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-rose-50/30 border-rose-100/60 hover:border-rose-300 hover:shadow-[0_12px_24px_rgba(244,63,94,0.06)]' 
+                    },
+                    'Sau sinh': { 
+                      icon: '🌸', 
+                      desc: 'Phục hồi, làm đẹp', 
+                      color: 'bg-purple-100/80 text-purple-600 border-purple-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-purple-50/30 border-purple-100/60 hover:border-purple-300 hover:shadow-[0_12px_24px_rgba(168,85,247,0.06)]' 
+                    },
+                    'Chăm sóc bé': { 
+                      icon: '👶', 
+                      desc: '0 - 3 tuổi ngoan ngoãn', 
+                      color: 'bg-blue-100/80 text-blue-600 border-blue-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-blue-50/30 border-blue-100/60 hover:border-blue-300 hover:shadow-[0_12px_24px_rgba(59,130,246,0.06)]' 
+                    },
+                    'Ăn dặm': { 
+                      icon: '🥦', 
+                      desc: 'Dinh dưỡng khoa học', 
+                      color: 'bg-emerald-100/80 text-emerald-600 border-emerald-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-emerald-50/30 border-emerald-100/60 hover:border-emerald-300 hover:shadow-[0_12px_24px_rgba(16,185,129,0.06)]' 
+                    },
+                    'Giáo dục sớm': { 
+                      icon: '🧩', 
+                      desc: 'Montessori, trí não', 
+                      color: 'bg-amber-100/80 text-amber-600 border-amber-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-amber-50/30 border-amber-100/60 hover:border-amber-300 hover:shadow-[0_12px_24px_rgba(245,158,11,0.06)]' 
+                    },
+                    'Tâm lý trẻ em': { 
+                      icon: '🧸', 
+                      desc: 'Khủng hoảng tuổi lên 2, 3', 
+                      color: 'bg-orange-100/80 text-orange-600 border-orange-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-orange-50/30 border-orange-100/60 hover:border-orange-300 hover:shadow-[0_12px_24px_rgba(249,115,22,0.06)]' 
+                    },
+                    'Mẹo tiết kiệm cho mẹ bỉm': { 
+                      icon: '💰', 
+                      desc: 'Quản lý chi tiêu tốt', 
+                      color: 'bg-teal-100/80 text-teal-600 border-teal-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-teal-50/30 border-teal-100/60 hover:border-teal-300 hover:shadow-[0_12px_24px_rgba(20,184,166,0.06)]' 
+                    },
+                    'Review sản phẩm mẹ & bé': { 
+                      icon: '🛍️', 
+                      desc: 'Đánh giá chân thực nhất', 
+                      color: 'bg-indigo-100/80 text-indigo-600 border-indigo-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-indigo-50/30 border-indigo-100/60 hover:border-indigo-300 hover:shadow-[0_12px_24px_rgba(99,102,241,0.06)]' 
+                    },
+                    'Kinh nghiệm nuôi con': { 
+                      icon: '📝', 
+                      desc: 'Bí quyết bỏ túi quý giá', 
+                      color: 'bg-sky-100/80 text-sky-600 border-sky-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-sky-50/30 border-sky-100/60 hover:border-sky-300 hover:shadow-[0_12px_24px_rgba(14,165,233,0.06)]' 
+                    },
+                    'Kiếm tiền online cho mẹ bỉm': { 
+                      icon: '💻', 
+                      desc: 'Tại nhà linh hoạt', 
+                      color: 'bg-violet-100/80 text-violet-600 border-violet-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-violet-50/30 border-violet-100/60 hover:border-violet-300 hover:shadow-[0_12px_24px_rgba(139,92,246,0.06)]' 
+                    },
+                    'Cộng đồng mẹ bỉm': { 
+                      icon: '👥', 
+                      desc: 'Kết nối mẹ bỉm muôn nơi', 
+                      color: 'bg-cyan-100/80 text-cyan-600 border-cyan-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-cyan-50/30 border-cyan-100/60 hover:border-cyan-300 hover:shadow-[0_12px_24px_rgba(6,182,212,0.06)]' 
+                    },
+                    'Chuyện thật làm mẹ': { 
+                      icon: '💝', 
+                      desc: 'Nhiều bài học nhân văn', 
+                      color: 'bg-pink-100/80 text-pink-600 border-pink-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-pink-50/30 border-pink-100/60 hover:border-pink-300 hover:shadow-[0_12px_24px_rgba(236,72,153,0.06)]' 
+                    },
+                    'Góc tâm sự': { 
+                      icon: '💬', 
+                      desc: 'Hôn nhân & gia đình', 
+                      color: 'bg-fuchsia-100/80 text-fuchsia-600 border-fuchsia-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-fuchsia-50/30 border-fuchsia-100/60 hover:border-fuchsia-300 hover:shadow-[0_12px_24px_rgba(217,70,239,0.06)]' 
+                    },
+                    'Hỏi đáp mẹ & bé': { 
+                      icon: '❓', 
+                      desc: 'Giải đáp nhanh chóng', 
+                      color: 'bg-red-100/80 text-red-600 border-red-200/50', 
+                      cardBg: 'bg-gradient-to-br from-white to-red-50/30 border-red-100/60 hover:border-red-300 hover:shadow-[0_12px_24px_rgba(239,68,68,0.06)]' 
+                    }
                   };
-                  const meta = categoryMeta[cat.name] || { icon: '📝', desc: cat.description || 'Tìm hiểu ngay', color: 'bg-neutral-50 text-neutral-600 border-neutral-100/50' };
+                  const meta = categoryMeta[cat.name] || { 
+                    icon: '📝', 
+                    desc: cat.description || 'Tìm hiểu ngay', 
+                    color: 'bg-neutral-100/80 text-neutral-600 border-neutral-200/50', 
+                    cardBg: 'bg-gradient-to-br from-white to-neutral-50/30 border-neutral-100/60 hover:border-neutral-300 hover:shadow-[0_12px_24px_rgba(0,0,0,0.03)]'
+                  };
                   return (
                     <div 
                       key={cat.id || idx} 
                       onClick={() => { setSelectedCategory(cat.name); setCurrentTab('articles'); }}
-                      className="category-card p-5 cursor-pointer bg-white rounded-3xl flex flex-col items-center md:items-start text-center md:text-left gap-3"
+                      className={`category-card p-5 cursor-pointer rounded-3xl flex flex-col items-center md:items-start text-center md:text-left gap-3 shadow-sm border ${meta.cardBg}`}
                     >
                       <span className={`w-12 h-12 ${meta.color} rounded-2xl flex items-center justify-center text-2xl shadow-sm border`}>{meta.icon}</span>
                       <div>
-                        <h3 className="font-bold text-neutral-800 text-sm md:text-base">{cat.name}</h3>
-                        <p className="text-xs text-neutral-400 mt-0.5">{meta.desc}</p>
+                        <h3 className="font-bold text-neutral-800 text-sm md:text-base leading-tight">{cat.name}</h3>
+                        <p className="text-xs text-neutral-400 mt-1 line-clamp-1">{meta.desc}</p>
                       </div>
                     </div>
                   );
