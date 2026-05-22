@@ -260,3 +260,107 @@ h1, h2, h3, h4, h5, h6 {
   background-color: hsl(var(--color-cream-pastel));
   font-weight: 600;
 }
+
+/* Glassmorphism Header */
+.glass-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(243, 244, 246, 0.6);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+/* Category Grid & Hover Effects */
+.category-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(243, 244, 246, 0.8);
+}
+
+.category-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px -15px rgba(224, 77, 101, 0.12);
+  border-color: rgba(252, 165, 179, 0.5);
+}
+
+/* Modern Article & Forum Cards */
+.premium-article-card {
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: white;
+  border: 1px solid rgba(229, 231, 235, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-article-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -10px rgba(224, 77, 101, 0.08);
+  border-color: rgba(252, 165, 179, 0.3);
+}
+
+.premium-article-card img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-article-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Modern Dashboard Panels for Baby Health Logs */
+.dashboard-panel {
+  background: white;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(229, 231, 235, 0.5);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.02);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.dashboard-panel:hover {
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-stat-card {
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+.dashboard-stat-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Gradient text utility */
+.text-gradient-pink {
+  background: linear-gradient(135deg, #e04d65 0%, #ff8a9a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Smooth Tabs */
+.tab-active {
+  background: hsl(var(--color-pink-dark));
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(224, 77, 101, 0.25);
+}
+
+/* Premium form element design */
+.premium-input {
+  background-color: hsl(var(--color-neutral-light));
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.premium-input:focus {
+  background-color: white;
+  border-color: hsl(var(--color-pink-pastel));
+  box-shadow: 0 0 0 3px rgba(252, 165, 179, 0.25);
+}
+

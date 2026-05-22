@@ -358,6 +358,36 @@ app.delete('/api/articles/:id', async (req, res) => {
   }
 });
 
+// --- API CATEGORIES ---
+app.get('/api/categories', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM categories ORDER BY id ASC');
+    if (result.rows.length === 0) {
+      // Fallback categories list when table is empty or in mock mode
+      const defaultCategories = [
+        { id: 1, name: 'Mang thai', slug: 'mang-thai', description: 'Kinh nghiệm mang thai, chăm sóc sức khỏe mẹ bầu và chuẩn bị sinh.' },
+        { id: 2, name: 'Sau sinh', slug: 'sau-sinh', description: 'Chăm sóc mẹ sau sinh, phục hồi sức khỏe, tâm lý và giảm stress.' },
+        { id: 3, name: 'Chăm sóc bé', slug: 'cham-soc-be', description: 'Kinh nghiệm nuôi dưỡng, tắm bé, chăm sóc sức khỏe và lịch tiêm chủng.' },
+        { id: 4, name: 'Ăn dặm', slug: 'an-dam', description: 'Công thức ăn dặm, ăn dặm tự chỉ huy (BLW), dinh dưỡng cho bé từng tháng tuổi.' },
+        { id: 5, name: 'Giáo dục sớm', slug: 'giao-duc-som', description: 'Phương pháp giáo dục sớm như Montessori, Glenn Doman và các hoạt động phát triển trí não.' },
+        { id: 6, name: 'Tâm lý trẻ em', slug: 'tam-ly-tre-em', description: 'Thấu hiểu cảm xúc của con, xử lý khủng hoảng tuổi lên 2, lên 3 và kết nối yêu thương.' },
+        { id: 7, name: 'Mẹo tiết kiệm cho mẹ bỉm', slug: 'meo-tiet-kiem-cho-me-bim', description: 'Bí quyết quản lý chi tiêu gia đình, săn sale bỉm sữa và tiết kiệm tài chính.' },
+        { id: 8, name: 'Review sản phẩm mẹ & bé', slug: 'review-san-pham-me-and-be', description: 'Đánh giá chân thực các sản phẩm bỉm, sữa, xe đẩy, nôi cũi và đồ dùng gia đình.' },
+        { id: 9, name: 'Kinh nghiệm nuôi con', slug: 'kinh-nghiem-nuoi-con', description: 'Các bài viết đúc kết kinh nghiệm thực tế nuôi dạy con từ các thế hệ mẹ bỉm.' },
+        { id: 10, name: 'Kiếm tiền online cho mẹ bỉm', slug: 'kiem-tien-online-cho-me-bim', description: 'Gợi ý các công việc freelance, cộng tác viên, affiliate marketing phù hợp cho mẹ bỉm tại nhà.' },
+        { id: 11, name: 'Cộng đồng mẹ bỉm', slug: 'cong-dong-me-bim', description: 'Nơi kết nối các mẹ bỉm, chia sẻ các hoạt động nhóm, hội thảo và hỗ trợ lẫn nhau.' },
+        { id: 12, name: 'Chuyện thật làm mẹ', slug: 'chuyen-that-lam-me', description: 'Những câu chuyện cảm động, chân thực, niềm vui và cả những giọt nước mắt trên hành trình làm mẹ.' },
+        { id: 13, name: 'Góc tâm sự', slug: 'goc-tam-su', description: 'Không gian trải lòng, chia sẻ tâm tư thầm kín về hôn nhân, gia đình và cuộc sống làm mẹ.' },
+        { id: 14, name: 'Hỏi đáp mẹ & bé', slug: 'hoi-dap-me-and-be', description: 'Giải đáp nhanh các thắc mắc về sức khỏe, chăm sóc và nuôi dạy bé từ chuyên gia và cộng đồng.' }
+      ];
+      return res.json(defaultCategories);
+    }
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- API FORUM POSTS ---
 app.get('/api/posts', async (req, res) => {
   try {

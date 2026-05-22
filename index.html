@@ -388,7 +388,7 @@
       const milestones = dbState.getMilestones();
       
       // Lọc danh mục bài viết
-      const categories = ['Tất cả', 'Trẻ sơ sinh', 'Dinh dưỡng cho bé', 'Giấc ngủ', 'Sức khỏe trẻ em', 'Phát triển trí tuệ', 'Chăm sóc mẹ sau sinh'];
+      const categories = ['Tất cả', ...(dbState.getCategories().map(c => c.name))];
       const filteredArticles = selectedCategory === 'Tất cả' 
         ? articles 
         : articles.filter(art => art.category === selectedCategory);
@@ -682,28 +682,38 @@
                 <p className="text-neutral-500 mt-1">Truy cập nhanh kho kiến thức theo từng chủ đề cần thiết</p>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { name: 'Trẻ sơ sinh', icon: '👶', desc: '0 - 12 tháng tuổi', color: 'bg-brand-pink-light text-brand-pink-dark' },
-                  { name: 'Dinh dưỡng cho bé', icon: '🥦', desc: 'Ăn dặm, BLW, sữa', color: 'bg-brand-mint-light text-brand-mint-dark' },
-                  { name: 'Giấc ngủ', icon: '🌙', desc: 'Sleep training, routine', color: 'bg-indigo-50 text-indigo-600' },
-                  { name: 'Sức khỏe trẻ em', icon: '🩺', desc: 'Sốt, ho, bệnh vặt', color: 'bg-red-50 text-red-600' },
-                  { name: 'Phát triển trí tuệ', icon: '🧩', desc: 'Montessori, vận động', color: 'bg-yellow-50 text-yellow-600' },
-                  { name: 'Chăm sóc mẹ sau sinh', icon: '🌸', desc: 'Phục hồi, tâm lý', color: 'bg-purple-50 text-purple-600' },
-                  { name: 'Ăn dặm kiểu Nhật', icon: '🍱', desc: 'Thực đơn ăn dặm', color: 'bg-orange-50 text-orange-600' },
-                  { name: 'Góc mẹ bỉm', icon: '💬', desc: 'Tâm sự, hỏi đáp', color: 'bg-cyan-50 text-cyan-600' }
-                ].map((cat, idx) => (
-                  <div 
-                    key={idx} 
-                    onClick={() => { setSelectedCategory(cat.name === 'Giấc ngủ' ? 'Giấc ngủ' : cat.name); setCurrentTab('articles'); }}
-                    className="soft-card p-5 cursor-pointer flex flex-col items-center md:items-start text-center md:text-left gap-3"
-                  >
-                    <span className={`w-12 h-12 ${cat.color} rounded-2xl flex items-center justify-center text-2xl shadow-sm`}>{cat.icon}</span>
-                    <div>
-                      <h3 className="font-bold text-neutral-800 text-sm md:text-base">{cat.name}</h3>
-                      <p className="text-xs text-neutral-400 mt-0.5">{cat.desc}</p>
+                {dbState.getCategories().map((cat, idx) => {
+                  const categoryMeta = {
+                    'Mang thai': { icon: '🤰', desc: 'Mẹ bầu khỏe mạnh', color: 'bg-rose-50 text-rose-600 border-rose-100/50' },
+                    'Sau sinh': { icon: '🌸', desc: 'Phục hồi, làm đẹp', color: 'bg-purple-50 text-purple-600 border-purple-100/50' },
+                    'Chăm sóc bé': { icon: '👶', desc: '0 - 3 tuổi ngoan ngoãn', color: 'bg-blue-50 text-blue-600 border-blue-100/50' },
+                    'Ăn dặm': { icon: '🥦', desc: 'Dinh dưỡng khoa học', color: 'bg-emerald-50 text-emerald-600 border-emerald-100/50' },
+                    'Giáo dục sớm': { icon: '🧩', desc: 'Montessori, trí não', color: 'bg-amber-50 text-amber-600 border-amber-100/50' },
+                    'Tâm lý trẻ em': { icon: '🧸', desc: 'Khủng hoảng tuổi lên 2, 3', color: 'bg-orange-50 text-orange-600 border-orange-100/50' },
+                    'Mẹo tiết kiệm cho mẹ bỉm': { icon: '💰', desc: 'Quản lý chi tiêu tốt', color: 'bg-teal-50 text-teal-600 border-teal-100/50' },
+                    'Review sản phẩm mẹ & bé': { icon: '🛍️', desc: 'Đánh giá chân thực nhất', color: 'bg-indigo-50 text-indigo-600 border-indigo-100/50' },
+                    'Kinh nghiệm nuôi con': { icon: '📝', desc: 'Bí quyết bỏ túi quý giá', color: 'bg-sky-50 text-sky-600 border-sky-100/50' },
+                    'Kiếm tiền online cho mẹ bỉm': { icon: '💻', desc: 'Tại nhà linh hoạt', color: 'bg-violet-50 text-violet-600 border-violet-100/50' },
+                    'Cộng đồng mẹ bỉm': { icon: '👥', desc: 'Kết nối mẹ bỉm muôn nơi', color: 'bg-cyan-50 text-cyan-600 border-cyan-100/50' },
+                    'Chuyện thật làm mẹ': { icon: '💝', desc: 'Nhiều bài học nhân văn', color: 'bg-pink-50 text-pink-600 border-pink-100/50' },
+                    'Góc tâm sự': { icon: '💬', desc: 'Hôn nhân & gia đình', color: 'bg-fuchsia-50 text-fuchsia-600 border-fuchsia-100/50' },
+                    'Hỏi đáp mẹ & bé': { icon: '❓', desc: 'Giải đáp nhanh chóng', color: 'bg-red-50 text-red-600 border-red-100/50' }
+                  };
+                  const meta = categoryMeta[cat.name] || { icon: '📝', desc: cat.description || 'Tìm hiểu ngay', color: 'bg-neutral-50 text-neutral-600 border-neutral-100/50' };
+                  return (
+                    <div 
+                      key={cat.id || idx} 
+                      onClick={() => { setSelectedCategory(cat.name); setCurrentTab('articles'); }}
+                      className="category-card p-5 cursor-pointer bg-white rounded-3xl flex flex-col items-center md:items-start text-center md:text-left gap-3"
+                    >
+                      <span className={`w-12 h-12 ${meta.color} rounded-2xl flex items-center justify-center text-2xl shadow-sm border`}>{meta.icon}</span>
+                      <div>
+                        <h3 className="font-bold text-neutral-800 text-sm md:text-base">{cat.name}</h3>
+                        <p className="text-xs text-neutral-400 mt-0.5">{meta.desc}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </section>
 
@@ -2824,7 +2834,7 @@
           )}
 
           {/* HEADER & MAIN NAVIGATION */}
-          <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-100 shadow-sm">
+          <header className="glass-header">
             <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between gap-4">
               
               {/* Logo / Brand */}

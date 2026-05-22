@@ -124,7 +124,7 @@ const INITIAL_DATABASE = {
       "author": "Mẹ Ốc",
       "isFeatured": false,
       "isTrending": true,
-      "image": "/viet_baby_eating.png",
+      "image": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=600&auto=format&fit=crop&q=80",
       "faqs": [
         {
           "q": "Bé chưa mọc răng có ăn dặm BLW được không?",
@@ -155,7 +155,7 @@ const INITIAL_DATABASE = {
       "author": "Mẹ Sữa Bé Gấu",
       "isFeatured": false,
       "isTrending": false,
-      "image": "/viet_baby_sleeping.png",
+      "image": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&auto=format&fit=crop&q=80",
       "faqs": [
         {
           "q": "Luyện ngủ có ảnh hưởng đến tâm lý hay làm giảm tình gắn kết mẹ con?",
@@ -244,7 +244,7 @@ const INITIAL_DATABASE = {
       "author": "Chuyên gia Ngủ Ngọc Anh",
       "isFeatured": false,
       "isTrending": false,
-      "image": "/viet_baby_sleeping.png",
+      "image": "https://images.unsplash.com/photo-1515488042361-404e9250afef?w=600&auto=format&fit=crop&q=80",
       "faqs": []
     },
     {
@@ -310,7 +310,7 @@ const INITIAL_DATABASE = {
       "author": "Mẹ Ốc",
       "isFeatured": false,
       "isTrending": false,
-      "image": "/viet_baby_eating.png",
+      "image": "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=600&auto=format&fit=crop&q=80",
       "faqs": []
     },
     {
@@ -1720,7 +1720,25 @@ const INITIAL_DATABASE = {
   ],
 
   // 9. Báo cáo vi phạm (Spam, abusive posts)
-  reports: []
+  reports: [],
+
+  // 10. Chuyên mục kiến thức (Categories)
+  categories: [
+    { id: 1, name: 'Mang thai', slug: 'mang-thai', description: 'Kinh nghiệm mang thai, chăm sóc sức khỏe mẹ bầu và chuẩn bị sinh.' },
+    { id: 2, name: 'Sau sinh', slug: 'sau-sinh', description: 'Chăm sóc mẹ sau sinh, phục hồi sức khỏe, tâm lý và giảm stress.' },
+    { id: 3, name: 'Chăm sóc bé', slug: 'cham-soc-be', description: 'Kinh nghiệm nuôi dưỡng, tắm bé, chăm sóc sức khỏe và lịch tiêm chủng.' },
+    { id: 4, name: 'Ăn dặm', slug: 'an-dam', description: 'Công thức ăn dặm, ăn dặm tự chỉ huy (BLW), dinh dưỡng cho bé từng tháng tuổi.' },
+    { id: 5, name: 'Giáo dục sớm', slug: 'giao-duc-som', description: 'Phương pháp giáo dục sớm như Montessori, Glenn Doman và các hoạt động phát triển trí não.' },
+    { id: 6, name: 'Tâm lý trẻ em', slug: 'tam-ly-tre-em', description: 'Thấu hiểu cảm xúc của con, xử lý khủng hoảng tuổi lên 2, lên 3 và kết nối yêu thương.' },
+    { id: 7, name: 'Mẹo tiết kiệm cho mẹ bỉm', slug: 'meo-tiet-kiem-cho-me-bim', description: 'Bí quyết quản lý chi tiêu gia đình, săn sale bỉm sữa và tiết kiệm tài chính.' },
+    { id: 8, name: 'Review sản phẩm mẹ & bé', slug: 'review-san-pham-me-and-be', description: 'Đánh giá chân thực các sản phẩm bỉm, sữa, xe đẩy, nôi cũi và đồ dùng gia đình.' },
+    { id: 9, name: 'Kinh nghiệm nuôi con', slug: 'kinh-nghiem-nuoi-con', description: 'Các bài viết đúc kết kinh nghiệm thực tế nuôi dạy con từ các thế hệ mẹ bỉm.' },
+    { id: 10, name: 'Kiếm tiền online cho mẹ bỉm', slug: 'kiem-tien-online-cho-me-bim', description: 'Gợi ý các công việc freelance, cộng tác viên, affiliate marketing phù hợp cho mẹ bỉm tại nhà.' },
+    { id: 11, name: 'Cộng đồng mẹ bỉm', slug: 'cong-dong-me-bim', description: 'Nơi kết nối các mẹ bỉm, chia sẻ các hoạt động nhóm, hội thảo và hỗ trợ lẫn nhau.' },
+    { id: 12, name: 'Chuyện thật làm mẹ', slug: 'chuyen-that-lam-me', description: 'Những câu chuyện cảm động, chân thực, niềm vui và cả những giọt nước mắt trên hành trình làm mẹ.' },
+    { id: 13, name: 'Góc tâm sự', slug: 'goc-tam-su', description: 'Không gian trải lòng, chia sẻ tâm tư thầm kín về hôn nhân, gia đình và cuộc sống làm mẹ.' },
+    { id: 14, name: 'Hỏi đáp mẹ & bé', slug: 'hoi-dap-me-and-be', description: 'Giải đáp nhanh các thắc mắc về sức khỏe, chăm sóc và nuôi dạy bé từ chuyên gia và cộng đồng.' }
+  ]
 };
 
 // Lấy DB hiện tại từ LocalStorage
@@ -1772,7 +1790,7 @@ export const db = {
           const dataTimeoutId = setTimeout(() => dataController.abort(), 4000);
 
           // Fetch toàn bộ dữ liệu song song
-          const [artRes, postRes, comRes, babyRes, feedRes, sleepRes, diaperRes, growthRes, vacRes] = await Promise.all([
+          const [artRes, postRes, comRes, babyRes, feedRes, sleepRes, diaperRes, growthRes, vacRes, catRes] = await Promise.all([
             fetch('/api/articles', { signal: dataController.signal }),
             fetch('/api/posts', { signal: dataController.signal }),
             fetch('/api/comments', { signal: dataController.signal }),
@@ -1781,10 +1799,11 @@ export const db = {
             fetch('/api/logs/sleep', { signal: dataController.signal }),
             fetch('/api/logs/diaper', { signal: dataController.signal }),
             fetch('/api/logs/growth', { signal: dataController.signal }),
-            fetch('/api/logs/vaccine', { signal: dataController.signal })
+            fetch('/api/logs/vaccine', { signal: dataController.signal }),
+            fetch('/api/categories', { signal: dataController.signal })
           ]);
 
-          const [articles, posts, comments, babies, feeding, sleep, diaper, growth, vacs] = await Promise.all([
+          const [articles, posts, comments, babies, feeding, sleep, diaper, growth, vacs, categories] = await Promise.all([
             artRes.json(),
             postRes.json(),
             comRes.json(),
@@ -1793,12 +1812,21 @@ export const db = {
             sleepRes.json(),
             diaperRes.json(),
             growthRes.json(),
-            vacRes.json()
+            vacRes.json(),
+            catRes.json()
           ]);
           
           clearTimeout(dataTimeoutId);
 
           const database = getDb();
+
+          // Map categories
+          database.categories = categories.map(c => ({
+            id: c.id,
+            name: c.name,
+            slug: c.slug,
+            description: c.description
+          }));
 
           // Map articles
           database.articles = articles.map(a => ({
@@ -2181,6 +2209,12 @@ export const db = {
       }
     }
     return vac;
+  },
+
+  // Danh mục kiến thức (Categories)
+  getCategories: () => {
+    const database = getDb();
+    return database.categories || [];
   },
 
   // Kho kiến thức (Articles)
